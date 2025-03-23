@@ -22,7 +22,10 @@ const { data } = await useFetch('/api/me', {
 
 if (data.value) {
   const loginUser = {
-    email: data.value?.email ?? ''
+    id: data.value.id,
+    email: data.value?.email ?? '',
+    // TODO: shop_nameが取得できるようにpublic.userからの情報も取得する
+    shop_name: ''
   }
 
   setUser(loginUser)

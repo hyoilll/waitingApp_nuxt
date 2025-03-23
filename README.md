@@ -1,75 +1,86 @@
-# Nuxt Minimal Starter
+# 整理番号管理アプリケーション
+## 概要
+  - お店が混んでる際に整理番号を管理するアプリケーション
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## 開発環境
+  - nuxt.js (typescript)
+  - vite
+  - tailwind css
+  - sass
+  - supabase
+  - pnpm
+  - deploye
+    - vercel
 
-## Setup
+## 画面構成
+  - アプリケーション紹介ページ
+  - 管理者モード
+  - QRcode表示モード
+  - 顧客モード（QRcodeを読み取ると表示される画面）
 
-Make sure to install dependencies:
+## 機能
+  - 管理者モード
+    - 顧客入店
+    - 顧客呼出
+    - 顧客キャンセル
+    - 入店済み顧客の退室
+  - 顧客モード
+    - 待ちキャンセル
 
-```bash
-# npm
-npm install
+## TODO
+  - 管理者モード
+    - 入店済みリスト
+      - [x] リスト取得
+      - [x] 退室処理
+      - [x] リアルタイムに監視して追加されたら取得する方にする（5秒ごとに取得より無駄な通信が増えそう）
+      - [x] 人数も表示する
+    - 順番待ちリスト
+      - [x] 顧客の入店処理
+      - [x] 顧客キャンセル
+      - [x] リアルタイムに監視して追加されたら取得する方にする（5秒ごとに取得より無駄な通信が増えそう）
+      - [x] 顧客人数表示
+      - [x] 顧客呼び出し
+    - メニュー登録モード
+      - [ ] 待っているお客さんがメニュー閲覧できるようにメニュー登録
+  - 顧客モード
+    - [x] 整理番号発券
+    - [x] 待ちキャンセル
+    - [x] qrコードを読み取って、人数だけを入力してform送信する
+    - [x] お待ちの人数取得をリアルタイムに監視して追加されたら取得する方にする
+    - [x] 最近の入店リスト取得をリアルタイムに監視して追加されたら取得する方にする
+    - [ ] メニュー閲覧メニューを設けて、待っている間メニュー見れるようにする
+  - [ ] loading コンポーネント
+  - login
+    - [ ] login
+    - [ ] register
+  - [x] 全体的にデザイン修正
+  - [ ] RLS policy
+  - [ ] sass導入
+    - [ ] postcss、autoprefixerについて調べる
+  - [ ] vite ssrを使って「アプリケーション紹介ページ」　/　「dashboard」を分ける
+    - アプリケーション紹介ページ（ssr + csr）
+      - [ ] qr読み取りアプリの紹介（ssr）
+      - [ ] 会員登録（csr）
+      - [ ] ログイン（csr）
+      - [ ] ログアウト（csr）
+      - [ ] 問い合わせ（ログイン状態ではないため、email + 問い合わせ内容を入力する）（csr）
+    - dashboard（csr）
+      - [ ] 上で作った機能（管理者モード、qrモードなど）
+      - [ ] ログアウト
+      - [ ] 問い合わせ（すでにログインされてる状態なので、問い合わせ内容だけ入力する）
 
-# pnpm
-pnpm install
+## deploye
+  - [ ] vercelにdeploye
+  - [ ] domain変更
 
-# yarn
-yarn install
+## THINKING
+  - [ ] entered_at & exited_atなどのカラムにjstに保存すべき？utcに保存すべき？
 
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## サービス公開（予定、変わるかも）
+  - wordpressでアプリを紹介するページを作成してお客さんから申し込みメールを受け取る
+    - 上記サイトに今回のアプリケーションを載せ、後にお店でqrcodeで注文できるアプリケーションも載せる
+      - そのアプリの機能
+        - メニュー一覧（お客側で設定画面で自在に設定できるように）
+        - おすすめメニュー紹介
+        - などなど
+  - メールを受け取ったらそのメール先にログイン情報を渡して、情報を修正してもらって使ってもらう

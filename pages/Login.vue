@@ -103,6 +103,7 @@ const sendMail = async (mail: string, resolve: (v: unknown) => void) => {
   }
 
   // TODO: loading component追加
+  // TODO: 登録されてないmailの場合にもerror表示しないので、修正
   alert('Sent mail')
   resolve(null)
 }

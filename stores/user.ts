@@ -1,17 +1,13 @@
 import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
-
-interface User {
-  email: string;
-  // queueId: string;
-  // shopName: string;
-}
+import type { User } from "~/composables/types/Admin";
 
 export const useUserStore = defineStore('user', () => {
   const user = reactive<User>({
+    id: '',
     email: '',
     // queueId: '',
-    // shopName: '',
+    shop_name: '',
   });
 
   // const session = 
