@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', () => {
   // const session = 
 
   const isLogin = computed(() => {
-    return !!user.email;
+    return user.email.length > 0;
   })
 
   const setUser = (newUser: User) => {

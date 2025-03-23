@@ -24,7 +24,7 @@
             required />
         </div>
         <p v-if="loginError.length" class="text-red-500 font-bold">{{ loginError }}</p>
-        <p class="text-blue-500 font-bold text-right">forgot password?</p>
+        <button type="button" class="text-blue-500 font-bold text-right" @click="resetPassword">forgot password?</button>
         <button
           type="submit"
           class="w-full px-4 py-2 text-white bg-blue-600 rounded-md">
@@ -33,9 +33,27 @@
       </form>
     </div>
   </div>
+
+  <UpdatePwDialog #="{ resolve, reject }">
+    <Modal id="updatePw">
+      <SendMailUpdatePw @close="reject(null)" @send="sendMail($event, resolve)" />
+    </Modal>
+  </UpdatePwDialog>
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  middleware: [
+    async () => {
+      const { isLogin } = storeToRefs(useUserStore())
+      const router = useRouter()
+      if (isLogin.value) {
+        router.push('/')
+      }
+    }
+  ]
+})
+
 interface User {
   email: string
   password: string
@@ -70,4 +88,22 @@ const handleSubmit = async () => {
   router.push('/')
 }
 
+const UpdatePwDialog = createTemplatePromise()
+const resetPassword = async () => {
+  await UpdatePwDialog.start()
+}
+
+const sendMail = async (mail: string, resolve: (v: unknown) => void) => {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(mail, {
+    redirectTo: 'http://localhost:3000/updatepassword'
+  })
+  if (error) {
+    console.error('Send mail error: ', error)
+    return
+  }
+
+  // TODO: loading component追加
+  alert('Sent mail')
+  resolve(null)
+}
 </script>
