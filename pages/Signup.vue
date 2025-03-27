@@ -42,6 +42,13 @@
 import { v4 as uuidv4 } from 'uuid'
 import type { User } from '~/composables/types/Admin'
 
+// TODO: 一旦ログイン時OTP認証でするので、会員登録画面は非表示にする。のちに会員登録＞ログインに変える
+definePageMeta({
+  redirect() {
+    return '/'
+  },
+})
+
 interface NewUser {
   email: string
   password: string
@@ -62,14 +69,24 @@ const submitForm = async () => {
   // TODO: 同じemailでも登録ができる、修正必要
   errorMsg.value = ''
 
-  // TODO: 会員登録のやり方をリンク先をクリックするとログイン状態に遷移されるのではなく、auth codeを送信するように修正
-  const { data, error } = await supabase.auth.signUp(form)
+  // TODO: 会員登録のやり方をリンク先をクリックするとログイン状態に遷移されるのではなく、otp codeを送信するように修正
+  // https://github.com/orgs/supabase/discussions/4837
+  const { data, error } = await supabase.auth.signInWithOtp({
+    email: form.email
+  })
   if (error) {
     console.error('signup error: ', error)
     errorMsg.value = error.message
     return
   }
-
+  debugger
+  const ee = await supabase.auth.verifyOtp({
+    email: form.email,
+    token: '',
+    type: 'email'
+  })
+  console.log(ee)
+  return
   if (!data.user?.identities?.length) {
     errorMsg.value = 'Already registered'
     return
