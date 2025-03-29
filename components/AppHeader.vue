@@ -33,9 +33,9 @@
           <li>
             <NuxtLink to="/login">Signin</NuxtLink>
           </li>
-          <!-- <li>
+          <li>
             <NuxtLink to="/signup">Signup</NuxtLink>
-          </li> -->
+          </li>
         </template>
       </ul>
     </nav>

@@ -1,37 +1,35 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
-      <form @submit.prevent="handleSubmit" class="space-y-4">
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            v-model="user.email"
-            type="email"
-            id="email"
-            class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
-            placeholder="Enter your email"
-            required />
-        </div>
-        <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            v-model="user.password"
-            type="password"
-            id="password"
-            class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
-            placeholder="Enter your password"
-            required />
-        </div>
-        <p v-if="loginError.length" class="text-red-500 font-bold">{{ loginError }}</p>
-        <button type="button" class="text-blue-500 font-bold text-right" @click="resetPassword">forgot password?</button>
-        <button
-          type="submit"
-          class="w-full px-4 py-2 text-white bg-blue-600 rounded-md">
-          Sign In
-        </button>
-      </form>
-    </div>
+  <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          v-model="user.email"
+          type="email"
+          id="email"
+          class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
+          placeholder="Enter your email"
+          required />
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          v-model="user.password"
+          type="password"
+          id="password"
+          class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
+          placeholder="Enter your password"
+          required />
+      </div>
+      <p v-if="loginError.length" class="text-red-500 font-bold">{{ loginError }}</p>
+      <button type="button" class="text-blue-500 font-bold text-right" @click="resetPassword">forgot password?</button>
+      <button
+        type="submit"
+        class="w-full px-4 py-2 text-white bg-blue-600 rounded-md">
+        Sign In
+      </button>
+    </form>
   </div>
 
   <UpdatePwDialog #="{ resolve, reject }">
@@ -108,3 +106,101 @@ const sendMail = async (mail: string, resolve: (v: unknown) => void) => {
   resolve(null)
 }
 </script>
+
+<!-- <template>
+  <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          v-model="user.email"
+          type="email"
+          id="email"
+          class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
+          placeholder="Enter your email"
+          required />
+      </div>
+      <p v-if="otpCodeSendErrorMsg.length" class="text-red-500 font-bold">{{ otpCodeSendErrorMsg }}</p>
+      <button
+        type="button"
+        class="w-full px-4 py-2 text-white bg-blue-600 rounded-md"
+        @click="sendOtp">
+        Send OTP Code
+      </button>
+      <p v-if="loginError.length" class="text-red-500 font-bold">{{ loginError }}</p>
+      <template v-if="isSendOtpCode">
+        <div>
+          <label for="otp" class="block text-sm font-medium text-gray-700">OTP Code</label>
+          <input
+            v-model="user.otp"
+            type="text"
+            id="otp"
+            class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
+            placeholder="Enter the OTP code"
+            required />
+        </div>
+        <p v-if="loginErrorMsg.length" class="text-red-500 font-bold">{{ loginErrorMsg }}</p>
+        <button
+          type="submit"
+          class="w-full px-4 py-2 text-white bg-blue-600 rounded-md">
+          Sign In
+        </button>
+      </template>
+    </form>
+  </div>
+</template>
+
+<script lang="ts" setup>
+
+interface User {
+  email: string
+  otp: string
+}
+
+const user = reactive<User>({
+  email: '',
+  otp: '',
+})
+
+const loginError = ref('')
+
+const isSendOtpCode = ref(false)
+const otpCodeSendErrorMsg = ref('')
+const loginErrorMsg = ref('')
+
+const sendOtp = async () => {
+  isSendOtpCode.value = false
+  const { error } = await $fetch('/api/sendotp', {
+    method: 'post',
+    body: {
+      email: user.email
+    }
+  })
+
+  if (error) {
+    otpCodeSendErrorMsg.value = error.message ?? error.code ?? 'otp code send error'
+    return
+  }
+
+  alert('あなたのメールにて認証コードをご確認ください！')
+  isSendOtpCode.value = true
+}
+
+const handleSubmit = async () => {
+  const { data, error } = await $fetch('/api/login', {
+    method: 'post',
+    body: {
+      email: user.email,
+      token: user.otp
+    }
+  })
+
+  if (error) {
+    otpCodeSendErrorMsg.value = error.message ?? error.code ?? 'otp code send error'
+    return
+  }
+
+  console.log(data)
+}
+</script> -->

@@ -6,6 +6,11 @@ export interface WaitingInfoResponse {
 export interface User {
   id: string
   email: string;
-  // queueId: string;
   shop_name: string;
+}
+
+export interface SignUpUserInfo {
+  email: string
+  password: string
+  shopName: string
 }
