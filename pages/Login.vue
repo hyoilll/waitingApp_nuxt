@@ -40,18 +40,6 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({
-  middleware: [
-    async () => {
-      const { isLogin } = storeToRefs(useUserStore())
-      const router = useRouter()
-      if (isLogin.value) {
-        router.push('/')
-      }
-    }
-  ]
-})
-
 interface User {
   email: string
   password: string
