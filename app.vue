@@ -20,15 +20,8 @@ const { data } = await useFetch('/api/me', {
   headers: useRequestHeaders(['cookie'])
 })
 
-if (data.value) {
-  const loginUser = {
-    id: data.value.id,
-    email: data.value?.email ?? '',
-    // TODO: shop_nameが取得できるようにpublic.userからの情報も取得する
-    shop_name: ''
-  }
-
-  setUser(loginUser)
+if (data.value?.user) {
+  setUser(data.value.user)
 }
 
 // const { data: session } = await useFetch('/api/session', {
