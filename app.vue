@@ -20,6 +20,10 @@ const { data } = await useFetch('/api/me', {
   headers: useRequestHeaders(['cookie'])
 })
 
+if (data.value?.error) {
+  console.log(data.value.error)
+}
+
 if (data.value?.user) {
   setUser(data.value.user)
 }

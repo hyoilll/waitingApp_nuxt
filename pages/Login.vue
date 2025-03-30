@@ -40,6 +40,14 @@
 </template>
 
 <script lang="ts" setup>
+// ログイン状態の場合はリダイレクト
+const supabaseUser = useSupabaseUser()
+watch(supabaseUser, () => {
+  if (supabaseUser.value) {
+    return navigateTo('/')
+  }
+}, { immediate: true })
+
 interface User {
   email: string
   password: string

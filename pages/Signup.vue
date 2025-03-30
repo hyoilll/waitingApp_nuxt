@@ -39,6 +39,14 @@
 <script lang="ts" setup>
 import type { SignUpUserInfo } from '~/composables/types/Admin'
 
+// ログイン状態の場合はリダイレクト
+const supabaseUser = useSupabaseUser()
+watch(supabaseUser, () => {
+  if (supabaseUser.value) {
+    return navigateTo('/')
+  }
+}, { immediate: true })
+
 const form = reactive<SignUpUserInfo>({
   email: '',
   password: '',
