@@ -2,7 +2,7 @@
   <div class="flex justify-center items-center h-screen bg-gray-100">
     <div class="w-full max-w-md bg-white p-8 rounded shadow-md">
       <h2 class="text-2xl font-bold mb-6 text-center">Update Password</h2>
-      <form @submit.prevent="updatePassword">
+      <form v-if="!successUpdated" @submit.prevent="updatePassword">
         <div class="mb-4">
           <label for="newPassword" class="block text-sm font-medium text-gray-700">New Password</label>
           <input
@@ -30,36 +30,39 @@
           Update Password
         </button>
       </form>
+      <p v-else class="text-center text-sm text-gray-500">
+        パスワードを更新しました。<br>前のページに戻ってログインしてください。
+      </p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: false
+})
+
 const newPassword = ref('')
 const confirmPassword = ref('')
 const errorMessage = ref('')
-
-const supabase = useSupabaseClient()
-const router = useRouter()
-
-const { setUser } = useUserStore()
+const successUpdated = ref(false)
 
 const updatePassword = async () => {
-  const { data, error } = await supabase.auth.updateUser({
-    password: newPassword.value
+  errorMessage.value = ''
+  successUpdated.value = false
+  const resp = await $fetch('/api/updatepassword', {
+    method: 'post',
+    body: {
+      newPassword: newPassword.value,
+      confirmPassword: confirmPassword.value
+    }
   })
-  if (error) {
-    console.error('update password error: ', error)
-    errorMessage.value = error.message
+
+  if (resp?.error) {
+    errorMessage.value = resp.error
     return
   }
 
-  const loginUser = {
-    email: data.user?.email ?? ''
-  }
-
-  //TODO: 更新したら、元のページに戻ってログインしてくださいと表示すべき？そとれも、今のページで進めるべき？
-  setUser(loginUser)
-  router.push('/')
+  successUpdated.value = true
 }
 </script>

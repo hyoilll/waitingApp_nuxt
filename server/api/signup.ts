@@ -1,6 +1,7 @@
 import { serverSupabaseClient } from '#supabase/server'
 import type { SignUpUserInfo } from '~/composables/types/Admin'
 import { v4 as uuidv4 } from 'uuid'
+import { getErrorMessage } from '../utils'
 
 export default eventHandler(async (event) => {
   const body = await readBody<SignUpUserInfo>(event)
@@ -50,7 +51,3 @@ export default eventHandler(async (event) => {
     return { error: getErrorMessage(insertShopError) }
   }
 })
-
-const getErrorMessage = (error: { message?: string; code?: string }) => {
-  return error.message ?? error.code ?? 'sign up error'
-}

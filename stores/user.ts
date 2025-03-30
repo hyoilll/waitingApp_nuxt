@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', () => {
   // const session = 
 
   const isLogin = computed(() => {
-    return user.email.length > 0;
+    return !!user.id;
   })
 
   const setUser = (newUser: User) => {
@@ -21,7 +21,9 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const clearUser = () => {
-    user.email = ''
+    user.id = '';
+    user.email = '';
+    user.shop_name = '';
   }
 
   return {
