@@ -22,6 +22,10 @@ const supabase = useSupabaseClient()
 const { clearUser } = useUserStore()
 
 const handleLogout = async () => {
+  if (!confirm('Are you sure you want to log out?')) {
+    return
+  }
+
   const { error } = await supabase.auth.signOut()
   if (error) {
     console.error('signout error', error)
