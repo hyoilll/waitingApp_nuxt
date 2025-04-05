@@ -9,6 +9,12 @@ export interface User {
   shop_name: string;
 }
 
+export interface Shop {
+  id: string
+  user_id: string
+  current_number: number
+}
+
 export interface SignUpUserInfo {
   email: string
   password: string

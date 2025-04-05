@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/supabase": "1.5.0",
     "@pinia/nuxt": "^0.10.1",
+    "@supabase/supabase-js": "^2.49.4",
     "@vueuse/core": "^13.0.0",
     "@vueuse/integrations": "^13.0.0",
     "@vueuse/nuxt": "13.0.0",

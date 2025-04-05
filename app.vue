@@ -25,7 +25,7 @@ if (data.value?.error) {
 }
 
 if (data.value?.user) {
-  setUser(data.value.user)
+  setUser(data.value.user, data.value.shop)
 }
 
 // const { data: session } = await useFetch('/api/session', {

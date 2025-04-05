@@ -75,7 +75,7 @@ const handleSubmit = async () => {
     return
   }
 
-  setUser(resp.user)
+  setUser(resp.user, resp.shop)
   router.push('/')
 }
 

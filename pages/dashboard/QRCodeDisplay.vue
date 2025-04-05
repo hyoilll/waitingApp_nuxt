@@ -14,12 +14,18 @@
 
 <script setup lang="ts">
 import { useQRCode } from '@vueuse/integrations/useQRCode';
+
 definePageMeta({
   layout: 'dashboard',
+  disableDashboardHeader: true,
 })
 
-// const text = shallowRef(`http://192.168.3.112:5173/create-entry-id/${queueId}`);
-const qrcode = useQRCode('https://google.com', {
+const { shop } = useUserStore()
+
+const config = useRuntimeConfig()
+const baseUrl = config.public.QR_CODE_MOVE_PAGE_URL
+
+const qrcode = useQRCode(`${baseUrl}/dashboard/create-entry-id/${shop.id}`, {
   errorCorrectionLevel: 'H',
   margin: 3,
 })

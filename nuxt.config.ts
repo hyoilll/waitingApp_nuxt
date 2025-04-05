@@ -8,7 +8,9 @@ export default defineNuxtConfig({
       login: '/login',
       callback: '/confirm',
       include: undefined,
-      exclude: ['/', '/services', '/inquiry', '/signup', '/updatepassword'],
+      exclude: [
+        '/', '/services', '/inquiry', '/signup', '/updatepassword', 
+        '/dashboard/create-entry-id/**', '/dashboard/customer/**', '/dashboard/canceled',],
       saveRedirectToCookie: false,
     },
     cookieOptions: {
@@ -22,5 +24,10 @@ export default defineNuxtConfig({
   devServer: {
     port: 3000,
     host: '0.0.0.0',
-  }
+  },
+  runtimeConfig: {
+    public: {
+      QR_CODE_MOVE_PAGE_URL: process.env.QR_CODE_MOVE_PAGE_URL || 'http://localhost:3000',
+    }
+  },
 })

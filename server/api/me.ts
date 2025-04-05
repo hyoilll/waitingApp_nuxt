@@ -18,6 +18,17 @@ export default defineEventHandler(async (event) => {
   if (userError) {
     return { error: getErrorMessage(userError, 'fetch user error') }
   }
+
+  // Get user info from public.shops
+  const { data: shop, error: shopError } = await client
+      .from('shops')
+      .select('*')
+      .eq('user_id', user.id)
+      .single()
+
+  if (shopError) {
+    return { error: getErrorMessage(shopError, 'fetch shop error') }
+  }
     
-  return { user }
+  return { user, shop }
 })

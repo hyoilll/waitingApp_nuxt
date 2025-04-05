@@ -24,6 +24,17 @@ export default eventHandler(async (event) => {
   if (userError) {
     return { error: getErrorMessage(userError, 'sign in error') }
   }
+
+  // Get user info from public.shops
+  const { data: shop, error: shopError } = await client
+    .from('shops')
+    .select('*')
+    .eq('user_id', user.id)
+    .single()
+
+  if (shopError) {
+    return { error: getErrorMessage(shopError, 'sign in error') }
+  }
   
-  return { user }
+  return { user, shop }
 })
