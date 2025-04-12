@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server'
-import { getErrorMessage } from '../utils'
+import { getErrorMessage } from '../../utils'
 import { v4 as uuidv4 } from 'uuid'
 
 export default eventHandler(async (event) => {

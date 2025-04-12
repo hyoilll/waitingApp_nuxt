@@ -1,6 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server'
-import { getErrorMessage } from '../utils'
-import dayjs from 'dayjs';
+import { getErrorMessage } from '../../utils'
 
 export default eventHandler(async (event) => {
   const query = await readBody(event)
@@ -9,11 +8,11 @@ export default eventHandler(async (event) => {
   try {
     const { error } = await client
       .from('entries')
-      .update({ status: 'entered', entered_at: dayjs().add(9, 'hour').toISOString() })
+      .update({ status: 'cancelled' })
       .eq('id', query.entryId);
 
     if (error) {
-      return { error: getErrorMessage(error, '入店処理に失敗しました') };
+      return { error: getErrorMessage(error, 'キャンセル処理に失敗しました') };
     }
 
     return true;

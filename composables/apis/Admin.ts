@@ -6,7 +6,7 @@ import type { RealtimeChannel } from "@supabase/supabase-js";
  * @returns 
  */
 export const getWaitingList = async (shopId: string) => {
-  return await $fetch('/api/waitinglist', {
+  return await $fetch('/api/admin/waitinglist', {
     method: 'GET',
     query: { shopId },
   })
@@ -18,7 +18,7 @@ export const getWaitingList = async (shopId: string) => {
  * @returns 
  */
 export const getEnteredList = async (shopId: string) => {
-  return await $fetch('/api/enteredlist', {
+  return await $fetch('/api/server/enteredlist', {
     method: 'GET',
     query: { shopId },
   })
@@ -59,7 +59,7 @@ export const unsubscribeFromShopInAdmin = (channel: RealtimeChannel): void => {
  * @returns 
  */
 export const markAsExited = async (entryId: string) => {
-  return await $fetch('/api/markexited', {
+  return await $fetch('/api/admin/markexited', {
     method: 'PUT',
     body: { entryId },
   })
@@ -71,7 +71,7 @@ export const markAsExited = async (entryId: string) => {
  * @returns 
  */
 export const markAsCalled = async (entryId: string) => {
-  return await $fetch('/api/markcalled', {
+  return await $fetch('/api/admin/markcalled', {
     method: 'PUT',
     body: { entryId },
   })
@@ -83,7 +83,7 @@ export const markAsCalled = async (entryId: string) => {
  * @returns 
  */
 export const markAsEntered = async (entryId: string) => {
-  return await $fetch('/api/markentered', {
+  return await $fetch('/api/admin/markentered', {
     method: 'PUT',
     body: { entryId },
   })
@@ -95,7 +95,7 @@ export const markAsEntered = async (entryId: string) => {
  * @returns 
  */
 export const markAsCanceled = async (entryId: string) => { 
-  return await $fetch('/api/markcanceled', {
+  return await $fetch('/api/admin/markcanceled', {
     method: 'PUT',
     body: { entryId },
   })

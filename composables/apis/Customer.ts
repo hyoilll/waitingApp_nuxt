@@ -6,7 +6,7 @@ import type { RealtimeChannel } from "@supabase/supabase-js";
  * @returns 
  */
 export const getShopName = async (shopId: string) => {
-  return await $fetch('/api/shopname', {
+  return await $fetch('/api/customer/shopname', {
     method: 'GET',
     query: { shopId },
   })
@@ -19,7 +19,7 @@ export const getShopName = async (shopId: string) => {
  * @returns 
  */
 export const getTicket = async (shopId: string, visitorCount: number) => {
-  return await $fetch('/api/ticket', {
+  return await $fetch('/api/customer/ticket', {
     method: 'GET',
     query: { shopId, visitorCount },
   })
@@ -31,7 +31,7 @@ export const getTicket = async (shopId: string, visitorCount: number) => {
  * @returns 
  */
 export const getEntryDetail = async (entryId: string) => {
-  return await $fetch('/api/entrydetail', {
+  return await $fetch('/api/customer/entrydetail', {
     method: 'GET',
     query: { entryId },
   })
@@ -42,7 +42,7 @@ export const getEntryDetail = async (entryId: string) => {
  * @param entryId 
  */
 export const getIsCalled = async (entryId: string) => {
-  return await $fetch('/api/iscalled', {
+  return await $fetch('/api/customer/iscalled', {
     method: 'GET',
     query: { entryId },
   })
@@ -84,7 +84,7 @@ export const unsubscribeFromShop = (channel: RealtimeChannel): void => {
  * @returns 
  */
 export const getRecentEntryTimes = async (shopId: string) => {
-  return await $fetch('/api/recententrytimes', {
+  return await $fetch('/api/customer/recententrytimes', {
     method: 'GET',
     query: { shopId },
   })
@@ -96,7 +96,7 @@ export const getRecentEntryTimes = async (shopId: string) => {
  * @returns 
  */
 export const getWaitingCount = async (shopId: string, entryNumber: number) => {
-  return await $fetch('/api/waitingcount', {
+  return await $fetch('/api/customer/waitingcount', {
     method: 'GET',
     query: { shopId, entryNumber },
   })
@@ -107,7 +107,7 @@ export const getWaitingCount = async (shopId: string, entryNumber: number) => {
  * @returns 
  */
 export const updateCancelWaiting = async (entryId: string) => {
-  return await $fetch('/api/cancelwaiting', {
+  return await $fetch('/api/customer/cancelwaiting', {
     method: 'PUT',
     body: { entryId },
   })

@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server'
-import { getErrorMessage } from '../utils'
+import { getErrorMessage } from '../../utils'
 
 export default eventHandler(async (event) => {
   const query = await getQuery(event)
@@ -10,9 +10,9 @@ export default eventHandler(async (event) => {
     .from('entries')
     .select('*')
     .eq('shop_id', query.shopId)
-    .is('entered_at', null)
-    .eq('status', 'waiting')
-    .order('entry_number', { ascending: true });
+    .not('entered_at', 'is', null)
+    .eq('status', 'entered')
+    .order('entered_at', { ascending: true });
 
     if (error) {
       return { error: getErrorMessage(error, '待ち組のリスト取得に失敗しました') };

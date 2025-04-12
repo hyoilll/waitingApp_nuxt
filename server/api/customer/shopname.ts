@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server'
-import { getErrorMessage } from '../utils'
+import { getErrorMessage } from '../../utils'
 
 export default eventHandler(async (event) => {
   const query = await getQuery(event)
