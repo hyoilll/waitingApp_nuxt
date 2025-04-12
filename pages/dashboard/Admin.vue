@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-6 h-[90%]">
+  <div class="grid grid-cols-2 gap-6 h-[90%] w-[85%]">
     <div class="min-h-[250px] h-[90%] max-h-[500px] min-w-[300px] w-[100%] border p-4 rounded shadow">
       <h2 class="text-lg font-semibold mb-4">入店済みのお客様</h2>
       <template v-if="enteredList.length">
@@ -10,7 +10,7 @@
               <span>{{ entered.visitor_count }}人</span>
               <span class="text-gray-500">入店: {{ $dayjs(entered.entered_at).format('HH:mm') }}</span>
             </div>
-            <button type="button" class="text-white px-3 py-1 rounded" @click="handleMarkAsExited(entered.entry_number, entered.id)">退室</button>
+            <button type="button" class="text-white bg-red-500 px-3 py-1 rounded" @click="handleMarkAsExited(entered.entry_number, entered.id)">退室</button>
           </li>
         </ul>
       </template>
@@ -40,13 +40,15 @@
           </li>
         </ul>
       </template>
+      <p v-else-if="waitingErrMsg.length" class="text-red-500 font-bold">{{ waitingErrMsg }}</p>
       <p v-else class="text-gray-500">現在、順番待ちのお客様はいません。</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getWaitingList } from '~/composables/apis/Admin';
+import type { RealtimeChannel } from '@supabase/supabase-js';
+import { getEnteredList, getWaitingList, markAsCalled, markAsCanceled, markAsEntered, markAsExited, subscribeToShopInAdmin, unsubscribeFromShopInAdmin } from '~/composables/apis/Admin';
 import type { Entry } from '~/composables/types/Admin';
 
 definePageMeta({
@@ -57,26 +59,95 @@ const enteredList = ref<Entry[]>([]);
 const enteredErrMsg = ref('');
 const waitingList = ref<Entry[]>([]);
 const waitingErrMsg = ref('');
+const realtimeChannel = ref<RealtimeChannel>();
+
+const { shop } = useUserStore();
 
 const handleMarkAsExited = async (entryNumber: number, entryId: string) => {
+  if (!confirm(`No.${entryNumber}を本当に退室します？`)) {
+    return
+  }
 
+  const resp = await markAsExited(entryId)
+  if (resp.error) {
+    alert(resp.error);
+  }
 };
 
 const handleMarkAsEntered = async (entryNumber: number, entryId: string) => {
+  if (!confirm(`No.${entryNumber}を本当に入店します？`)) {
+    return
+  }
 
+  const resp = await markAsEntered(entryId)
+  if (resp.error) {
+    alert(resp.error);
+  }
 };
 
 const handelMarkAsCanceled = async (entryNumber: number, entryId: string) => {
+  if (!confirm(`No.${entryNumber}を本当にキャンセルしますか？`)) {
+    return
+  }
 
+  const resp = await markAsCanceled(entryId);
+  if (resp.error) {
+    alert(resp.error);
+  }
 };
 
 const handelMarkAsCalled = async (entryNumber: number, entryId: string) => {
+  if (!confirm(`No.${entryNumber}を本当に呼出しますか？`)) {
+    return
+  }
 
+  const resp = await markAsCalled(entryId);
+  if (resp.error) {
+    alert(resp.error);
+  }
 };
 
-onBeforeMount(() => {
-  Promise.all([
+const fetchWaitingCustomers = async () => {
+  try {
+    const resp = await getWaitingList(shop.id);
+    if (resp.error) {
+      waitingErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+      return;
+    }
 
+    waitingList.value = resp.data;
+  } catch (error) {
+    waitingErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+  }
+};
+
+const fetchEnteredCustomers = async () => {
+  try {
+    const resp = await getEnteredList(shop.id);
+    if (resp.error) {
+      enteredErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+      return;
+    }
+
+    enteredList.value = resp.data;
+  } catch (error) {
+    enteredErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+  }
+};
+
+onBeforeMount(async () => {
+  Promise.all([
+    fetchWaitingCustomers(),
+    fetchEnteredCustomers(),
   ])
+
+  // realtimeでwating list, entered list更新を監視
+  realtimeChannel.value = await subscribeToShopInAdmin(shop.id, fetchWaitingCustomers, fetchEnteredCustomers);
 })
+
+onUnmounted(() => {
+  if (realtimeChannel.value) {
+    unsubscribeFromShopInAdmin(realtimeChannel.value);
+  }
+});
 </script>

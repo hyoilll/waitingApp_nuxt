@@ -12,9 +12,12 @@ export default eventHandler(async (event) => {
       .eq('id', query.entryId);
 
     if (error) {
-      return { error: getErrorMessage(error, 'キャンセルに失敗しました') };
+      return { error: getErrorMessage(error, 'キャンセル処理に失敗しました') };
     }
-  } catch (error) {
+
+    return true;
+  }
+  catch (error) {
     return { error: '予期せぬエラーが発生しました' };
   }
 })

@@ -58,9 +58,9 @@ export const getIsCalled = async (entryId: string) => {
 export const subscribeToShop = async (shopId: string, entryId: string, fetchEnteredList: () => void, fetchWaitingList: () => void, fetchIsCalled: () => void): Promise<RealtimeChannel> => {
   const supabase = useSupabaseClient(); // Supabaseクライアントを取得
   const channel = supabase
-    .channel(`queue:${shopId}/entry:${entryId}`) // 'queueId/entryId'に基づいてチャンネルを作成
+    .channel(`shop:${shopId}/entry:${entryId}`) // 'shopId/entryId'に基づいてチャンネルを作成
     .on('postgres_changes', { event: '*', schema: 'public', table: 'entries', filter: `shop_id=eq.${shopId}` }, () => {
-      // 'entries'テーブルの'queue_id'が指定された'queueId'と一致する行に対する全てのイベントを監視
+      // 'entries'テーブルの'shop_id'が指定された'shopId'と一致する行に対する全てのイベントを監視
       fetchEnteredList();
       fetchWaitingList();
       fetchIsCalled();
@@ -109,6 +109,6 @@ export const getWaitingCount = async (shopId: string, entryNumber: number) => {
 export const updateCancelWaiting = async (entryId: string) => {
   return await $fetch('/api/cancelwaiting', {
     method: 'PUT',
-    query: { entryId },
+    body: { entryId },
   })
 }

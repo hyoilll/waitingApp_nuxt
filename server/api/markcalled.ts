@@ -7,14 +7,17 @@ export default eventHandler(async (event) => {
 
   try {
     const { error } = await client
-      .from('entries')
-      .update({ status: 'cancelled' })
-      .eq('id', query.entryId);
+    .from('entries')
+    .update({ is_called: true })
+    .eq('id', query.entryId);
 
     if (error) {
-      return { error: getErrorMessage(error, 'キャンセルに失敗しました') };
+      return { error: getErrorMessage(error, '呼出処理に失敗しました') };
     }
-  } catch (error) {
+
+    return true;
+  }
+  catch (error) {
     return { error: '予期せぬエラーが発生しました' };
   }
 })
