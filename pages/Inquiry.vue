@@ -32,13 +32,13 @@
   </section>
 
   <InquiryAddDialog #="{ resolve, reject }">
-    <Modal id="addInquiry">
+    <Modal id="addInquiry" @close="reject('closeModal')">
       <AddInquiryDialog @add="resolve" @close="reject('closeModal')" />
     </Modal>
   </InquiryAddDialog>
 
-  <InquiryDetailDialog #="{ args: [inquiry] }">
-    <Modal id="detailInquiry">
+  <InquiryDetailDialog #="{ args: [inquiry], reject }">
+    <Modal id="detailInquiry" @close="reject('closeModal')">
       <DetailInquiryDialog :inquiry />
     </Modal>
   </InquiryDetailDialog>

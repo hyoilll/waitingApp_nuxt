@@ -32,8 +32,8 @@
     </form>
   </div>
 
-  <UpdatePwDialog #="{ resolve }">
-    <Modal id="updatePw">
+  <UpdatePwDialog #="{ resolve, reject }">
+    <Modal id="updatePw" @close="reject('closeModal')">
       <SendMailUpdatePw :err-msg="sendMailError" @send="sendMail($event, resolve)" />
     </Modal>
   </UpdatePwDialog>
