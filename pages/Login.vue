@@ -32,9 +32,9 @@
     </form>
   </div>
 
-  <UpdatePwDialog #="{ resolve, reject }">
+  <UpdatePwDialog #="{ resolve }">
     <Modal id="updatePw">
-      <SendMailUpdatePw :err-msg="sendMailError" @close="reject(null)" @send="sendMail($event, resolve)" />
+      <SendMailUpdatePw :err-msg="sendMailError" @send="sendMail($event, resolve)" />
     </Modal>
   </UpdatePwDialog>
 </template>
