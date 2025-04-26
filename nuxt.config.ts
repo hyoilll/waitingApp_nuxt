@@ -1,8 +1,10 @@
+import { fileURLToPath, URL } from 'node:url';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', '@nuxt/test-utils/module'],
   supabase: {
     redirectOptions: {
       login: '/login',
@@ -29,5 +31,14 @@ export default defineNuxtConfig({
     public: {
       QR_CODE_MOVE_PAGE_URL: process.env.QR_CODE_MOVE_PAGE_URL || 'http://localhost:3000',
     }
+  },
+  alias: {
+    '@': fileURLToPath(new URL('./', import.meta.url)),
+    '@Servers': fileURLToPath(new URL('./servers', import.meta.url)),
+    '@Components': fileURLToPath(new URL('./components', import.meta.url)),
+    '@Composables': fileURLToPath(new URL('./composables', import.meta.url)),
+    '@Layouts': fileURLToPath(new URL('./layouts', import.meta.url)),
+    '@Pages': fileURLToPath(new URL('./pages', import.meta.url)),
+    '@Stores': fileURLToPath(new URL('./stores', import.meta.url)),
   },
 })
