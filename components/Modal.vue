@@ -48,10 +48,10 @@ dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-dialog {
+/* dialog {
   position: fixed;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
+} */
 </style>
