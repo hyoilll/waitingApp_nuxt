@@ -18,10 +18,10 @@
       <li
         v-for="inquiry in shownInquirys"
         :key="inquiry.id"
-        class="p-4 hover:bg-gray-300 rounded-md cursor-pointer">
+        class="p-4 hover:bg-gray-300 rounded-md cursor-pointer"
+        @click="openDetailDialog(inquiry)">
         <div>
           <h2 class="font-bold text-lg">{{ inquiry.title }}</h2>
-          <p class="text-sm text-gray-500">Status: {{ inquiry.status }}</p>
           <p class="text-sm text-gray-500">Created at: {{ inquiry.createdAt }}</p>
         </div>
       </li>
@@ -36,10 +36,16 @@
       <AddInquiryDialog @add="resolve" @close="reject('closeModal')" />
     </Modal>
   </InquiryAddDialog>
+
+  <InquiryDetailDialog #="{ args: [inquiry] }">
+    <Modal id="detailInquiry">
+      <DetailInquiryDialog :inquiry />
+    </Modal>
+  </InquiryDetailDialog>
 </template>
 
 <script setup lang="ts">
-import type { NewInquiryPayload } from '~/composables/types/Inquiry'
+import type { InquiryInfo, NewInquiryPayload } from '~/composables/types/Inquiry'
 
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
@@ -47,45 +53,35 @@ const shownInquirys = computed(() => inquirys.value.filter((inquiry) => inquiry.
 const inquirys = ref([
   {
     id: 1,
+    email: 'test1@test.com',
     title: 'Inquiry about product A',
-    status: 'open',
+    content: 'Inquiry content AInquiry content AInquiry content AInquiry content AInquiry content A',
     createdAt: '2023-10-01',
   },
   {
     id: 2,
+    email: 'test2@test.com',
     title: 'Inquiry about product B',
-    status: 'closed',
+    content: 'Inquiry content B',
     createdAt: '2023-10-02',
   },
   {
     id: 3,
+    email: 'test3@test.com',
     title: 'Inquiry about product A',
-    status: 'open',
+    content: 'Inquiry content A',
     createdAt: '2023-10-01',
   },
-  {
-    id: 4,
-    title: 'Inquiry about product B',
-    status: 'closed',
-    createdAt: '2023-10-02',
-  }, {
-    id: 5,
-    title: 'Inquiry about product A',
-    status: 'open',
-    createdAt: '2023-10-01',
-  },
-  {
-    id: 6,
-    title: 'Inquiry about product B',
-    status: 'closed',
-    createdAt: '2023-10-02',
-  },
-
 ])
 
 const InquiryAddDialog = createTemplatePromise<NewInquiryPayload>()
 const openAddDialog = async () => {
   const newInquiry = await InquiryAddDialog.start()
   console.log(newInquiry)
+}
+
+const InquiryDetailDialog = createTemplatePromise<unknown, [InquiryInfo]>()
+const openDetailDialog = async (inquiry: InquiryInfo) => {
+  await InquiryDetailDialog.start(inquiry)
 }
 </script>
