@@ -1,7 +1,8 @@
 <template>
   <section class="flex gap-3 items-center">
     <h1 class="font-bold text-xl">Inquiry</h1>
-    <button type="button" class="w-fit px-4 py-2 text-white bg-blue-600 rounded-md">新規作成</button>
+    <!-- TODO: login済みだけ作成できるように -->
+    <button type="button" class="w-fit px-4 py-2 text-white bg-blue-600 rounded-md" @click="openAddDialog">新規作成</button>
   </section>
 
   <section class="w-[90%] mx-auto pt-10">
@@ -13,7 +14,7 @@
   </section>
 
   <section class="w-[90%] mx-auto py-10">
-    <ul>
+    <ul v-if="shownInquirys.length">
       <li
         v-for="inquiry in shownInquirys"
         :key="inquiry.id"
@@ -25,10 +26,21 @@
         </div>
       </li>
     </ul>
+    <span v-else>
+      該当する問い合わせはありません。
+    </span>
   </section>
+
+  <InquiryAddDialog #="{ resolve, reject }">
+    <Modal id="addInquiry">
+      <AddInquiryDialog @add="resolve" @close="reject('closeModal')" />
+    </Modal>
+  </InquiryAddDialog>
 </template>
 
 <script setup lang="ts">
+import type { NewInquiryPayload } from '~/composables/types/Inquiry'
+
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
 const shownInquirys = computed(() => inquirys.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
@@ -70,4 +82,10 @@ const inquirys = ref([
   },
 
 ])
+
+const InquiryAddDialog = createTemplatePromise<NewInquiryPayload>()
+const openAddDialog = async () => {
+  const newInquiry = await InquiryAddDialog.start()
+  console.log(newInquiry)
+}
 </script>
