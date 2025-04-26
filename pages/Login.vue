@@ -40,6 +40,10 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  isSignPage: true
+})
+
 // ログイン状態の場合はリダイレクト
 const supabaseUser = useSupabaseUser()
 watch(supabaseUser, () => {

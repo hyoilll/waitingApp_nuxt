@@ -15,6 +15,10 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  isSignPage: true
+})
+
 const router = useRouter()
 const supabase = useSupabaseClient()
 const { clearUser } = useUserStore()

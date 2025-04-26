@@ -39,6 +39,10 @@
 <script lang="ts" setup>
 import type { SignUpUserInfo } from '~/composables/types/Admin'
 
+definePageMeta({
+  isSignPage: true
+})
+
 // ログイン状態の場合はリダイレクト
 const supabaseUser = useSupabaseUser()
 watch(supabaseUser, () => {
