@@ -16,10 +16,10 @@
   <section class="w-[90%] mx-auto py-10">
     <ul v-if="shownInquirys.length">
       <li
-        v-for="inquiry in shownInquirys"
+        v-for="inquiry, idx in shownInquirys"
         :key="inquiry.id"
         class="p-4 hover:bg-gray-300 rounded-md cursor-pointer"
-        @click="openDetailDialog(inquiry)">
+        @click="openDetailDialog(idx)">
         <div>
           <h2 class="font-bold text-lg">{{ inquiry.title }}</h2>
           <p class="text-sm text-gray-500">Created at: {{ inquiry.createdAt }}</p>
@@ -37,9 +37,9 @@
     </Modal>
   </InquiryAddDialog>
 
-  <InquiryDetailDialog #="{ args: [inquiry], reject }">
+  <InquiryDetailDialog #="{ args: [inquirys, idx], reject }">
     <Modal id="detailInquiry" @close="reject('closeModal')">
-      <DetailInquiryDialog :inquiry />
+      <DetailInquiryDialog :inquirys :idx />
     </Modal>
   </InquiryDetailDialog>
 </template>
@@ -80,8 +80,8 @@ const openAddDialog = async () => {
   console.log(newInquiry)
 }
 
-const InquiryDetailDialog = createTemplatePromise<unknown, [InquiryInfo]>()
-const openDetailDialog = async (inquiry: InquiryInfo) => {
-  await InquiryDetailDialog.start(inquiry)
+const InquiryDetailDialog = createTemplatePromise<unknown, [InquiryInfo[], number]>()
+const openDetailDialog = async (idx: number) => {
+  await InquiryDetailDialog.start(shownInquirys.value, idx)
 }
 </script>
