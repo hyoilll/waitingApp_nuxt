@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { getInquryList } from '~/composables/apis/Inquiry'
+import { addInquiry, getInquryList } from '~/composables/apis/Inquiry'
 import type { InquiryInfo, NewInquiryPayload } from '~/composables/types/Inquiry'
 
 const searchInquiry = ref('')
@@ -56,7 +56,13 @@ const shownInquirys = computed(() => inquirys.value.filter((inquiry) => inquiry.
 const InquiryAddDialog = createTemplatePromise<NewInquiryPayload>()
 const openAddDialog = async () => {
   const newInquiry = await InquiryAddDialog.start()
-  console.log(newInquiry)
+  const resp = await addInquiry(newInquiry)
+
+  if (resp?.error) {
+    console.error(resp.error)
+  }
+
+  inquirys.value = resp?.data as InquiryInfo[]
 }
 
 const InquiryDetailDialog = createTemplatePromise<unknown, [InquiryInfo[], number]>()
