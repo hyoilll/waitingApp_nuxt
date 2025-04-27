@@ -22,7 +22,7 @@
         @click="openDetailDialog(idx)">
         <div>
           <h2 class="font-bold text-lg">{{ inquiry.title }}</h2>
-          <p class="text-sm text-gray-500">Created at: {{ inquiry.createdAt }}</p>
+          <p class="text-sm text-gray-500">Created at: {{ inquiry.created_at }}</p>
         </div>
       </li>
     </ul>
@@ -45,34 +45,13 @@
 </template>
 
 <script setup lang="ts">
+import { getInquryList } from '~/composables/apis/Inquiry'
 import type { InquiryInfo, NewInquiryPayload } from '~/composables/types/Inquiry'
 
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
+const inquirys = ref<InquiryInfo[]>([])
 const shownInquirys = computed(() => inquirys.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
-const inquirys = ref([
-  {
-    id: 1,
-    email: 'test1@test.com',
-    title: 'Inquiry about product A',
-    content: 'Inquiry content AInquiry content AInquiry content AInquiry content AInquiry content A',
-    createdAt: '2023-10-01',
-  },
-  {
-    id: 2,
-    email: 'test2@test.com',
-    title: 'Inquiry about product B',
-    content: 'Inquiry content B',
-    createdAt: '2023-10-02',
-  },
-  {
-    id: 3,
-    email: 'test3@test.com',
-    title: 'Inquiry about product A',
-    content: 'Inquiry content A',
-    createdAt: '2023-10-01',
-  },
-])
 
 const InquiryAddDialog = createTemplatePromise<NewInquiryPayload>()
 const openAddDialog = async () => {
@@ -84,4 +63,12 @@ const InquiryDetailDialog = createTemplatePromise<unknown, [InquiryInfo[], numbe
 const openDetailDialog = async (idx: number) => {
   await InquiryDetailDialog.start(shownInquirys.value, idx)
 }
+
+const resp = await getInquryList()
+
+if (resp.error.value) {
+  console.error(resp.error)
+}
+
+inquirys.value = resp.data.value?.data as InquiryInfo[]
 </script>

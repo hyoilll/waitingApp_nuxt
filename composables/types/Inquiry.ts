@@ -6,5 +6,5 @@ export interface NewInquiryPayload {
 
 export interface InquiryInfo extends NewInquiryPayload {
   id: number
-  createdAt: string
+  created_at: string
 }

@@ -28,7 +28,7 @@
     <div class="space-y-4">
       <ReuseDetailTemplate title="タイトル" :data="inquirys[selectedId].title" />
       <ReuseDetailTemplate title="メールアドレス" :data="inquirys[selectedId].email" />
-      <ReuseDetailTemplate title="作成日" :data="inquirys[selectedId].createdAt" />
+      <ReuseDetailTemplate title="作成日" :data="inquirys[selectedId].created_at" />
       <ReuseDetailTemplate title="内容" :col="true" :data="inquirys[selectedId].content" />
     </div>
   </div>
