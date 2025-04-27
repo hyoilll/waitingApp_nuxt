@@ -33,7 +33,7 @@
   </div>
 
   <UpdatePwDialog #="{ resolve, reject }">
-    <Modal id="updatePw" @close="reject('closeModal')">
+    <Modal id="updatePw" @close="reject(CLOSE_MODAL)">
       <SendMailUpdatePw :err-msg="sendMailError" @send="sendMail($event, resolve)" />
     </Modal>
   </UpdatePwDialog>
