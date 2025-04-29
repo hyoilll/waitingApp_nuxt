@@ -14,21 +14,21 @@
           placeholder="Search inquiries..."
           class="w-full px-4 py-2 border rounded-md outline-none" />
 
-        <DisplayInquiryList
+        <InquiryDisplayList
           :shown-inquiries
           @open="openDetail" />
       </template>
     </TransitionGroup>
     <TransitionGroup name="slide-right">
-      <DetailInquiry v-if="!isShowList" :shown-inquiries :idx="selectedId" class="absolute top-10" @return="isShowList = !isShowList" />
+      <InquiryDetail v-if="!isShowList" :shown-inquiries :idx="selectedId" class="absolute top-10" @return="isShowList = !isShowList" />
     </TransitionGroup>
   </section>
 
-  <InquiryAddDialog #="{ resolve, reject }">
+  <AddDialog #="{ resolve, reject }">
     <Modal id="addInquiry" @close="reject(CLOSE_MODAL)">
-      <AddInquiryDialog @add="resolve" @close="reject(CLOSE_MODAL)" />
+      <InquiryAddDialog @add="resolve" @close="reject(CLOSE_MODAL)" />
     </Modal>
-  </InquiryAddDialog>
+  </AddDialog>
 </template>
 
 <script setup lang="ts">
@@ -40,9 +40,9 @@ const debounced = refDebounced(searchInquiry, 500)
 const inquirys = ref<InquiryInfo[]>([])
 const shownInquiries = computed(() => inquirys.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
 
-const InquiryAddDialog = createTemplatePromise<NewInquiryPayload>()
+const AddDialog = createTemplatePromise<NewInquiryPayload>()
 const openAddDialog = async () => {
-  const newInquiry = await InquiryAddDialog.start()
+  const newInquiry = await AddDialog.start()
   const resp = await addInquiry(newInquiry)
 
   if (resp?.error) {
