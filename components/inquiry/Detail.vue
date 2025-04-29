@@ -7,14 +7,14 @@
       </div>
     </DefineDetailTemplate>
 
-    <button
-      type="button"
-      class="w-fit px-2 py-1 bg-gray-300 rounded-md text-sm text-white font-bold"
-      @click="$emit('return')">戻る</button>
-
-    <div class="w-full">
-      <h1 class="font-bold text-xl text-center mb-5">詳細内容</h1>
-      <div class="flex gap-2 absolute top-0 right-0">
+    <div class="flex justify-between items-center">
+      <button
+        type="button"
+        class="w-fit px-2 py-1 bg-gray-300 rounded-md text-sm text-white font-bold"
+        @click="$emit('return')">
+        戻る
+      </button>
+      <div class="flex gap-2">
         <button
           type="button"
           class="px-2 py-1 bg-gray-400 text-white rounded-full"
@@ -28,6 +28,10 @@
           :disabled="disableRightBtn"
           @click="moveRight"> → </button>
       </div>
+    </div>
+
+    <div class="w-full">
+      <h1 class="font-bold text-xl text-center mb-5">詳細内容</h1>
 
       <div class="space-y-4">
         <ReuseDetailTemplate title="タイトル" :data="shownInquiries[selectedId].title" />
