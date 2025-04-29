@@ -36,6 +36,8 @@
         <ReuseDetailTemplate title="内容" :col="true" :data="shownInquiries[selectedId].content" />
       </div>
     </div>
+
+    <InquiryComments />
   </div>
 </template>
 
