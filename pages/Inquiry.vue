@@ -50,6 +50,7 @@ const openAddDialog = async () => {
   }
 
   inquirys.value = resp?.data as InquiryInfo[]
+  isShowList.value = true
 }
 
 const resp = await getInquryList()
