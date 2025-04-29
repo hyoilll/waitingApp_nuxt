@@ -6,22 +6,19 @@
   </section>
 
   <section class="w-[90%] mx-auto py-10 relative">
-    <TransitionGroup name="slide-left">
-      <template v-if="isShowList">
-        <input
-          v-model="searchInquiry"
-          type="text"
-          placeholder="Search inquiries..."
-          class="w-full px-4 py-2 border rounded-md outline-none" />
+    <template v-if="isShowList">
+      <input
+        v-model="searchInquiry"
+        type="text"
+        placeholder="Search inquiries..."
+        class="w-full px-4 py-2 border rounded-md outline-none" />
 
-        <InquiryDisplayList
-          :shown-inquiries
-          @open="openDetail" />
-      </template>
-    </TransitionGroup>
-    <TransitionGroup name="slide-right">
-      <InquiryDetail v-if="!isShowList" :shown-inquiries :idx="selectedId" class="absolute top-10" @return="isShowList = !isShowList" />
-    </TransitionGroup>
+      <InquiryDisplayList
+        :shown-inquiries
+        @open="openDetail" />
+    </template>
+
+    <InquiryDetail v-if="!isShowList" :shown-inquiries :idx="selectedId" @return="returnPage" />
   </section>
 
   <AddDialog #="{ resolve, reject }">
@@ -63,28 +60,19 @@ inquirys.value = resp.data.value?.data as InquiryInfo[]
 
 const selectedId = ref(0)
 const openDetail = (idx: number) => {
-  isShowList.value = !isShowList
   selectedId.value = idx
+  const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
+
+  // transition.finished.then(() => console.log('Transition finished'))
+}
+
+const returnPage = () => {
+  const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
+
+  // transition.finished.then(() => console.log('Transition finished'))
 }
 </script>
 
 <style scoped>
-.slide-left-enter-active,
-.slide-left-leave-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: all 0.5s;
-}
-
-.slide-left-enter-from,
-.slide-left-leave-to {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-
-.slide-right-enter-from,
-.slide-right-leave-to {
-  opacity: 0;
-  transform: translateX(100%);
-}
+/* TODO: view transitionを使ってアニメーション追加すること */
 </style>
