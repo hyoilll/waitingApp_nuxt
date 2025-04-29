@@ -7,7 +7,7 @@
       @click="$emit('open', idx)">
       <div>
         <h2 class="font-bold text-lg">{{ inquiry.title }}</h2>
-        <p class="text-sm text-gray-500">Created at: {{ inquiry.created_at }}</p>
+        <p class="text-sm text-gray-500">作成日: {{ $dayjs(inquiry.created_at).format(DATE_FORMAT) }}</p>
       </div>
     </li>
   </ul>

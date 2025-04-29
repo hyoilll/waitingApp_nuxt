@@ -32,7 +32,7 @@
       <div class="space-y-4">
         <ReuseDetailTemplate title="タイトル" :data="shownInquiries[selectedId].title" />
         <ReuseDetailTemplate title="メールアドレス" :data="shownInquiries[selectedId].email" />
-        <ReuseDetailTemplate title="作成日" :data="shownInquiries[selectedId].created_at" />
+        <ReuseDetailTemplate title="作成日" :data="$dayjs(shownInquiries[selectedId].created_at).format(DATE_FORMAT)" />
         <ReuseDetailTemplate title="内容" :col="true" :data="shownInquiries[selectedId].content" />
       </div>
     </div>
