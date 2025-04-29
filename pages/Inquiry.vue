@@ -5,30 +5,23 @@
     <button type="button" class="w-fit px-4 py-2 text-white bg-blue-600 rounded-md" @click="openAddDialog">新規作成</button>
   </section>
 
-  <section class="w-[90%] mx-auto pt-10">
-    <input
-      v-model="searchInquiry"
-      type="text"
-      placeholder="Search inquiries..."
-      class="w-full px-4 py-2 border rounded-md outline-none" />
-  </section>
+  <section class="w-[90%] mx-auto py-10 relative">
+    <TransitionGroup name="slide-left">
+      <template v-if="isShowList">
+        <input
+          v-model="searchInquiry"
+          type="text"
+          placeholder="Search inquiries..."
+          class="w-full px-4 py-2 border rounded-md outline-none" />
 
-  <section class="w-[90%] mx-auto py-10">
-    <ul v-if="shownInquirys.length">
-      <li
-        v-for="inquiry, idx in shownInquirys"
-        :key="inquiry.id"
-        class="p-4 hover:bg-gray-300 rounded-md cursor-pointer"
-        @click="openDetailDialog(idx)">
-        <div>
-          <h2 class="font-bold text-lg">{{ inquiry.title }}</h2>
-          <p class="text-sm text-gray-500">Created at: {{ inquiry.created_at }}</p>
-        </div>
-      </li>
-    </ul>
-    <span v-else>
-      該当する問い合わせはありません。
-    </span>
+        <DisplayInquiryList
+          :shown-inquiries
+          @open="openDetail" />
+      </template>
+    </TransitionGroup>
+    <TransitionGroup name="slide-right">
+      <DetailInquiry v-if="!isShowList" :shown-inquiries :idx="selectedId" class="absolute top-10" @return="isShowList = !isShowList" />
+    </TransitionGroup>
   </section>
 
   <InquiryAddDialog #="{ resolve, reject }">
@@ -36,12 +29,6 @@
       <AddInquiryDialog @add="resolve" @close="reject(CLOSE_MODAL)" />
     </Modal>
   </InquiryAddDialog>
-
-  <InquiryDetailDialog #="{ args: [inquirys, idx], reject }">
-    <Modal id="detailInquiry" @close="reject(CLOSE_MODAL)">
-      <DetailInquiryDialog :inquirys :idx />
-    </Modal>
-  </InquiryDetailDialog>
 </template>
 
 <script setup lang="ts">
@@ -51,7 +38,7 @@ import type { InquiryInfo, NewInquiryPayload } from '~/composables/types/Inquiry
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
 const inquirys = ref<InquiryInfo[]>([])
-const shownInquirys = computed(() => inquirys.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
+const shownInquiries = computed(() => inquirys.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
 
 const InquiryAddDialog = createTemplatePromise<NewInquiryPayload>()
 const openAddDialog = async () => {
@@ -65,16 +52,38 @@ const openAddDialog = async () => {
   inquirys.value = resp?.data as InquiryInfo[]
 }
 
-const InquiryDetailDialog = createTemplatePromise<unknown, [InquiryInfo[], number]>()
-const openDetailDialog = async (idx: number) => {
-  await InquiryDetailDialog.start(shownInquirys.value, idx)
-}
-
 const resp = await getInquryList()
-
+const isShowList = ref(true)
 if (resp.error.value) {
   console.error(resp.error)
 }
 
 inquirys.value = resp.data.value?.data as InquiryInfo[]
+
+const selectedId = ref(0)
+const openDetail = (idx: number) => {
+  isShowList.value = !isShowList
+  selectedId.value = idx
+}
 </script>
+
+<style scoped>
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.5s;
+}
+
+.slide-left-enter-from,
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+</style>
