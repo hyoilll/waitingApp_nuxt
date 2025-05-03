@@ -4,7 +4,7 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', '@nuxt/test-utils/module'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', '@nuxt/test-utils/module', '@nuxt/icon'],
   supabase: {
     redirectOptions: {
       login: '/login',
