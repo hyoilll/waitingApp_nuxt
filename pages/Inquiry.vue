@@ -62,6 +62,7 @@ const selectedId = ref(0)
 const openDetail = (idx: number) => {
   selectedId.value = idx
   const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 
   // transition.finished.then(() => console.log('Transition finished'))
 }
