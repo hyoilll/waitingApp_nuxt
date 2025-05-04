@@ -3,10 +3,12 @@
     <div class="flex flex-col gap-1">
       <div class="flex gap-1">
         <label :for="id">{{ label }}</label>
-        <span class="text-red-500">*</span>
+        <span v-if="id !== 'email'" class="text-red-500">*</span>
       </div>
 
+      <span v-if="id === 'email'" class="ml-3">{{ user.email }}</span>
       <component
+        v-else
         :is="type ? 'input' : 'textarea'"
         :id
         :name="id"
@@ -42,6 +44,8 @@ const emit = defineEmits<{
 
 const [DefineFormTemplate, ReuseFormTemplate] = createReusableTemplate<{ id: string, label: string, type?: string }>()
 
+const { user } = useUserStore()
+
 const handleSubmit = (form: HTMLFormElement) => {
   const formData = new FormData(form)
   const data = Object.fromEntries(formData.entries())
@@ -50,6 +54,7 @@ const handleSubmit = (form: HTMLFormElement) => {
     email: data.email as string,
     title: data.title as string,
     content: data.content as string,
+    user_id: user.id
   }
 
   emit('add', payload)

@@ -2,7 +2,7 @@
   <section class="flex gap-3 items-center">
     <h1 class="font-bold text-xl">Inquiry</h1>
     <!-- TODO: login済みだけ作成できるように -->
-    <button type="button" class="w-fit px-4 py-2 text-white bg-blue-600 rounded-md" @click="openAddDialog">新規作成</button>
+    <button v-if="isLogin" type="button" class="w-fit px-4 py-2 text-white bg-blue-600 rounded-md" @click="openAddDialog">新規作成</button>
   </section>
 
   <section class="w-[90%] mx-auto py-10 relative">
@@ -18,7 +18,7 @@
         @open="openDetail" />
     </template>
 
-    <InquiryDetail v-if="!isShowList" :shown-inquiries :idx="selectedId" @return="returnPage" />
+    <InquiryDetail v-if="!isShowList" :shown-inquiries :idx="selectedIdx" @return="returnPage" />
   </section>
 
   <AddDialog #="{ resolve, reject }">
@@ -37,6 +37,8 @@ const debounced = refDebounced(searchInquiry, 500)
 const inquirys = ref<InquiryInfo[]>([])
 const shownInquiries = computed(() => inquirys.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
 
+const { isLogin } = useUserStore()
+
 const AddDialog = createTemplatePromise<NewInquiryPayload>()
 const openAddDialog = async () => {
   const newInquiry = await AddDialog.start()
@@ -44,6 +46,7 @@ const openAddDialog = async () => {
 
   if (resp?.error) {
     console.error(resp.error)
+    return
   }
 
   inquirys.value = resp?.data as InquiryInfo[]
@@ -58,9 +61,9 @@ if (resp.error.value) {
 
 inquirys.value = resp.data.value?.data as InquiryInfo[]
 
-const selectedId = ref(0)
+const selectedIdx = ref(0)
 const openDetail = (idx: number) => {
-  selectedId.value = idx
+  selectedIdx.value = idx
   const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
   window.scrollTo({ top: 0, behavior: 'smooth' })
 

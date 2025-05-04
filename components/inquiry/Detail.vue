@@ -1,9 +1,9 @@
 <template>
   <div class="w-full flex flex-col gap-3">
     <DefineDetailTemplate #="{ title, data, col }">
-      <div class="flex gap-05" :class="{ 'flex-col': col }">
+      <div class="flex gap-05 flex-wrap" :class="{ 'flex-col': col }">
         <span class="py-1 px-2 bg-blue-300 text-xs text-white rounded-full w-fit">{{ title }}</span>
-        <p class="ml-2">{{ data }}</p>
+        <p class="ml-2 whitespace-pre-wrap">{{ data }}</p>
       </div>
     </DefineDetailTemplate>
 
@@ -34,14 +34,14 @@
       <h1 class="font-bold text-xl text-center mb-5">詳細内容</h1>
 
       <div class="space-y-4">
-        <ReuseDetailTemplate title="タイトル" :data="shownInquiries[selectedId].title" />
-        <ReuseDetailTemplate title="メールアドレス" :data="shownInquiries[selectedId].email" />
-        <ReuseDetailTemplate title="作成日" :data="$dayjs(shownInquiries[selectedId].created_at).format(DATE_FORMAT)" />
-        <ReuseDetailTemplate title="内容" :col="true" :data="shownInquiries[selectedId].content" />
+        <ReuseDetailTemplate title="タイトル" :data="shownInquiries[selectedIdx].title" />
+        <ReuseDetailTemplate title="メールアドレス" :data="shownInquiries[selectedIdx].email" />
+        <ReuseDetailTemplate title="作成日" :data="$dayjs(shownInquiries[selectedIdx].created_at).format(DATE_FORMAT)" />
+        <ReuseDetailTemplate title="内容" :col="true" :data="shownInquiries[selectedIdx].content" />
       </div>
     </div>
 
-    <InquiryComments />
+    <InquiryComments :id="shownInquiries[selectedIdx].id" />
   </div>
 </template>
 
@@ -57,19 +57,19 @@ defineEmits<{
   return: []
 }>()
 
-const selectedId = ref(idx)
+const selectedIdx = ref(idx)
 
-const disableLeftBtn = computed(() => !selectedId.value)
+const disableLeftBtn = computed(() => !selectedIdx.value)
 const moveLeft = () => {
   if (!disableLeftBtn.value) {
-    selectedId.value -= 1
+    selectedIdx.value -= 1
   }
 }
 
-const disableRightBtn = computed(() => selectedId.value >= shownInquiries.length - 1)
+const disableRightBtn = computed(() => selectedIdx.value >= shownInquiries.length - 1)
 const moveRight = () => {
   if (!disableRightBtn.value) {
-    selectedId.value += 1
+    selectedIdx.value += 1
   }
 }
 
