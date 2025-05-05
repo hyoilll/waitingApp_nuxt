@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       callback: '/confirm',
       include: undefined,
       exclude: [
-        '/', '/services', '/inquiry', '/signup', '/updatepassword', 
+        '/', '/services', '/inquiry', '/inquiry/**', '/signup', '/updatepassword', 
         '/dashboard/create-entry-id/**', '/dashboard/customer/**', '/dashboard/canceled',],
       saveRedirectToCookie: false,
     },

@@ -39,16 +39,19 @@
 </template>
 
 <script setup lang="ts">
-import { addComment, getComments } from '~/composables/apis/Inquiry';
+import { addComment } from '~/composables/apis/Inquiry';
 import type { InquiryComment, NewCommentPayload } from '~/composables/types/Inquiry';
 
-const { id } = defineProps<{
-  id: number
+const { comments } = defineProps<{
+  comments: InquiryComment[]
 }>()
 
-const { isLogin, user } = useUserStore()
+const route = useRoute()
+const id = +route.params.id
 
-const comments = ref<InquiryComment[]>([])
+const { isLogin, user } = useUserStore()
+const commentList = ref<InquiryComment[]>(comments)
+
 const isCreator = (email: string) => user.email === email
 
 const newComment = ref('')
@@ -65,14 +68,7 @@ const add = async () => {
     return
   }
 
-  comments.value = resp.data as InquiryComment[]
+  commentList.value = resp.data as InquiryComment[]
   newComment.value = ''
 }
-
-const resp = await getComments(id)
-if (resp.error.value) {
-  console.error(resp.error)
-}
-comments.value = resp.data.value?.data as InquiryComment[]
-
 </script>
