@@ -61,7 +61,7 @@
         </div>
       </form>
 
-      <InquiryComments :comments="inquiries[selectedIdx].comments" @edit="editComment" />
+      <InquiryComments :comments="inquiries[selectedIdx].comments" @edit="editComment" @delete="deleteComment" />
     </div>
 
   </div>
@@ -79,6 +79,7 @@ const emit = defineEmits<{
   return: []
   add: [NewCommentPayload, number]
   edit: [NewCommentPayload, number, number]
+  delete: [number, number, string]
 }>()
 
 const { isLogin, user } = useUserStore()
@@ -112,7 +113,7 @@ const makePayload = () => {
   }
 }
 
-const add = async () => {
+const add = () => {
   emit('add', makePayload(), selectedIdx.value)
   newComment.value = ''
 }
@@ -132,7 +133,7 @@ const editComment = ({ id, content }: { id: number, content: string }) => {
   }
 }
 
-const edit = async () => {
+const edit = () => {
   emit('edit', makePayload(), selectedIdx.value, commentId.value)
   newComment.value = ''
   isEditFlag.value = false
@@ -142,5 +143,13 @@ const cancelUpdateComment = () => {
   newComment.value = ''
   commentId.value = 0
   isEditFlag.value = false
+}
+
+const deleteComment = (commentId: number) => {
+  if (!confirm('本当に削除しますか？')) {
+    return
+  }
+
+  emit('delete', selectedIdx.value, commentId, user.id)
 }
 </script>

@@ -11,10 +11,9 @@
           <!-- TODO: 管理者ラベルも追加 -->
         </div>
         <div class="flex gap-2 items-center">
-          <!-- TODO: 自分が作成したコメントの場合編集と削除が可能 -->
           <template v-if="isLogin && isCreator(comment.user.email)">
             <IconEdit @edit="editComment(comment.id, comment.content)" />
-            <IconDelete @delete="console.log('delete')" />
+            <IconDelete @delete="$emit('delete', comment.id)" />
           </template>
           <span class="text-sm text-gray-500">{{ $dayjs(comment.created_at).format(DATE_FORMAT) }}</span>
         </div>
@@ -36,6 +35,7 @@ const { comments } = defineProps<{
 
 const emit = defineEmits<{
   edit: [{ id: number, content: string }]
+  delete: [number]
 }>()
 
 const { user, isLogin } = useUserStore()

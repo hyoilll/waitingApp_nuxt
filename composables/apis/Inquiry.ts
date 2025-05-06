@@ -68,3 +68,18 @@ export const editComment = async (inquiryId: number, commentId: number, payload:
     body: payload,
   })
 }
+
+/**
+ * deletes a comment from an inquiry.
+ * @param inquiryId 
+ * @param commentId 
+ * @returns 
+ */
+export const deleteComment = async (inquiryId: number, commentId: number, userId: string) => {
+  return await $fetch(`/api/inquiry/${inquiryId}/comment/${commentId}/delete`, {
+    method: 'DELETE',
+    body: {
+      user_id: userId,
+    },
+  })
+}

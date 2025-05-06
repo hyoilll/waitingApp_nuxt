@@ -17,7 +17,7 @@
           :shown-inquiries
           @open="openDetail" />
       </template>
-      <InquiryDetail v-if="!isShowList" :inquiries="shownInquiries" :idx="selectedIdx" @add="add" @edit="edit" @return="returnPage" />
+      <InquiryDetail v-if="!isShowList" :inquiries="shownInquiries" :idx="selectedIdx" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
     </section>
 
     <AddDialog #="{ resolve, reject }">
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { addComment, addInquiry, editComment, getInquryList } from '~/composables/apis/Inquiry'
+import { addComment, addInquiry, deleteComment, editComment, getInquryList } from '~/composables/apis/Inquiry'
 import type { InquiryInfo, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
 
 const searchInquiry = ref('')
@@ -74,6 +74,16 @@ const add = async (payload: NewCommentPayload, targetIdx: number) => {
 
 const edit = async (payload: NewCommentPayload, targetIdx: number, commentId: number) => {
   const resp = await editComment(shownInquiries.value[targetIdx].id, commentId, payload)
+  if (resp?.error) {
+    console.error(resp.error)
+    return
+  }
+
+  inquiries.value = resp?.data as InquiryInfo[]
+}
+
+const handleDelete = async (targetIdx: number, commentId: number, userId: string) => {
+  const resp = await deleteComment(shownInquiries.value[targetIdx].id, commentId, userId)
   if (resp?.error) {
     console.error(resp.error)
     return
