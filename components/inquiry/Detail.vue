@@ -128,7 +128,8 @@ const editComment = ({ id, content }: { id: number, content: string }) => {
   // Scroll to the top of the textarea
   const textArea = document.querySelector('textarea')
   if (textArea) {
-    textArea.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    // TODO: なぜかスクロールがtextAreaより下だと、smoothが効かない
+    textArea.scrollIntoView({ behavior: 'smooth', block: 'center' })
     textArea.focus()
   }
 }
