@@ -35,6 +35,8 @@ const handleLogout = async () => {
   }
 
   clearUser()
-  router.push('/')
+
+  await router.push('/')
+  window.location.reload()
 }
 </script>

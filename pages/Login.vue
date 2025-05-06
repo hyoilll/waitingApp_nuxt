@@ -80,7 +80,9 @@ const handleSubmit = async () => {
   }
 
   setUser(resp.user, resp.shop)
-  router.push('/')
+
+  await router.push('/')
+  window.location.reload()
 }
 
 const UpdatePwDialog = createTemplatePromise()
