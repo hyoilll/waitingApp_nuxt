@@ -3,7 +3,7 @@ import { getErrorMessage } from '../../../../utils'
 
 export default eventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
-  const inquiryId = event.context.params?.inquiryId;
+  const inquiryId = event.context.params?.id;
 
   if (!inquiryId) {
     return { error: 'IDが指定されていません' };

@@ -7,13 +7,15 @@
       <div class="flex justify-between">
         <div class="flex gap-2 items-center">
           <span class="font-bold text-lg">{{ comment.user.email }}</span>
-          <span v-if="isCreator(comment.user.email)" class="text-xs px-2 py-1 bg-green-400 text-white rounded-full">作成者</span>
+          <span v-if="isLogin && isCreator(comment.user.email)" class="text-xs px-2 py-1 bg-green-400 text-white rounded-full">作成者</span>
           <!-- TODO: 管理者ラベルも追加 -->
         </div>
         <div class="flex gap-2 items-center">
           <!-- TODO: 自分が作成したコメントの場合編集と削除が可能 -->
-          <IconEdit @edit="console.log('edit')" />
-          <IconDelete @delete="console.log('delete')" />
+          <template v-if="isLogin && isCreator(comment.user.email)">
+            <IconEdit @edit="editComment(comment.id, comment.content)" />
+            <IconDelete @delete="console.log('delete')" />
+          </template>
           <span class="text-sm text-gray-500">{{ $dayjs(comment.created_at).format(DATE_FORMAT) }}</span>
         </div>
       </div>
@@ -32,7 +34,16 @@ const { comments } = defineProps<{
   comments: InquiryComment[]
 }>()
 
-const { user } = useUserStore()
+const emit = defineEmits<{
+  edit: [{ id: number, content: string }]
+}>()
+
+const { user, isLogin } = useUserStore()
 
 const isCreator = (email: string) => user.email === email
+
+const editComment = (id: number, content: string) => {
+  const payload = { id, content }
+  emit('edit', payload)
+}
 </script>

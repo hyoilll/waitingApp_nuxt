@@ -39,7 +39,7 @@ export const getDetailInquiry = async (inquiryId: number) => {
  * @returns 
  */
 export const getComments = async (inquiryId: number) => {
-  return await useFetch(`/api/inquiry/comment/${inquiryId}/getlist`, {
+  return await useFetch(`/api/inquiry/${inquiryId}/comment/getlist`, {
     headers: useRequestHeaders(['cookie']),
   })
 }
@@ -50,8 +50,21 @@ export const getComments = async (inquiryId: number) => {
  * @returns 
  */
 export const addComment = async (inquiryId: number, payload: NewCommentPayload) => {
-  return await $fetch(`/api/inquiry/comment/${inquiryId}/add`, {
+  return await $fetch(`/api/inquiry/${inquiryId}/comment/add`, {
     method: 'POST',
+    body: payload,
+  })
+}
+
+/**
+ * edits an existing comment on an inquiry.
+ * @param inquiryId 
+ * @param commentId 
+ * @returns 
+ */
+export const editComment = async (inquiryId: number, commentId: number, payload: NewCommentPayload) => {
+  return await $fetch(`/api/inquiry/${inquiryId}/comment/${commentId}/edit`, {
+    method: 'PUT',
     body: payload,
   })
 }

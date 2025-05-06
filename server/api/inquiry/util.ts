@@ -14,6 +14,7 @@ export const getInquiriesWithComments = async (client: SupabaseClient) => {
   const { data: comments, error: commentsError } = await client
     .from('inquiry_comments')
     .select('*, user:users(email)')
+    .order('id', { ascending: true })
 
   if (commentsError) {
     return { error: getErrorMessage(commentsError, '問い合わせのコメント取得に失敗しました') };

@@ -44,18 +44,24 @@
     <div>
       <SeperateLine />
 
-      <form v-if="isLogin" class="mb-4" @submit.prevent="add">
+      <form v-if="isLogin" class="mb-4" @submit.prevent="isEditFlag ? edit() : add()">
         <textarea
           v-model="newComment"
           placeholder="Add a comment..."
           class="w-full p-2 border border-gray-300 rounded outline-none"
-          rows="5" />
-        <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded">
-          Submit
-        </button>
+          rows="5"
+          required />
+        <div class="flex gap-2">
+          <button v-if="isEditFlag" class="mt-2 px-4 py-2 bg-gray-500 text-white rounded" @click="cancelUpdateComment">Cancel</button>
+          <button
+            class="mt-2 px-4 py-2 text-white rounded"
+            :class="isEditFlag ? 'bg-red-600' : 'bg-blue-600'">
+            {{ isEditFlag ? 'Update' : 'Submit' }}
+          </button>
+        </div>
       </form>
 
-      <InquiryComments :comments="inquiries[selectedIdx].comments" />
+      <InquiryComments :comments="inquiries[selectedIdx].comments" @edit="editComment" />
     </div>
 
   </div>
@@ -72,6 +78,7 @@ const { inquiries, idx } = defineProps<{
 const emit = defineEmits<{
   return: []
   add: [NewCommentPayload, number]
+  edit: [NewCommentPayload, number, number]
 }>()
 
 const { isLogin, user } = useUserStore()
@@ -98,14 +105,42 @@ const [DefineDetailTemplate, ReuseDetailTemplate] = createReusableTemplate<{ tit
 
 const newComment = ref('')
 
-const add = async () => {
-  const payload: NewCommentPayload = {
+const makePayload = () => {
+  return {
     content: newComment.value,
     user_id: user.id
   }
-
-  newComment.value = ''
-  emit('add', payload, selectedIdx.value)
 }
 
+const add = async () => {
+  emit('add', makePayload(), selectedIdx.value)
+  newComment.value = ''
+}
+
+const isEditFlag = ref(false)
+const commentId = ref(0)
+const editComment = ({ id, content }: { id: number, content: string }) => {
+  newComment.value = content
+  commentId.value = id
+  isEditFlag.value = true
+
+  // Scroll to the top of the textarea
+  const textArea = document.querySelector('textarea')
+  if (textArea) {
+    textArea.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    textArea.focus()
+  }
+}
+
+const edit = async () => {
+  emit('edit', makePayload(), selectedIdx.value, commentId.value)
+  newComment.value = ''
+  isEditFlag.value = false
+}
+
+const cancelUpdateComment = () => {
+  newComment.value = ''
+  commentId.value = 0
+  isEditFlag.value = false
+}
 </script>

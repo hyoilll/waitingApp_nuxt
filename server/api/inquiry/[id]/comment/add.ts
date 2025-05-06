@@ -5,7 +5,7 @@ import { getInquiriesWithComments } from '../../util'
 export default eventHandler(async (event) => {
   const body = await readBody(event)
   const client = await serverSupabaseClient(event)
-  const inquiryId = event.context.params?.inquiryId;
+  const inquiryId = event.context.params?.id;
 
   try {
     const { error: insertError } = await client
