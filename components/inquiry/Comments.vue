@@ -1,17 +1,4 @@
 <template>
-  <SeperateLine />
-
-  <form v-if="isLogin" class="mb-4" @submit.prevent="add">
-    <textarea
-      v-model="newComment"
-      placeholder="Add a comment..."
-      class="w-full p-2 border border-gray-300 rounded outline-none"
-      rows="5" />
-    <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded">
-      Submit
-    </button>
-  </form>
-
   <ul v-if="comments.length">
     <li
       v-for="comment in comments"
@@ -39,36 +26,13 @@
 </template>
 
 <script setup lang="ts">
-import { addComment } from '~/composables/apis/Inquiry';
-import type { InquiryComment, NewCommentPayload } from '~/composables/types/Inquiry';
+import type { InquiryComment } from '~/composables/types/Inquiry';
 
 const { comments } = defineProps<{
   comments: InquiryComment[]
 }>()
 
-const route = useRoute()
-const id = +route.params.id
-
-const { isLogin, user } = useUserStore()
-const commentList = ref<InquiryComment[]>(comments)
+const { user } = useUserStore()
 
 const isCreator = (email: string) => user.email === email
-
-const newComment = ref('')
-const add = async () => {
-  const payload: NewCommentPayload = {
-    content: newComment.value,
-    inquiry_id: id,
-    user_id: user.id
-  }
-
-  const resp = await addComment(id, payload)
-  if (resp.error) {
-    console.error(resp.error)
-    return
-  }
-
-  commentList.value = resp.data as InquiryComment[]
-  newComment.value = ''
-}
 </script>

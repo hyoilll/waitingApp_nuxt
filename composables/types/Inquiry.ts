@@ -7,13 +7,7 @@ export interface NewInquiryPayload {
 
 export interface NewCommentPayload {
   user_id: string
-  inquiry_id: number
   content: string
-}
-
-export interface InquiryInfo extends NewInquiryPayload {
-  id: number
-  created_at: string
 }
 
 export interface InquiryComment {
@@ -24,4 +18,10 @@ export interface InquiryComment {
   user: {
     email: string
   }
+}
+
+export interface InquiryInfo extends NewInquiryPayload {
+  id: number
+  created_at: string
+  comments: InquiryComment[]
 }

@@ -51,7 +51,7 @@ const handleSubmit = (form: HTMLFormElement) => {
   const data = Object.fromEntries(formData.entries())
 
   const payload: NewInquiryPayload = {
-    email: data.email as string,
+    email: user.email,
     title: data.title as string,
     content: data.content as string,
     user_id: user.id

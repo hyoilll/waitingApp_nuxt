@@ -1,5 +1,6 @@
 import { serverSupabaseClient } from '#supabase/server'
 import { getErrorMessage } from '../../utils'
+import { CommentResponse, InquiryResponse } from './types'
 
 export default eventHandler(async (event) => {
   const body = await readBody(event)
@@ -14,7 +15,7 @@ export default eventHandler(async (event) => {
       return { error: getErrorMessage(insertError, '問い合わせの追加に失敗しました') };
     }
 
-    const { data, error: selectError } = await client
+    const { data: inquiries, error: selectError } = await client
       .from('inquiries')
       .select('*')
 
@@ -22,7 +23,34 @@ export default eventHandler(async (event) => {
       return { error: getErrorMessage(selectError, '問い合わせのリスト取得に失敗しました') };
     }
 
-    return { data };
+    // TODO: ここはgetlist.tsと重複してるので、共通化する
+    const { data: comments, error: commentError } = await client
+      .from('inquiry_comments')
+      .select('*, user:users(email)')
+        
+    if (commentError) {
+      return { error: getErrorMessage(commentError, '問い合わせのコメント取得に失敗しました') };
+    }
+        
+    const commentsByInquiryId = (comments as CommentResponse[]).reduce((acc, comment) => {
+      if (!acc[comment.inquiry_id]) {
+        acc[comment.inquiry_id] = [];
+      }
+          
+      acc[comment.inquiry_id].push(comment);
+      return acc;
+    }, {} as Record<number, CommentResponse[]>);
+    
+    const inquiriesWithComments = (inquiries as InquiryResponse[]).map(inquiry => {
+      const inquiryComments = commentsByInquiryId[inquiry.id] || [];
+          
+      return { 
+        ...inquiry,
+        comments: inquiryComments
+      };
+    });
+    
+    return { data: inquiriesWithComments };
   } catch (error) {
     return { error: '予期せぬエラーが発生しました' };
   }

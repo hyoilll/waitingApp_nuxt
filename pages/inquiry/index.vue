@@ -6,15 +6,18 @@
     </section>
 
     <section class="w-[90%] mx-auto py-10">
-      <input
-        v-model="searchInquiry"
-        type="text"
-        placeholder="Search inquiries..."
-        class="w-full px-4 py-2 border rounded-md outline-none" />
+      <template v-if="isShowList">
+        <input
+          v-model="searchInquiry"
+          type="text"
+          placeholder="Search inquiries..."
+          class="w-full px-4 py-2 border rounded-md outline-none" />
 
-      <InquiryDisplayList
-        :shown-inquiries
-        @open="openDetail" />
+        <InquiryDisplayList
+          :shown-inquiries
+          @open="openDetail" />
+      </template>
+      <InquiryDetail v-if="!isShowList" :inquiries="shownInquiries" :idx="selectedIdx" @return="returnPage" @add="add" />
     </section>
 
     <AddDialog #="{ resolve, reject }">
@@ -22,37 +25,17 @@
         <InquiryAddDialog @add="resolve" @close="reject(CLOSE_MODAL)" />
       </Modal>
     </AddDialog>
-
-    <!-- <InquiryDetail v-if="!isShowList" :shown-inquiries :idx="selectedIdx" @return="returnPage" /> -->
   </div>
-
-
-
 </template>
 
 <script setup lang="ts">
-import { addInquiry, getInquryList } from '~/composables/apis/Inquiry'
-import type { InquiryInfo, NewInquiryPayload } from '~/composables/types/Inquiry'
-
-definePageMeta({
-  pageTransition: {
-    name: 'slide-left',
-    mode: 'out-in'
-  },
-  middleware(to, from) {
-    // TODO: アニメーション修正
-    // console.log(to)
-    // console.log(from)
-    // if (!from.path.includes('/inquiry')) {
-    //   to.meta.pageTransition = false
-    // }
-  }
-})
+import { addComment, addInquiry, getInquryList } from '~/composables/apis/Inquiry'
+import type { InquiryInfo, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
 
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
-const inquirys = ref<InquiryInfo[]>([])
-const shownInquiries = computed(() => inquirys.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
+const inquiries = ref<InquiryInfo[]>([])
+const shownInquiries = computed(() => inquiries.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
 
 const { isLogin } = useUserStore()
 
@@ -66,7 +49,10 @@ const openAddDialog = async () => {
     return
   }
 
-  inquirys.value = resp?.data as InquiryInfo[]
+  inquiries.value = resp?.data as InquiryInfo[]
+  if (!isShowList.value) {
+    returnPage()
+  }
 }
 
 const resp = await getInquryList()
@@ -74,30 +60,27 @@ if (resp.error.value) {
   console.error(resp.error)
 }
 
-inquirys.value = resp.data.value?.data as InquiryInfo[]
+inquiries.value = resp.data.value?.data as InquiryInfo[]
 
-const { push } = useRouter()
+const add = async (payload: NewCommentPayload, targetIdx: number) => {
+  const resp = await addComment(shownInquiries.value[targetIdx].id, payload)
+  if (resp?.error) {
+    console.error(resp.error)
+    return
+  }
+
+  inquiries.value = resp?.data as InquiryInfo[]
+}
+
+const isShowList = ref(true)
+
 const selectedIdx = ref(0)
 const openDetail = (idx: number) => {
   selectedIdx.value = idx
+  const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
+}
 
-  push({ name: 'inquiry-id', params: { id: inquirys.value[idx].id } })
+const returnPage = () => {
+  const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
 }
 </script>
-
-<style scoped>
-.slide-left-enter-active,
-.slide-left-leave-active {
-  transition: all 0.15s;
-}
-
-.slide-left-enter-from {
-  opacity: 0;
-  transform: translate(-100px, 0);
-}
-
-.slide-left-leave-to {
-  opacity: 0;
-  transform: translate(-100px, 0);
-}
-</style>
