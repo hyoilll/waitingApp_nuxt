@@ -11,7 +11,7 @@ export default eventHandler(async (event) => {
   try {
     const { error: updateError } = await client
       .from('inquiry_comments')
-      .delete()
+      .update({ content: body.content ,updated_at: new Date() })
       .eq('id', commentId)
       .eq('inquiry_id', inquiryId)
       .eq('user_id', body.user_id)
