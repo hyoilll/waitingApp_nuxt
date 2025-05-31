@@ -1,4 +1,4 @@
-import type { NewCommentPayload, NewInquiryPayload } from "../types/Inquiry"
+import type { InquiryUpdatePayload, NewCommentPayload, NewInquiryPayload } from "../types/Inquiry"
 
 /**
  * Fetches the list of inquiries.
@@ -81,5 +81,18 @@ export const deleteComment = async (inquiryId: number, commentId: number, userId
     body: {
       user_id: userId,
     },
+  })
+}
+
+/**
+ * updates an existing inquiry.
+ * @param inquiryId 
+ * @param payload 
+ * @returns 
+ */
+export const updateInquiry = async (inquiryId: number, payload: InquiryUpdatePayload) => {
+  return await $fetch(`/api/inquiry/${inquiryId}/update`, {
+    method: 'PUT',
+    body: payload,
   })
 }

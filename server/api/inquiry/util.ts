@@ -6,6 +6,7 @@ export const getInquiriesWithComments = async (client: SupabaseClient) => {
   const { data: inquiries, error } = await client
     .from('inquiries')
     .select('*')
+    .order('id', { ascending: true })
 
   if (error) {
     return { error: getErrorMessage(error, '問い合わせのリスト取得に失敗しました') };

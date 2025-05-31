@@ -1,19 +1,50 @@
 <template>
   <div class="w-full flex flex-col gap-3">
-    <DefineDetailTemplate #="{ title, data, col }">
+    <DefineDetailTemplate #="{ title, data, col, edit, name }">
       <div class="flex gap-05 flex-wrap" :class="{ 'flex-col': col }">
         <span class="py-1 px-2 bg-blue-300 text-xs text-white rounded-full w-fit">{{ title }}</span>
-        <p class="ml-2 whitespace-pre-wrap">{{ data }}</p>
+        <p v-if="!edit" class="ml-2 whitespace-pre-wrap">{{ data }}</p>
+        <component
+          v-else
+          :is="col ? 'textarea' : 'input'"
+          :value="data"
+          :name
+          class="w-full p-2 border border-gray-300 rounded outline-none mt-2"
+          :rows="col ? 7 : 1"
+          required />
       </div>
     </DefineDetailTemplate>
 
     <div class="flex justify-between items-center">
-      <button
-        type="button"
-        class="w-fit px-2 py-1 bg-gray-300 rounded-md text-sm text-white font-bold"
-        @click="$emit('return')">
-        一覧に戻る
-      </button>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="w-fit px-2 py-1 bg-gray-300 rounded-md text-sm text-white font-bold"
+          @click="$emit('return')">
+          一覧に戻る
+        </button>
+        <div v-if="user.email === inquiries[selectedIdx].email">
+          <button
+            v-if="!isEdit"
+            type="button"
+            class="w-fit px-2 py-1 rounded-md text-sm text-white font-bold bg-violet-500"
+            @click="isEdit = true">
+            編集
+          </button>
+          <div v-else class="flex gap-2">
+            <button form="updateForm" class="bg-red-500 w-fit px-2 py-1 rounded-md text-sm text-white font-bold">
+              更新
+            </button>
+            <button
+              type="button"
+              class="w-fit px-2 py-1 bg-gray-500 rounded-md text-sm text-white font-bold"
+              @click="isEdit = false">
+              キャンセル
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="flex gap-2">
         <button
           type="button"
@@ -33,12 +64,12 @@
     <div class="w-full">
       <h1 class="font-bold text-xl text-center mb-5">詳細内容</h1>
 
-      <div class="space-y-4">
-        <ReuseDetailTemplate title="タイトル" :data="inquiries[selectedIdx].title" />
+      <component :is="isEdit ? 'form' : 'div'" id="updateForm" class="space-y-4" @submit.prevent="updateInquiry($event.target)">
+        <ReuseDetailTemplate title="タイトル" :data="inquiries[selectedIdx].title" :edit="isEdit" name="title" />
         <ReuseDetailTemplate title="メールアドレス" :data="inquiries[selectedIdx].email" />
-        <ReuseDetailTemplate title="作成日" :data="$dayjs(inquiries[selectedIdx].created_at).format(DATE_FORMAT)" />
-        <ReuseDetailTemplate title="内容" :col="true" :data="inquiries[selectedIdx].content" />
-      </div>
+        <ReuseDetailTemplate title="作成日" :data="$dayjs(inquiries[selectedIdx].update_at).format(DATE_FORMAT)" />
+        <ReuseDetailTemplate title="内容" :col="true" :data="inquiries[selectedIdx].content" :edit="isEdit" name="content" />
+      </component>
     </div>
 
     <div>
@@ -68,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InquiryInfo, NewCommentPayload } from '~/composables/types/Inquiry';
+import type { InquiryInfo, InquiryUpdateForm, NewCommentPayload } from '~/composables/types/Inquiry';
 
 const { inquiries, idx } = defineProps<{
   inquiries: InquiryInfo[]
@@ -77,12 +108,15 @@ const { inquiries, idx } = defineProps<{
 
 const emit = defineEmits<{
   return: []
+  updateInquiry: [InquiryUpdateForm, number]
   add: [NewCommentPayload, number]
   edit: [NewCommentPayload, number, number]
   delete: [number, number, string]
 }>()
 
 const { isLogin, user } = useUserStore()
+
+const isEdit = ref(false)
 
 const selectedIdx = ref(idx)
 const enableLeftBtn = computed(() => selectedIdx.value > 0)
@@ -92,6 +126,8 @@ const moveLeft = () => {
   if (!enableLeftBtn.value) {
     return
   }
+
+  isEdit.value = false
   selectedIdx.value -= 1
 }
 
@@ -99,10 +135,12 @@ const moveRight = () => {
   if (!enableRightBtn.value) {
     return
   }
+
+  isEdit.value = false
   selectedIdx.value += 1
 }
 
-const [DefineDetailTemplate, ReuseDetailTemplate] = createReusableTemplate<{ title: string, data: string, col?: boolean }>()
+const [DefineDetailTemplate, ReuseDetailTemplate] = createReusableTemplate<{ title: string, data: string, col?: boolean, edit?: boolean, name?: string }>()
 
 const newComment = ref('')
 
@@ -152,5 +190,16 @@ const deleteComment = (commentId: number) => {
   }
 
   emit('delete', selectedIdx.value, commentId, user.id)
+}
+
+const updateInquiry = (formElement: HTMLFormElement) => {
+  const formData = new FormData(formElement);
+  const updatedData: InquiryUpdateForm = {
+    title: formData.get('title') as string,
+    content: formData.get('content') as string,
+  };
+
+  emit('updateInquiry', updatedData, selectedIdx.value);
+  isEdit.value = false;
 }
 </script>

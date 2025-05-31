@@ -17,7 +17,7 @@
           :shown-inquiries
           @open="openDetail" />
       </template>
-      <InquiryDetail v-if="!isShowList" :inquiries="shownInquiries" :idx="selectedIdx" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
+      <InquiryDetail v-if="!isShowList" :inquiries="shownInquiries" :idx="selectedIdx" @update-inquiry="updateInq" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
     </section>
 
     <AddDialog #="{ resolve, reject }">
@@ -29,8 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { addComment, addInquiry, deleteComment, editComment, getInquryList } from '~/composables/apis/Inquiry'
-import type { InquiryInfo, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
+import { addComment, addInquiry, deleteComment, editComment, getInquryList, updateInquiry } from '~/composables/apis/Inquiry'
+import type { InquiryInfo, InquiryUpdatePayload, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
 
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
@@ -97,10 +97,27 @@ const isShowList = ref(true)
 const selectedIdx = ref(0)
 const openDetail = (idx: number) => {
   selectedIdx.value = idx
+  window.scrollTo({ top: 0, behavior: 'smooth' })
   const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
 }
 
 const returnPage = () => {
   const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
+}
+
+const updateInq = async (updateForm: InquiryUpdatePayload, idx: number) => {
+  const inquiry = shownInquiries.value[idx]
+  const payload = {
+    ...updateForm,
+    user_id: inquiry.user_id,
+  }
+
+  const resp = await updateInquiry(inquiry.id, payload)
+  if (resp?.error) {
+    console.error(resp.error)
+    return
+  }
+
+  inquiries.value = resp?.data as InquiryInfo[]
 }
 </script>
