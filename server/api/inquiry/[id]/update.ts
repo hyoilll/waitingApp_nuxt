@@ -10,7 +10,7 @@ export default eventHandler(async (event) => {
   try {
     const { error: updateError } = await client
       .from('inquiries')
-      .update({ title: body.title, content: body.content, update_at: new Date() })
+      .update({ title: body.title, content: body.content, updated_at: new Date() })
       .eq('id', inquiryId)
       .eq('user_id', body.user_id)
 

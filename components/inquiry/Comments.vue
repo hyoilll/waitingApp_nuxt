@@ -15,7 +15,7 @@
             <IconEdit @edit="editComment(comment.id, comment.content)" />
             <IconDelete @delete="$emit('delete', comment.id)" />
           </template>
-          <span class="text-sm text-gray-500">{{ $dayjs(comment.update_at).format(DATE_FORMAT) }}</span>
+          <span class="text-sm text-gray-500">{{ convertToJSTDate(comment.updated_at) }}</span>
         </div>
       </div>
       <p>{{ comment.content }}</p>

@@ -1,6 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server'
 import { getErrorMessage } from '../../utils'
-import dayjs from 'dayjs';
 
 export default eventHandler(async (event) => {
   const query = await readBody(event)
@@ -9,7 +8,7 @@ export default eventHandler(async (event) => {
   try {
     const { error } = await client
       .from('entries')
-      .update({ status: 'entered', entered_at: dayjs().add(9, 'hour').toISOString() })
+      .update({ status: 'entered', entered_at: new Date() })
       .eq('id', query.entryId);
 
     if (error) {

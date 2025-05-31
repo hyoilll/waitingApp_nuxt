@@ -14,7 +14,7 @@
           <h2 class="text-xl font-semibold text-gray-800 mb-3">最近の入店</h2>
           <ul class="space-y-2">
             <li v-for="entry in recentEntries" :key="entry.entry_number" class="bg-gray-50 border border-gray-200 rounded-lg p-2">
-              <span class="text-gray-700">{{ `No. ${entry.entry_number}（${entry.visitor_count}人）${$dayjs(entry.entered_at).format('HH:mm')}` }}</span>
+              <span class="text-gray-700">{{ `No. ${entry.entry_number}（${entry.visitor_count}人）${convertToJSTDate(entry.entered_at, 'HH:mm')}` }}</span>
             </li>
           </ul>
         </div>

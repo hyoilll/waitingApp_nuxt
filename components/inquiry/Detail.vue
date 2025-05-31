@@ -67,7 +67,7 @@
       <component :is="isEdit ? 'form' : 'div'" id="updateForm" class="space-y-4" @submit.prevent="updateInquiry($event.target)">
         <ReuseDetailTemplate title="タイトル" :data="inquiries[selectedIdx].title" :edit="isEdit" name="title" />
         <ReuseDetailTemplate title="メールアドレス" :data="inquiries[selectedIdx].email" />
-        <ReuseDetailTemplate title="作成日" :data="$dayjs(inquiries[selectedIdx].update_at).format(DATE_FORMAT)" />
+        <ReuseDetailTemplate title="作成日" :data="convertToJSTDate(inquiries[selectedIdx].updated_at)" />
         <ReuseDetailTemplate title="内容" :col="true" :data="inquiries[selectedIdx].content" :edit="isEdit" name="content" />
       </component>
     </div>

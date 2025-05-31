@@ -18,7 +18,7 @@ export const getWaitingList = async (shopId: string) => {
  * @returns 
  */
 export const getEnteredList = async (shopId: string) => {
-  return await $fetch('/api/server/enteredlist', {
+  return await $fetch('/api/admin/enteredlist', {
     method: 'GET',
     query: { shopId },
   })

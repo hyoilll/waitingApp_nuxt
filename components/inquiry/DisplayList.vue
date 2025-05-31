@@ -7,7 +7,7 @@
       @click="$emit('open', idx)">
       <div class="flex items-center justify-between">
         <h2 class="font-bold text-lg">{{ inquiry.title }}</h2>
-        <p class="text-sm text-gray-500 min-w-[143px]">{{ $dayjs(inquiry.update_at).format(DATE_FORMAT) }}</p>
+        <p class="text-sm text-gray-500 min-w-[143px]">{{ convertToJSTDate(inquiry.updated_at) }}</p>
       </div>
       <div class="text-sm text-gray-500 flex items-center gap-2">
         {{ inquiry.email }}

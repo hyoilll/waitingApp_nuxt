@@ -15,7 +15,7 @@ export interface InquiryComment {
   inquiry_id: number
   content: string
   created_at: string
-  update_at: string
+  updated_at: string
   user: {
     email: string
   }
@@ -24,7 +24,7 @@ export interface InquiryComment {
 export interface InquiryInfo extends NewInquiryPayload {
   id: number
   created_at: string
-  update_at: string
+  updated_at: string
   comments: InquiryComment[]
 }
 

@@ -8,7 +8,7 @@
             <div class="flex gap-4">
               <span class="font-medium">No. {{ entered.entry_number }}</span>
               <span>{{ entered.visitor_count }}人</span>
-              <span class="text-gray-500">入店: {{ $dayjs(entered.entered_at).format('HH:mm') }}</span>
+              <span class="text-gray-500">入店: {{ convertToJSTDate(entered.entered_at ?? new Date(), 'HH:mm') }}</span>
             </div>
             <button type="button" class="text-white bg-red-500 px-3 py-1 rounded" @click="handleMarkAsExited(entered.entry_number, entered.id)">退室</button>
           </li>
