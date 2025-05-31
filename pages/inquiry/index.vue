@@ -2,7 +2,7 @@
   <div>
     <section class="flex gap-3 items-center">
       <h1 class="font-bold text-xl">Inquiry</h1>
-      <button v-if="isLogin" type="button" class="w-fit px-4 py-2 text-white bg-blue-600 rounded-md" @click="openAddDialog">新規作成</button>
+      <button v-if="isLogin" type="button" class="w-fit px-2 py-1 text-white bg-blue-600 rounded-md text-sm font-bold" @click="openAddDialog">新規作成</button>
     </section>
 
     <section class="w-[90%] mx-auto py-10">
