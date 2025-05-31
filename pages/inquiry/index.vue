@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { addComment, addInquiry, deleteComment, editComment, getInquryList, updateInquiry } from '~/composables/apis/Inquiry'
-import type { InquiryInfo, InquiryUpdatePayload, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
+import type { InquiryInfo, InquiryUpdateForm, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
 
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
@@ -105,7 +105,7 @@ const returnPage = () => {
   const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
 }
 
-const updateInq = async (updateForm: InquiryUpdatePayload, idx: number) => {
+const updateInq = async (updateForm: InquiryUpdateForm, idx: number) => {
   const inquiry = shownInquiries.value[idx]
   const payload = {
     ...updateForm,
