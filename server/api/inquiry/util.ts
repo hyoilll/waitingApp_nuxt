@@ -3,19 +3,20 @@ import { getErrorMessage } from '../../utils'
 import { CommentResponse, InquiryResponse } from './types'
 
 export const getInquiriesWithComments = async (client: SupabaseClient) => {
-  const { data: inquiries, error } = await client
-    .from('inquiries')
-    .select('*')
-    .order('id', { ascending: true })
+  const [{ data: inquiries, error: inquiriesError }, { data: comments, error: commentsError }] = await Promise.all([
+    client
+      .from('inquiries')
+      .select('*')
+      .order('id', { ascending: true }),
+    client
+      .from('inquiry_comments')
+      .select('*, user:users(email)')
+      .order('id', { ascending: true })
+  ]);
 
-  if (error) {
-    return { error: getErrorMessage(error, '問い合わせのリスト取得に失敗しました') };
+  if (inquiriesError) {
+    return { error: getErrorMessage(inquiriesError, '問い合わせのリスト取得に失敗しました') };
   }
-
-  const { data: comments, error: commentsError } = await client
-    .from('inquiry_comments')
-    .select('*, user:users(email)')
-    .order('id', { ascending: true })
 
   if (commentsError) {
     return { error: getErrorMessage(commentsError, '問い合わせのコメント取得に失敗しました') };
