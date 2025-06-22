@@ -14,31 +14,25 @@ export const getInquiriesWithComments = async (client: SupabaseClient) => {
       .order('id', { ascending: true })
   ]);
 
-  if (inquiriesError) {
-    return { error: getErrorMessage(inquiriesError, '問い合わせのリスト取得に失敗しました') };
-  }
-
-  if (commentsError) {
-    return { error: getErrorMessage(commentsError, '問い合わせのコメント取得に失敗しました') };
-  }
-
-  const commentsByInquiryId = (comments as CommentResponse[]).reduce((acc, comment) => {
-    if (!acc[comment.inquiry_id]) {
-      acc[comment.inquiry_id] = [];
-    }
-
-    acc[comment.inquiry_id].push(comment);
-    return acc;
-  }, {} as Record<number, CommentResponse[]>);
-
-  const inquiriesWithComments = (inquiries as InquiryResponse[]).map(inquiry => {
-    const inquiryComments = commentsByInquiryId[inquiry.id] || [];
-
+  if (inquiriesError || commentsError) {
     return { 
-      ...inquiry,
-      comments: inquiryComments
+      error: inquiriesError 
+        ? getErrorMessage(inquiriesError, '問い合わせのリスト取得に失敗しました') 
+        : getErrorMessage(commentsError, '問い合わせのコメント取得に失敗しました') 
     };
+  }
+
+  const commentsByInquiryId = new Map<number, CommentResponse[]>();
+  (comments as CommentResponse[]).forEach(comment => {
+    const inquiryComments = commentsByInquiryId.get(comment.inquiry_id) || [];
+    inquiryComments.push(comment);
+    commentsByInquiryId.set(comment.inquiry_id, inquiryComments);
   });
+
+  const inquiriesWithComments = (inquiries as InquiryResponse[]).map(inquiry => ({
+    ...inquiry,
+    comments: commentsByInquiryId.get(inquiry.id) || []
+  }));
 
   return { data: inquiriesWithComments };
 }
