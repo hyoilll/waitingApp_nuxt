@@ -36,7 +36,7 @@
       </div>
     </section>
 
-    <section class="w-[70%] mx-auto flex flex-col gap-5">
+    <section class="w-[70%] mx-auto flex flex-col gap-3">
       <DefineMeritTemplate #="{ icon, title, descriptions }">
         <div>
           <div class="flex items-center gap-1">
@@ -58,7 +58,7 @@
 
       <h1 class="font-bold text-center text-xl">「Qパス」を導入することで、お店とお客様、双方に嬉しい変化が生まれます。</h1>
 
-      <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-2">
         <ReuseMeritTemplate
           icon="mdi:emoticon-happy-outline"
           title="スタッフの負担を大幅軽減"
