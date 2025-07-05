@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-[70%] mx-auto py-10">
     <section class="flex gap-3 items-center">
       <h1 class="font-bold text-xl">Inquiry</h1>
       <button v-if="isLogin" type="button" class="w-fit px-2 py-1 text-white bg-blue-600 rounded-md text-sm font-bold" @click="openAddDialog">新規作成</button>

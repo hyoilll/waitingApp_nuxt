@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-[70%] mx-auto py-10">
     <DefineContentTemplate v-slot="{ image, description, isReverse }">
       <div class="flex h-[300px] bg-yellow-300" :class="isReverse ? 'flex-row-reverse' : ''">
         <div class="w-[45%] h-full bg-red-500"></div>
