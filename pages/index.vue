@@ -92,7 +92,7 @@
 
       <h1 class="font-bold text-center text-xl">導入までの流れ</h1>
 
-      <div class="w-full bg-white rounded-lg shadow-lg p-6 flex gap-10 items-center">
+      <div class="w-full bg-white rounded-lg shadow-lg p-6 flex justify-between items-center">
         <ReuseIntroductionTemplate icon="mdi:file-document-edit-outline" title="お申し込み" description="簡単な申込書作成でOK" />
         <Icon name="mdi:arrow-right-thick" class="text-blue-400" size="3em" />
         <ReuseIntroductionTemplate icon="mdi:cog" title="準備・設定" description="システムにお店情報を追加" />
