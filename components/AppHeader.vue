@@ -7,17 +7,17 @@
     <nav>
       <ul class="flex justify-center space-x-6">
         <li>
-          <NuxtLink to="/">Home</NuxtLink>
+          <NuxtLink to="/" :class="{ active: currentTab === 'home' }" @click="currentTab = 'home'">Home</NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/services">Services</NuxtLink>
+          <NuxtLink to="/services" :class="{ active: currentTab === 'services' }" @click="currentTab = 'services'">Services</NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/inquiry">Inquiry</NuxtLink>
+          <NuxtLink to="/inquiry" :class="{ active: currentTab === 'inquiry' }" @click="currentTab = 'inquiry'">Inquiry</NuxtLink>
         </li>
         <template v-if="isLogin">
           <li>
-            <NuxtLink to="/logout">Signout</NuxtLink>
+            <NuxtLink to="/logout" :class="{ active: currentTab === 'logout' }" @click="currentTab = 'logout'">Signout</NuxtLink>
           </li>
           <li>
             <NuxtLink
@@ -31,10 +31,10 @@
         </template>
         <template v-else>
           <li>
-            <NuxtLink to="/login">Signin</NuxtLink>
+            <NuxtLink to="/login" :class="{ active: currentTab === 'login' }" @click="currentTab = 'login'">Signin</NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/signup">Signup</NuxtLink>
+            <NuxtLink to="/signup" :class="{ active: currentTab === 'signup' }" @click="currentTab = 'signup'">Signup</NuxtLink>
           </li>
         </template>
       </ul>
@@ -46,4 +46,16 @@
 const { user, isLogin } = storeToRefs(useUserStore())
 
 const userEmail = computed(() => user.value.email.split('@')[0])
+
+type TabType = 'home' | 'services' | 'inquiry' | 'login' | 'signup' | 'logout'
+const currentTab = ref<TabType>('home')
 </script>
+
+<style scoped>
+.active {
+  border-bottom-width: 2px;
+  padding-bottom: 0.25rem;
+  border-color: #60a5fa;
+  /* This is the Tailwind color for blue-400 */
+}
+</style>
