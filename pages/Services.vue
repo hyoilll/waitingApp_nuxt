@@ -1,13 +1,15 @@
 <template>
   <div class="w-[70%] mx-auto py-10">
     <DefineContentTemplate v-slot="{ image, description, isReverse }">
-      <div class="flex h-[300px] bg-yellow-300" :class="isReverse ? 'flex-row-reverse' : ''">
-        <div class="w-[45%] h-full bg-red-500"></div>
-        <p class="w-[55%] p-3">{{ description }}</p>
+      <div class="flex h-[300px] p-2 gap-5" :class="isReverse ? 'flex-row-reverse' : ''">
+        <!-- TODO: あとでimageに差し替え -->
+        <img :src="useAsset(image)" alt="Wating" class="w-[50%] h-full rounded-2xl shadow-lg" />
+        <div class="w-[55%] p-3">
+          <span class="font-bold text-4xl">title</span>
+          <p class="text-xl">{{ description }}</p>
+        </div>
       </div>
     </DefineContentTemplate>
-
-    <h1 class="font-bold text-xl">Service</h1>
 
     <section class="w-[90%] mx-auto py-10">
       <ul class="flex border rounded-md bg-white w-fit mx-auto cursor-pointer">
@@ -26,7 +28,7 @@
         </li>
       </ul>
 
-      <div class="mt-5 space-y-3">
+      <div class="mt-10 space-y-20">
         <ReuseContentTemplate
           v-for="content, idx in serviceItems[selectedIdx].contents"
           :key="idx"
@@ -39,9 +41,66 @@
 </template>
 
 <script setup lang="ts">
-import { serviceItems } from '~/composables/datas/Service';
-
 const selectedIdx = ref(0)
+
+const serviceItems = [
+  {
+    id: 1,
+    title: 'Service 1',
+    contents: [
+      {
+        image: 'wating',
+        description: 'Description for Service 1',
+      },
+      {
+        image: 'wating',
+        description: 'Another description for Service 1Another description for Service 1',
+      },
+    ]
+  },
+  // {
+  //   id: 2,
+  //   title: 'Service 2',
+  //   contents: [
+  //     {
+  //       image: 'wating',
+  //       description: 'Description for Service 2',
+  //     },
+  //     {
+  //       image: 'wating',
+  //       description: 'Another description for Service 2',
+  //     },
+  //   ]
+  // },
+  // {
+  //   id: 3,
+  //   title: 'Service 3',
+  //   contents: [
+  //     {
+  //       image: 'wating',
+  //       description: 'Description for Service 3',
+  //     },
+  //     {
+  //       image: 'wating',
+  //       description: 'Another description for Service 3',
+  //     },
+  //   ]
+  // },
+  // {
+  //   id: 4,
+  //   title: 'Service 4',
+  //   contents: [
+  //     {
+  //       image: 'wating',
+  //       description: 'Description for Service 4',
+  //     },
+  //     {
+  //       image: 'wating',
+  //       description: 'Another description for Service 4',
+  //     },
+  //   ]
+  // },
+]
 
 const [DefineContentTemplate, ReuseContentTemplate] = createReusableTemplate<{ image: string, description: string, isReverse?: boolean }>()
 

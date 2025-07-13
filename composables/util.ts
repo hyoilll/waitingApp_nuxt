@@ -2,6 +2,11 @@ import dayjs from "dayjs"
 
 export const CLOSE_MODAL = 'closeModal'
 
+/**
+ * UTCをJSTに変換する
+ * 
+ * ex) convertToJSTDate('2023-10-01T12:00:00Z') // => '2023/10/01 21:00:00'
+ * */
 export const convertToJSTDate = (date: string | Date, format?: string): string => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -22,4 +27,21 @@ export const convertToJSTDate = (date: string | Date, format?: string): string =
 
   const ret = initDate.toLocaleString('ja-JP', options)
   return format ? dayjs(ret).format(format) : ret
+}
+
+/**
+ * 画像ファイルのパスを取得する
+ * 
+ * @param fileName 画像ファイル名
+ * @param extension 拡張子（デフォルトは 'png'）
+ * @returns 画像ファイルのパス
+ */
+export function useAsset(fileName: string, extension: string = 'png'): string {
+  const assets = import.meta.glob('~/assets/**/*', {
+    eager: true,
+    import: 'default',
+  })
+
+  // @ts-expect-error: wrong type info
+  return assets[`/assets/imgs/${fileName}.${extension}`]
 }
