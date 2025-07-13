@@ -7,7 +7,7 @@
     <nav>
       <ul class="flex justify-center space-x-6">
         <li>
-          <NuxtLink to="/" :class="{ active: currentTab === 'home' }" @click="currentTab = 'home'">Home</NuxtLink>
+          <NuxtLink to="/" :class="{ active: currentTab === '' }" @click="currentTab = ''">Home</NuxtLink>
         </li>
         <li>
           <NuxtLink to="/services" :class="{ active: currentTab === 'services' }" @click="currentTab = 'services'">Services</NuxtLink>
@@ -47,8 +47,10 @@ const { user, isLogin } = storeToRefs(useUserStore())
 
 const userEmail = computed(() => user.value.email.split('@')[0])
 
-type TabType = 'home' | 'services' | 'inquiry' | 'login' | 'signup' | 'logout'
-const currentTab = ref<TabType>('home')
+type TabType = '' | 'services' | 'inquiry' | 'login' | 'signup' | 'logout'
+const route = useRoute()
+const initPath = (route.fullPath.replace('/', '').toLowerCase() || '') as TabType
+const currentTab = ref<TabType>(initPath)
 </script>
 
 <style scoped>
