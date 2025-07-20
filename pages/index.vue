@@ -129,6 +129,7 @@
         <ReuseFAQTemplate question="Qパスの導入にはどれくらいの時間がかかりますか？" answer="お申し込みから運用開始まで、最短で翌日からご利用いただけます。" />
         <ReuseFAQTemplate question="導入にあたって特別な設備は必要ですか？" answer="特別な設備は不要で、スマートフォンやタブレットがあれば簡単に導入できます。" />
         <ReuseFAQTemplate question="導入後のサポートはありますか？" answer="はい、導入後も専任のサポートチームが対応いたしますので、ご安心ください。" />
+        <ReuseFAQTemplate question="お店別にカスタマイズはできますか？" answer="はい、申し込みいただければ、お店別にカスタマイズ対応できます。" />
       </div>
     </section>
   </div>
