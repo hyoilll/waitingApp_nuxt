@@ -1,5 +1,7 @@
+import type { Service } from "../types/Service"
+
 /** お店側のスクショ */
-export const serviceShopItems = {
+export const serviceShopItems: Service = {
   id: 1,
   title: 'Service 1',
   contents: [
@@ -37,6 +39,7 @@ export const serviceShopItems = {
       type: 'jpeg',
       title: '呼出もワンタッチで完了！',
       description: '「呼出」ボタンを押下することにより、お客様の端末に通知が届きます。お客様は通知を受け取ることで、呼ばれたことを確認できるので、スタッフの業務が軽減されます。\nまた、「呼出済み」と表示が変わるため、お客様の状態をより把握しやすくなります。',
+      isSupportText: true,
     },
     {
       image: 'dashboard/waiting_4',
