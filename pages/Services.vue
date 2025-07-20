@@ -7,7 +7,7 @@
         <div class="w-[55%] p-3">
           <div class="relative group">
             <NuxtLink
-              :to="'#' + anchor"
+              :href="`#${anchor}`"
               class="absolute text-gray-400 -left-5 top-2 group-hover:visible invisible cursor-pointer"
               @click="scrollToAnchor(anchor)">
               <Icon
@@ -42,13 +42,6 @@
 <script setup lang="ts">
 import { serviceShopItems } from '~/composables/datas/Service';
 
-function scrollToAnchor(anchor: string) {
-  const element = document.getElementById(anchor);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-
 const [DefineContentTemplate, ReuseContentTemplate] = createReusableTemplate<{
   image: string
   anchor: string
@@ -57,5 +50,19 @@ const [DefineContentTemplate, ReuseContentTemplate] = createReusableTemplate<{
   type?: string
   isReverse?: boolean
 }>()
+
+/**
+ * TODO: 
+ * 1. smoothとoffsetが効かないので、後で修正
+ * 2. Hydration class mismatch on <NuxtLink>のエラーが出るので、後で修正
+ * */
+const { scrollToAnchor, scrollToTop } = useAnchorScroll({
+  toTop: {
+    scrollOptions: {
+      behavior: 'smooth',
+      offsetTop: 10,
+    }
+  }
+})
 
 </script>
