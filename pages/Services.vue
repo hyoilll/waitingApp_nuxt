@@ -6,22 +6,27 @@
         <p class="text-gray-600">呼び出しも管理もワンタッチ。順番待ちの新体験。</p>
       </div>
 
+      <!-- 管理者側でのイメージ -->
+      <div class="mt-10">
+        <h1 class="text-center font-bold text-3xl">管理者</h1>
+        <SeperateLine custom-class="border-t-2 border-gray-300 w-[30%] mx-auto mb-8 mt-2" />
 
-      <div class="mt-10 space-y-20">
-        <ServiceItem
-          v-for="content, idx in serviceShopItems.contents"
-          :key="idx"
-          v-bind="content"
-          :is-reverse="idx % 2 === 1"
-          @move-to-anchor="scrollToAnchor">
-          <p v-if="content.isSupportText" class="ml-2 text-sm font-bold">
-            ※ 「呼出」押下後のお客様の画面は
-            <NuxtLink
-              href="#"
-              class="cursor-pointer text-blue-500 hover:underline"
-              @click="scrollToAnchor('')">ここ</NuxtLink>
-          </p>
-        </ServiceItem>
+        <div class="mt-5 space-y-20">
+          <ServiceItem
+            v-for="content, idx in serviceShopItems.contents"
+            :key="idx"
+            v-bind="content"
+            :is-reverse="idx % 2 === 1"
+            @move-to-anchor="scrollToAnchor">
+            <p v-if="content.isSupportText" class="ml-2 text-sm font-bold">
+              ※ 「呼出」押下後のお客様の画面は
+              <NuxtLink
+                href="#"
+                class="cursor-pointer text-blue-500 hover:underline"
+                @click="scrollToAnchor('')">ここ</NuxtLink>
+            </p>
+          </ServiceItem>
+        </div>
       </div>
     </section>
   </div>
