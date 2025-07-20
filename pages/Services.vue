@@ -1,39 +1,38 @@
 <template>
-  <div class="w-[70%] mx-auto py-10">
-    <DefineContentTemplate v-slot="{ image, description, isReverse }">
+  <div class="w-[80%] mx-auto py-10">
+    <DefineContentTemplate v-slot="{ image, anchor, title, description, type, isReverse }">
       <div class="flex h-[300px] p-2 gap-5" :class="isReverse ? 'flex-row-reverse' : ''">
         <!-- TODO: あとでimageに差し替え -->
-        <img :src="useAsset(image)" alt="Wating" class="w-[50%] h-full rounded-2xl shadow-lg" />
+        <img :src="useAsset(image, type)" alt="Waiting" class="shadow-xl p-1 bg-blue-400 brightness-125" />
         <div class="w-[55%] p-3">
-          <span class="font-bold text-4xl">title</span>
-          <p class="text-xl">{{ description }}</p>
+          <div class="relative group">
+            <NuxtLink
+              :to="'#' + anchor"
+              class="absolute text-gray-400 -left-5 top-2 group-hover:visible invisible cursor-pointer"
+              @click="scrollToAnchor(anchor)">
+              <Icon
+                name="mdi:anchor"
+                size="1.5em" />
+            </NuxtLink>
+            <span :id="anchor" class="ml-1 font-bold text-4xl group-hover:cursor-pointer">{{ title }}</span>
+          </div>
+          <p class="text-xl ml-4 mt-4 text-gray-500 whitespace-pre-wrap">{{ description }}</p>
         </div>
       </div>
     </DefineContentTemplate>
 
     <section class="w-[90%] mx-auto py-10">
-      <ul class="flex border rounded-md bg-white w-fit mx-auto cursor-pointer">
-        <li
-          v-for="item, idx in serviceItems"
-          :key="item.id"
-          class="p-2"
-          :class="[
-            idx ? 'border-l' : '',
-            selectedIdx === idx ? 'bg-blue-500 text-white' : '',
-            idx === 0 ? 'rounded-l-md' : '',
-            idx === serviceItems.length - 1 ? 'rounded-r-md' : ''
-          ]"
-          @click="selectedIdx = idx">
-          <span class="font-bold">{{ item.title }}</span>
-        </li>
-      </ul>
+      <div>
+        <h1 class="text-4xl font-bold border-b-2 w-fit pb-1">Qパス</h1>
+        <p class="text-gray-600">呼び出しも管理もワンタッチ。順番待ちの新体験。</p>
+      </div>
+
 
       <div class="mt-10 space-y-20">
         <ReuseContentTemplate
-          v-for="content, idx in serviceItems[selectedIdx].contents"
+          v-for="content, idx in serviceShopItems.contents"
           :key="idx"
-          :image="content.image"
-          :description="content.description"
+          v-bind="content"
           :is-reverse="idx % 2 === 1" />
       </div>
     </section>
@@ -41,67 +40,22 @@
 </template>
 
 <script setup lang="ts">
-const selectedIdx = ref(0)
+import { serviceShopItems } from '~/composables/datas/Service';
 
-const serviceItems = [
-  {
-    id: 1,
-    title: 'Service 1',
-    contents: [
-      {
-        image: 'wating',
-        description: 'Description for Service 1',
-      },
-      {
-        image: 'wating',
-        description: 'Another description for Service 1Another description for Service 1',
-      },
-    ]
-  },
-  // {
-  //   id: 2,
-  //   title: 'Service 2',
-  //   contents: [
-  //     {
-  //       image: 'wating',
-  //       description: 'Description for Service 2',
-  //     },
-  //     {
-  //       image: 'wating',
-  //       description: 'Another description for Service 2',
-  //     },
-  //   ]
-  // },
-  // {
-  //   id: 3,
-  //   title: 'Service 3',
-  //   contents: [
-  //     {
-  //       image: 'wating',
-  //       description: 'Description for Service 3',
-  //     },
-  //     {
-  //       image: 'wating',
-  //       description: 'Another description for Service 3',
-  //     },
-  //   ]
-  // },
-  // {
-  //   id: 4,
-  //   title: 'Service 4',
-  //   contents: [
-  //     {
-  //       image: 'wating',
-  //       description: 'Description for Service 4',
-  //     },
-  //     {
-  //       image: 'wating',
-  //       description: 'Another description for Service 4',
-  //     },
-  //   ]
-  // },
-]
+function scrollToAnchor(anchor: string) {
+  const element = document.getElementById(anchor);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
-const [DefineContentTemplate, ReuseContentTemplate] = createReusableTemplate<{ image: string, description: string, isReverse?: boolean }>()
+const [DefineContentTemplate, ReuseContentTemplate] = createReusableTemplate<{
+  image: string
+  anchor: string
+  title: string
+  description: string
+  type?: string
+  isReverse?: boolean
+}>()
 
 </script>
