@@ -57,20 +57,33 @@ export const serviceCustomerItems = {
   title: 'Service 1',
   contents: [
     {
-      image: 'dashboard/custom_1',
-      description: 'Description for Service 1',
+      image: 'dashboard/customer_1',
+      title: '必要な情報は人数だけ！',
+      anchor: 'customer_1',
+      type: 'jpg',
+      description: '整理券の発券のために必要な情報は人数だけです。\n名前や電話番号などは必要なく、人数情報だけで気軽に発券が可能です。',
+      
     },
     {
-      image: 'dashboard/custom_2_1',
-      description: 'Another description for Service 1Another description for Service 1',
+      image: 'dashboard/customer_2_1',
+      anchor: 'customer_2_1',
+      type: 'jpg',
+      title: 'シンプルなUI！',
+      description: 'お客様が使う画面は、シンプルなUIで構成されているため、誰でも不便なく操作できます。\n自分の順番が何番めなのか、またキャンセルもワンタッチで簡単にできます。',
     },
     {
-      image: 'dashboard/custom_2_2',
-      description: 'Another description for Service 1Another description for Service 1',
+      image: 'dashboard/customer_2_2',
+      anchor: 'customer_2_2',
+      type: 'jpg',
+      title: '自分がいつ入れるか予想できる',
+      description: '最近入店したお客様の情報をもとに、次に入店できる時間を予想できます。\nこれにより、お客様は自分の順番がいつになるかを予想できるので、安心して待つことができます。',
     },
     {
-      image: 'dashboard/custom_3',
-      description: 'Another description for Service 1Another description for Service 1',
+      image: 'dashboard/customer_3',
+      anchor: 'customer_3',
+      type: 'jpg',
+      title: '呼び出されたことがわかる',
+      description: 'お客様の端末に通知が届くので、呼び出されたことがわかります。\n通知を受け取ることで、スタッフが呼びに行く手間を省くことができ、スタッフの業務が軽減されます。',
     },
   ]
 }
