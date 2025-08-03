@@ -29,4 +29,5 @@ const qrcode = useQRCode(`${baseUrl}/dashboard/create-entry-id/${shop.id}`, {
   errorCorrectionLevel: 'H',
   margin: 3,
 })
+console.log(`qrcode: ${baseUrl}/dashboard/create-entry-id/${shop.id}`)
 </script>
