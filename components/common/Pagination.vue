@@ -1,6 +1,15 @@
 <template>
   <nav v-if="totalPages > 1" aria-label="Pagination">
     <ul class="flex items-center justify-center gap-2">
+      <!-- Go to First Button -->
+      <li>
+        <button
+          :disabled="currentPage === 1"
+          @click="changePage(1)"
+          class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+          <Icon name="mdi:chevron-double-left" />
+        </button>
+      </li>
       <!-- Previous Button -->
       <li>
         <button
@@ -36,15 +45,31 @@
           <Icon name="mdi:chevron-right" />
         </button>
       </li>
+      <!-- Go to Last Button -->
+      <li>
+        <button
+          :disabled="currentPage === totalPages"
+          @click="changePage(totalPages)"
+          class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+          <Icon name="mdi:chevron-double-right" />
+        </button>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script setup lang="ts">
+interface PageItem {
+  page: number;
+  isDisabled: boolean;
+  isVisible: boolean;
+}
+
 const { currentPage, totalPages, maxVisibleButtons = 7 } = defineProps<{
   currentPage: number
   totalPages: number
   /**
+   * 表示されるページネーションの最大数
    * @default 7
    */
   maxVisibleButtons?: number
@@ -53,12 +78,6 @@ const { currentPage, totalPages, maxVisibleButtons = 7 } = defineProps<{
 const emit = defineEmits<{
   changePage: [number]
 }>();
-
-interface PageItem {
-  page: number;
-  isDisabled: boolean;
-  isVisible: boolean;
-}
 
 const pages = computed<PageItem[]>(() => {
   const range: PageItem[] = [];
@@ -99,7 +118,7 @@ const pages = computed<PageItem[]>(() => {
 
 const changePage = (page: number) => {
   if (page < 1 || page > totalPages || page === currentPage) {
-    return;
+    return
   }
 
   emit('changePage', page);
