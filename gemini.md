@@ -49,6 +49,8 @@
 
 - **Emits**
   - `defineEmits` を使用し、必ず型を定義します。
+  - イベント名はsingle quoteで囲みません。
+  - イベント名は`update:changeData`ではなく、`changeData`
   ```typescript
   const emit = defineEmits<{
     update: [number]
@@ -82,6 +84,18 @@
 
     // Bad
     const countRef = ref(0)
+    ```
+
+- **文法**
+  - できるだけ1行で書きません。
+    ```typescript
+    // Good
+    if (...) {
+      return
+    }
+
+    // Bad
+    if (...) return
     ```
 
 ---
