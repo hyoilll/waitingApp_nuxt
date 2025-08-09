@@ -10,10 +10,6 @@ export function usePagination<T>(items: MaybeRef<T[]>, limit = 10) {
   })
 
   function goToPage(page: number) {
-    if (page < 1 || page > totalPages.value) {
-      return
-    }
-
     currentPage.value = page
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }

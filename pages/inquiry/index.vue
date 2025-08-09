@@ -18,7 +18,7 @@
           class="mb-8"
           :current-page="currentPage"
           :total-pages="totalPages"
-          @update:current-page="goToPage" />
+          @change-page="goToPage" />
 
         <div class="mb-6">
           <input
@@ -36,7 +36,7 @@
           class="mt-8"
           :current-page="currentPage"
           :total-pages="totalPages"
-          @update:current-page="goToPage" />
+          @change-page="goToPage" />
       </template>
       <InquiryDetail v-else :inquiries="shownInquiries" :idx="selectedIdx" @update-inquiry="updateInq" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
     </main>
