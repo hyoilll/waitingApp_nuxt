@@ -13,13 +13,13 @@
     </div>
 
     <main>
-      <CommonPagination
-        class="mb-8"
-        :current-page="currentPage"
-        :total-pages="totalPages"
-        @update:current-page="goToPage" />
-
       <template v-if="isShowList">
+        <CommonPagination
+          class="mb-8"
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @update:current-page="goToPage" />
+
         <div class="mb-6">
           <input
             v-model="searchInquiry"
