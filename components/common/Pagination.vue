@@ -12,17 +12,17 @@
       </li>
 
       <!-- Page Numbers -->
-      <li v-for="page in pages" :key="page.name">
+      <li v-for="page in pages" :key="page.page">
         <button
-          v-if="page.name !== '...'"
+          v-if="page.isVisible"
           :disabled="page.isDisabled"
-          @click="changePage(+page.name)"
+          @click="changePage(page.page)"
           :class="{
-            'bg-indigo-600 text-white': +page.name === currentPage,
-            'bg-white text-gray-700 hover:bg-gray-50': +page.name !== currentPage
+            'bg-indigo-600 text-white': page.page === currentPage,
+            'bg-white text-gray-700 hover:bg-gray-50': page.page !== currentPage
           }"
           class="px-4 py-2 rounded-md font-medium border">
-          {{ page.name }}
+          {{ page.page }}
         </button>
         <span v-else class="px-4 py-2 text-gray-500">...</span>
       </li>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-const { currentPage, totalPages, maxVisibleButtons = 7, } = defineProps<{
+const { currentPage, totalPages, maxVisibleButtons = 7 } = defineProps<{
   currentPage: number
   totalPages: number
   /**
@@ -54,13 +54,18 @@ const emit = defineEmits<{
   changePage: [number]
 }>();
 
-//TODO: rangeを修正する必要がある。"..."を持ってるのがちょっと嫌だね
-const pages = computed(() => {
-  const range = [];
+interface PageItem {
+  page: number;
+  isDisabled: boolean;
+  isVisible: boolean;
+}
+
+const pages = computed<PageItem[]>(() => {
+  const range: PageItem[] = [];
 
   if (totalPages <= maxVisibleButtons) {
     for (let i = 1; i <= totalPages; i++) {
-      range.push({ name: i.toString(), isDisabled: i === currentPage });
+      range.push({ page: i, isDisabled: i === currentPage, isVisible: true });
     }
     return range;
   }
@@ -68,28 +73,33 @@ const pages = computed(() => {
   const startPage = Math.max(2, currentPage - 2);
   const endPage = Math.min(totalPages - 1, currentPage + 2);
 
-  range.push({ name: '1', isDisabled: currentPage === 1 });
+  // First page
+  range.push({ page: 1, isDisabled: currentPage === 1, isVisible: true });
 
+  // Ellipsis at the start
   if (startPage > 2) {
-    range.push({ name: '...', isDisabled: true });
+    range.push({ page: -1, isDisabled: true, isVisible: false }); // placeholder page -1 for ellipsis
   }
 
+  // Visible page numbers
   for (let i = startPage; i <= endPage; i++) {
-    range.push({ name: i.toString(), isDisabled: i === currentPage });
+    range.push({ page: i, isDisabled: i === currentPage, isVisible: true });
   }
 
+  // Ellipsis at the end
   if (endPage < totalPages - 1) {
-    range.push({ name: '...', isDisabled: true });
+    range.push({ page: -2, isDisabled: true, isVisible: false }); // placeholder page -2 for ellipsis
   }
 
-  range.push({ name: totalPages, isDisabled: currentPage === totalPages });
+  // Last page
+  range.push({ page: totalPages, isDisabled: currentPage === totalPages, isVisible: true });
 
   return range;
 });
 
 const changePage = (page: number) => {
   if (page < 1 || page > totalPages || page === currentPage) {
-    return
+    return;
   }
 
   emit('changePage', page);
