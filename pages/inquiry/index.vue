@@ -80,6 +80,7 @@ const openAddDialog = async () => {
   }
 }
 
+// TODO: 今は全ての問い合わせを取得しているが、ページネーションを考慮して必要な分だけ取得するようにする
 const resp = await getInquryList()
 if (resp.error.value) {
   console.error(resp.error)
