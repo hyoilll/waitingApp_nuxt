@@ -1,40 +1,39 @@
 <template>
-  <div class="bg-gray-50 min-h-screen">
-    <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <header class="mb-8">
-        <div class="flex justify-between items-center">
-          <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">Inquiry</h1>
-          <button v-if="isLogin" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="openAddDialog">
-            <Icon name="mdi:plus" class="-ml-1 mr-2 h-5 w-5" />
-            新規作成
-          </button>
-        </div>
-        <p class="mt-2 text-lg text-gray-500">ご意見・ご要望、バグ報告などはこちらへ</p>
-      </header>
+  <div class="w-[70%] mx-auto py-10">
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <h1 class="text-4xl font-bold border-b-2 w-fit pb-1">問い合わせ</h1>
+        <button v-if="isLogin" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="openAddDialog">
+          <Icon name="mdi:plus" class="-ml-1 mr-2 h-5 w-5" />
+          新規作成
+        </button>
+      </div>
 
-      <main>
-        <template v-if="isShowList">
-          <div class="mb-6">
-            <input
-              v-model="searchInquiry"
-              type="text"
-              placeholder="Search inquiries..."
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
-          </div>
-
-          <InquiryDisplayList
-            :shown-inquiries
-            @open="openDetail" />
-        </template>
-        <InquiryDetail v-else :inquiries="shownInquiries" :idx="selectedIdx" @update-inquiry="updateInq" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
-      </main>
-
-      <AddDialog #="{ resolve, reject }">
-        <Modal id="addInquiry" @close="reject(CLOSE_MODAL)">
-          <InquiryAddDialog @add="resolve" @close="reject(CLOSE_MODAL)" />
-        </Modal>
-      </AddDialog>
+      <p class="text-gray-600">ご意見・ご要望、バグ報告などはこちらへ</p>
     </div>
+
+    <main>
+      <template v-if="isShowList">
+        <div class="mb-6">
+          <input
+            v-model="searchInquiry"
+            type="text"
+            placeholder="Search inquiries..."
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
+        </div>
+
+        <InquiryDisplayList
+          :shown-inquiries
+          @open="openDetail" />
+      </template>
+      <InquiryDetail v-else :inquiries="shownInquiries" :idx="selectedIdx" @update-inquiry="updateInq" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
+    </main>
+
+    <AddDialog #="{ resolve, reject }">
+      <Modal id="addInquiry" @close="reject(CLOSE_MODAL)">
+        <InquiryAddDialog @add="resolve" @close="reject(CLOSE_MODAL)" />
+      </Modal>
+    </AddDialog>
   </div>
 </template>
 
