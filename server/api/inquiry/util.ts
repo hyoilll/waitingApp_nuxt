@@ -7,11 +7,11 @@ export const getInquiriesWithComments = async (client: SupabaseClient) => {
     client
       .from('inquiries')
       .select('*')
-      .order('id', { ascending: true }),
+      .order('created_at', { ascending: false }),
     client
       .from('inquiry_comments')
       .select('*, user:users(email)')
-      .order('id', { ascending: true })
+      .order('created_at', { ascending: false })
   ]);
 
   if (inquiriesError || commentsError) {

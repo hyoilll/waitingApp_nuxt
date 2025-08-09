@@ -1,100 +1,102 @@
 <template>
-  <div class="w-full flex flex-col gap-3">
-    <DefineDetailTemplate #="{ title, data, col, edit, name }">
-      <div class="flex gap-05 flex-wrap" :class="{ 'flex-col': col }">
-        <span class="py-1 px-2 bg-blue-300 text-xs text-white rounded-full w-fit">{{ title }}</span>
-        <p v-if="!edit" class="ml-2 whitespace-pre-wrap">{{ data }}</p>
-        <component
-          v-else
-          :is="col ? 'textarea' : 'input'"
-          :value="data"
-          :name
-          class="w-full p-2 border border-gray-300 rounded outline-none mt-2"
-          :rows="col ? 7 : 1"
-          required />
-      </div>
-    </DefineDetailTemplate>
-
-    <div class="flex justify-between items-center">
-      <div class="flex gap-2">
+  <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+    <div class="p-6">
+      <!-- ヘッダー：戻るボタン、編集、ページネーション -->
+      <div class="flex justify-between items-center mb-6 pb-4 border-b">
         <button
           type="button"
-          class="w-fit px-2 py-1 bg-gray-300 rounded-md text-sm text-white font-bold"
+          class="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           @click="$emit('return')">
+          <Icon name="mdi:arrow-left" />
           一覧に戻る
         </button>
-        <div v-if="user.email === inquiries[selectedIdx].email">
-          <button
-            v-if="!isEdit"
-            type="button"
-            class="w-fit px-2 py-1 rounded-md text-sm text-white font-bold bg-violet-500"
-            @click="isEdit = true">
-            編集
-          </button>
-          <div v-else class="flex gap-2">
-            <button form="updateForm" class="bg-red-500 w-fit px-2 py-1 rounded-md text-sm text-white font-bold">
-              更新
+
+        <div class="flex items-center gap-4">
+          <!-- 編集ボタン -->
+          <div v-if="user.email === inquiries[selectedIdx].email">
+            <button
+              v-if="!isEdit"
+              type="button"
+              class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+              @click="isEdit = true">
+              <Icon name="mdi:pencil" />
+              編集
+            </button>
+            <div v-else class="flex gap-2">
+              <button form="updateForm" class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+                <Icon name="mdi:check" />
+                更新
+              </button>
+              <button
+                type="button"
+                class="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                @click="isEdit = false">
+                キャンセル
+              </button>
+            </div>
+          </div>
+          <!-- ページネーション -->
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 disabled:opacity-50"
+              :disabled="!enableLeftBtn"
+              @click="moveLeft">
+              <Icon name="mdi:chevron-left" size="1.5em" />
             </button>
             <button
               type="button"
-              class="w-fit px-2 py-1 bg-gray-500 rounded-md text-sm text-white font-bold"
-              @click="isEdit = false">
-              キャンセル
+              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 disabled:opacity-50"
+              :disabled="!enableRightBtn"
+              @click="moveRight">
+              <Icon name="mdi:chevron-right" size="1.5em" />
             </button>
           </div>
         </div>
       </div>
 
-      <div class="flex gap-2">
-        <button
-          type="button"
-          class="px-2 py-1 bg-gray-400 text-white rounded-full"
-          :class="{ 'opacity-30': !enableLeftBtn }"
-          :disabled="!enableLeftBtn"
-          @click="moveLeft"> ← </button>
-        <button
-          type="button"
-          class="px-2 py-1 bg-gray-400 text-white rounded-full"
-          :class="{ 'opacity-30': !enableRightBtn }"
-          :disabled="!enableRightBtn"
-          @click="moveRight"> → </button>
-      </div>
-    </div>
+      <!-- 詳細内容 -->
+      <component :is="isEdit ? 'form' : 'div'" id="updateForm" class="space-y-6" @submit.prevent="updateInquiry($event.target)">
+        <h1 v-if="!isEdit" class="text-3xl font-bold text-gray-900">{{ inquiries[selectedIdx].title }}</h1>
+        <input v-else type="text" name="title" :value="inquiries[selectedIdx].title" class="w-full text-3xl font-bold p-2 border-b-2 focus:outline-none focus:border-indigo-500" required />
 
-    <div class="w-full">
-      <h1 class="font-bold text-xl text-center mb-5">詳細内容</h1>
+        <div class="flex items-center gap-6 text-sm text-gray-500">
+          <span>
+            <Icon name="mdi:account-circle" class="mr-1 translate-y-0.5" />{{ inquiries[selectedIdx].email }}
+          </span>
+          <span>
+            <Icon name="mdi:clock-outline" class="mr-1 translate-y-0.5" />{{ convertToJSTDate(inquiries[selectedIdx].updated_at) }}
+          </span>
+        </div>
 
-      <component :is="isEdit ? 'form' : 'div'" id="updateForm" class="space-y-4" @submit.prevent="updateInquiry($event.target)">
-        <ReuseDetailTemplate title="タイトル" :data="inquiries[selectedIdx].title" :edit="isEdit" name="title" />
-        <ReuseDetailTemplate title="メールアドレス" :data="inquiries[selectedIdx].email" />
-        <ReuseDetailTemplate title="作成日" :data="convertToJSTDate(inquiries[selectedIdx].updated_at)" />
-        <ReuseDetailTemplate title="内容" :col="true" :data="inquiries[selectedIdx].content" :edit="isEdit" name="content" />
+        <p v-if="!isEdit" class="text-gray-700 text-lg leading-relaxed whitespace-pre-wrap">{{ inquiries[selectedIdx].content }}</p>
+        <textarea v-else name="content" :value="inquiries[selectedIdx].content" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" rows="8" required></textarea>
       </component>
     </div>
 
-    <div>
-      <SeperateLine />
-
-      <form v-if="isLogin" class="mb-4" @submit.prevent="isEditFlag ? edit() : add()">
+    <!-- コメントセクション -->
+    <div class="bg-gray-50 p-6">
+      <h2 class="text-xl font-bold mb-4 text-gray-800">Comments</h2>
+      <form v-if="isLogin" class="mb-6" @submit.prevent="isEditFlag ? edit() : add()">
         <textarea
           v-model="newComment"
           placeholder="Add a comment..."
-          class="w-full p-2 border border-gray-300 rounded outline-none"
-          rows="5"
+          class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          rows="4"
           required />
-        <div class="flex gap-2">
-          <button v-if="isEditFlag" class="mt-2 px-4 py-2 bg-gray-500 text-white rounded" @click="cancelUpdateComment">Cancel</button>
+        <div class="flex justify-end items-center gap-2 mt-2">
+          <button v-if="isEditFlag" type="button" class="px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 border" @click="cancelUpdateComment">Cancel</button>
           <button
-            class="mt-2 px-4 py-2 text-white rounded"
-            :class="isEditFlag ? 'bg-red-600' : 'bg-blue-600'">
-            {{ isEditFlag ? 'Update' : 'Submit' }}
+            type="submit"
+            class="px-4 py-2 text-sm font-medium rounded-md shadow-sm text-white"
+            :class="isEditFlag ? 'bg-red-600 hover:bg-red-700' : 'bg-indigo-600 hover:bg-indigo-700'">
+            {{ isEditFlag ? 'Update Comment' : 'Submit Comment' }}
           </button>
         </div>
       </form>
 
       <InquiryComments :comments="inquiries[selectedIdx].comments" @edit="editComment" @delete="deleteComment" />
     </div>
-
   </div>
 </template>
 

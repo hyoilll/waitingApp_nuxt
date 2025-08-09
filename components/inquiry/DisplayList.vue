@@ -1,23 +1,31 @@
 <template>
-  <ul v-if="shownInquiries.length">
-    <li
+  <div class="space-y-4">
+    <div
       v-for="inquiry, idx in shownInquiries"
       :key="inquiry.id"
-      class="p-4 hover:bg-gray-300 rounded-md cursor-pointer"
+      class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
       @click="$emit('open', idx)">
-      <div class="flex items-center justify-between">
-        <h2 class="font-bold text-lg">{{ inquiry.title }}</h2>
-        <p class="text-sm text-gray-500 min-w-[143px]">{{ convertToJSTDate(inquiry.updated_at) }}</p>
+      <h2 class="font-bold text-xl text-gray-800 mb-2">{{ inquiry.title }}</h2>
+      <div class="text-sm text-gray-500 flex items-center gap-4">
+        <span>
+          <Icon name="mdi:account-circle" class="mr-1 translate-y-0.5" />
+          {{ inquiry.email }}
+          <span v-if="user.email === inquiry.email" class="ml-2 text-xs px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full">作成者</span>
+        </span>
+        <span>
+          <Icon name="mdi:comment-text-outline" class="mr-1 translate-y-0.5" />
+          {{ inquiry.comments.length }} コメント
+        </span>
+        <span>
+          <Icon name="mdi:clock-outline" class="mr-1 translate-y-0.5" />
+          {{ convertToJSTDate(inquiry.updated_at) }}
+        </span>
       </div>
-      <div class="text-sm text-gray-500 flex items-center gap-2">
-        {{ inquiry.email }}
-        <span v-if="user.email === inquiry.email" class="text-xs px-2 py-1 bg-green-400 text-white rounded-full">作成者</span>
-      </div>
-    </li>
-  </ul>
-  <span v-else>
-    該当する問い合わせはありません。
-  </span>
+    </div>
+    <div v-if="!shownInquiries.length" class="text-center py-12">
+      <p class="text-gray-500 text-lg">該当する問い合わせはありません。</p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

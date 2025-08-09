@@ -1,24 +1,45 @@
 <template>
   <div class="w-[70%] mx-auto py-10">
-    <section class="flex gap-3 items-center">
-      <h1 class="font-bold text-xl">Inquiry</h1>
-      <button v-if="isLogin" type="button" class="w-fit px-2 py-1 text-white bg-blue-600 rounded-md text-sm font-bold" @click="openAddDialog">新規作成</button>
-    </section>
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <h1 class="text-4xl font-bold border-b-2 w-fit pb-1">問い合わせ</h1>
+        <button v-if="isLogin" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="openAddDialog">
+          <Icon name="mdi:plus" class="-ml-1 mr-2 h-5 w-5" />
+          新規作成
+        </button>
+      </div>
 
-    <section class="w-[90%] mx-auto py-10">
+      <p class="text-gray-600">ご意見・ご要望、バグ報告などはこちらへ</p>
+    </div>
+
+    <main>
       <template v-if="isShowList">
-        <input
-          v-model="searchInquiry"
-          type="text"
-          placeholder="Search inquiries..."
-          class="w-full px-4 py-2 border rounded-md outline-none" />
+        <CommonPagination
+          class="mb-8"
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @change-page="goToPage" />
+
+        <div class="mb-6">
+          <input
+            v-model="searchInquiry"
+            type="text"
+            placeholder="Search inquiries..."
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
+        </div>
 
         <InquiryDisplayList
-          :shown-inquiries
+          :shown-inquiries="paginatedItems"
           @open="openDetail" />
+
+        <CommonPagination
+          class="mt-8"
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @change-page="goToPage" />
       </template>
-      <InquiryDetail v-if="!isShowList" :inquiries="shownInquiries" :idx="selectedIdx" @update-inquiry="updateInq" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
-    </section>
+      <InquiryDetail v-else :inquiries="shownInquiries" :idx="selectedIdx" @update-inquiry="updateInq" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
+    </main>
 
     <AddDialog #="{ resolve, reject }">
       <Modal id="addInquiry" @close="reject(CLOSE_MODAL)">
@@ -31,11 +52,15 @@
 <script setup lang="ts">
 import { addComment, addInquiry, deleteComment, editComment, getInquryList, updateInquiry } from '~/composables/apis/Inquiry'
 import type { InquiryInfo, InquiryUpdateForm, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
+import CommonPagination from '~/components/common/Pagination.vue';
+import { usePagination } from '~/composables/Pagination';
 
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
 const inquiries = ref<InquiryInfo[]>([])
 const shownInquiries = computed(() => inquiries.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
+
+const { currentPage, totalPages, paginatedItems, LIMIT, goToPage } = usePagination(shownInquiries)
 
 const { isLogin } = useUserStore()
 
@@ -55,6 +80,7 @@ const openAddDialog = async () => {
   }
 }
 
+// TODO: 今は全ての問い合わせを取得しているが、ページネーションを考慮して必要な分だけ取得するようにする
 const resp = await getInquryList()
 if (resp.error.value) {
   console.error(resp.error)
@@ -96,7 +122,8 @@ const isShowList = ref(true)
 
 const selectedIdx = ref(0)
 const openDetail = (idx: number) => {
-  selectedIdx.value = idx
+  const realIndex = (currentPage.value - 1) * LIMIT + idx;
+  selectedIdx.value = realIndex
   window.scrollTo({ top: 0, behavior: 'smooth' })
   const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
 }
