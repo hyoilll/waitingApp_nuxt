@@ -17,7 +17,7 @@
         class="mb-8"
         :current-page="currentPage"
         :total-pages="totalPages"
-        @update:current-page="handlePageUpdate" />
+        @update:current-page="goToPage" />
 
       <template v-if="isShowList">
         <div class="mb-6">
@@ -29,14 +29,14 @@
         </div>
 
         <InquiryDisplayList
-          :shown-inquiries="paginatedInquiries"
+          :shown-inquiries="paginatedItems"
           @open="openDetail" />
 
         <CommonPagination
           class="mt-8"
           :current-page="currentPage"
           :total-pages="totalPages"
-          @update:current-page="handlePageUpdate" />
+          @update:current-page="goToPage" />
       </template>
       <InquiryDetail v-else :inquiries="shownInquiries" :idx="selectedIdx" @update-inquiry="updateInq" @add="add" @edit="edit" @delete="handleDelete" @return="returnPage" />
     </main>
@@ -53,25 +53,14 @@
 import { addComment, addInquiry, deleteComment, editComment, getInquryList, updateInquiry } from '~/composables/apis/Inquiry'
 import type { InquiryInfo, InquiryUpdateForm, NewCommentPayload, NewInquiryPayload } from '~/composables/types/Inquiry'
 import CommonPagination from '~/components/common/Pagination.vue';
+import { usePagination } from '~/composables/Pagination';
 
 const searchInquiry = ref('')
 const debounced = refDebounced(searchInquiry, 500)
 const inquiries = ref<InquiryInfo[]>([])
 const shownInquiries = computed(() => inquiries.value.filter((inquiry) => inquiry.title.includes(debounced.value)))
 
-const currentPage = ref(1)
-const limit = ref(10)
-const totalPages = computed(() => Math.ceil(shownInquiries.value.length / limit.value))
-const paginatedInquiries = computed(() => {
-  const start = (currentPage.value - 1) * limit.value
-  const end = start + limit.value
-  return shownInquiries.value.slice(start, end)
-})
-
-const handlePageUpdate = (page: number) => {
-  currentPage.value = page
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
+const { currentPage, totalPages, paginatedItems, LIMIT, goToPage } = usePagination(shownInquiries)
 
 const { isLogin } = useUserStore()
 
@@ -132,7 +121,7 @@ const isShowList = ref(true)
 
 const selectedIdx = ref(0)
 const openDetail = (idx: number) => {
-  const realIndex = (currentPage.value - 1) * limit.value + idx;
+  const realIndex = (currentPage.value - 1) * LIMIT + idx;
   selectedIdx.value = realIndex
   window.scrollTo({ top: 0, behavior: 'smooth' })
   const transition = document.startViewTransition(() => isShowList.value = !isShowList.value)
