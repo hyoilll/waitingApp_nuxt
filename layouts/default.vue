@@ -2,7 +2,7 @@
   <div>
     <AppHeader />
     <div
-      class="min-h-[calc(100vh-160px)] bg-gray-100"
+      class="min-h-[calc(100vh-160px)] bg-white"
       :class="{ 'flex items-center justify-center': isSignPage }">
       <slot />
     </div>
