@@ -1,7 +1,7 @@
 <template>
   <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
     <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
-    <form @submit.prevent="handleSubmit" class="space-y-4">
+    <form @submit.prevent="login" class="space-y-4">
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
         <input
@@ -40,6 +40,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useLogin } from '~/composables/useLogin';
+
 definePageMeta({
   isSignPage: true
 })
@@ -52,39 +54,9 @@ watch(supabaseUser, () => {
   }
 }, { immediate: true })
 
-interface User {
-  email: string
-  password: string
-}
+const { user, loginError, login } = useLogin()
 
-const user = reactive<User>({
-  email: '',
-  password: ''
-})
-
-const router = useRouter()
-const { setUser } = useUserStore()
-const loginError = ref('')
 const sendMailError = ref('')
-
-const handleSubmit = async () => {
-  loginError.value = ''
-  const resp = await $fetch('/api/login', {
-    method: 'post',
-    body: user
-  })
-
-  if ('error' in resp) {
-    loginError.value = resp.error
-    return
-  }
-
-  setUser(resp.user, resp.shop)
-
-  await router.push('/')
-  window.location.reload()
-}
-
 const UpdatePwDialog = createTemplatePromise()
 const resetPassword = async () => {
   sendMailError.value = ''
