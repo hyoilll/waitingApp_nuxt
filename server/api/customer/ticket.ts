@@ -6,6 +6,20 @@ export default eventHandler(async (event) => {
   const query = await getQuery(event)
   const client = await serverSupabaseClient(event)
 
+  // --- Server-side Validation ---
+  const visitorCountRaw = query.visitorCount
+  if (visitorCountRaw === null || visitorCountRaw === undefined) {
+    setResponseStatus(event, 400)
+    return { error: '人数が指定されていません。' }
+  }
+
+  const visitorCount = Number(visitorCountRaw)
+  if (isNaN(visitorCount) || !Number.isInteger(visitorCount) || visitorCount < 1 || visitorCount > 30) {
+    setResponseStatus(event, 400)
+    return { error: '人数の値が不正です。1から30までの整数で指定してください。' }
+  }
+  // --- End of Validation ---
+
   try {
     // 1. shops テーブルの current_number をインクリメント
     // まず current_number を取得
@@ -38,7 +52,7 @@ export default eventHandler(async (event) => {
     // 2. entries テーブルに新しいエントリーを作成
     const { data: newEntry, error: entryError } = await client
       .from('entries')
-      .insert([{ id: uuidv4(), shop_id: shopData.id, entry_number: newTicketNumber, visitor_count: query.visitorCount }])
+      .insert([{ id: uuidv4(), shop_id: shopData.id, entry_number: newTicketNumber, visitor_count: visitorCount }])
       .select('id')
       .single();
 
