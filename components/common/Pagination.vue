@@ -1,6 +1,26 @@
 <template>
   <nav v-if="totalPages > 1" aria-label="Pagination">
-    <ul class="flex items-center justify-center gap-2">
+    <!-- Mobile View -->
+    <div class="flex items-center justify-center gap-4 md:hidden">
+      <button
+        :disabled="currentPage === 1"
+        @click="changePage(currentPage - 1)"
+        class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+        <Icon name="mdi:chevron-left" />
+      </button>
+      <span class="font-medium text-gray-700">
+        {{ currentPage }} / {{ totalPages }}
+      </span>
+      <button
+        :disabled="currentPage === totalPages"
+        @click="changePage(currentPage + 1)"
+        class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+        <Icon name="mdi:chevron-right" />
+      </button>
+    </div>
+
+    <!-- Desktop View -->
+    <ul class="hidden md:flex items-center justify-center gap-2">
       <!-- Go to First Button -->
       <li>
         <button
@@ -92,25 +112,20 @@ const pages = computed<PageItem[]>(() => {
   const startPage = Math.max(2, currentPage - 2);
   const endPage = Math.min(totalPages - 1, currentPage + 2);
 
-  // First page
   range.push({ page: 1, isDisabled: currentPage === 1, isVisible: true });
 
-  // Ellipsis at the start
   if (startPage > 2) {
-    range.push({ page: -1, isDisabled: true, isVisible: false }); // placeholder page -1 for ellipsis
+    range.push({ page: -1, isDisabled: true, isVisible: false });
   }
 
-  // Visible page numbers
   for (let i = startPage; i <= endPage; i++) {
     range.push({ page: i, isDisabled: i === currentPage, isVisible: true });
   }
 
-  // Ellipsis at the end
   if (endPage < totalPages - 1) {
-    range.push({ page: -2, isDisabled: true, isVisible: false }); // placeholder page -2 for ellipsis
+    range.push({ page: -2, isDisabled: true, isVisible: false });
   }
 
-  // Last page
   range.push({ page: totalPages, isDisabled: currentPage === totalPages, isVisible: true });
 
   return range;
@@ -120,7 +135,6 @@ const changePage = (page: number) => {
   if (page < 1 || page > totalPages || page === currentPage) {
     return
   }
-
   emit('changePage', page);
 };
 </script>
