@@ -1,7 +1,7 @@
 <template>
-  <section class="w-[70%] mx-auto py-10">
+  <section class="w-full lg:w-[70%] mx-auto py-10 px-4 sm:px-6 lg:px-8">
     <div>
-      <h1 class="text-4xl font-bold border-b-2 w-fit pb-1">Qパス</h1>
+      <h1 class="text-3xl sm:text-4xl font-bold border-b-2 w-fit pb-1">Qパス</h1>
       <p class="text-gray-600">呼び出しも管理もワンタッチ。順番待ちの新体験。</p>
     </div>
 
@@ -11,7 +11,7 @@
         class="relative w-fit mx-auto group"
         anchor="admin"
         title="管理者"
-        customClass="flex items-center justify-center text-3xl font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-500 w-fit px-5 py-3 rounded-full shadow-lg"
+        customClass="flex items-center justify-center text-2xl sm:text-3xl font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-500 w-fit px-5 py-3 rounded-full shadow-lg"
         @move="scrollToAnchor('admin')" />
 
       <div class=" mt-5 space-y-20">
@@ -38,7 +38,7 @@
         class="relative w-fit mx-auto group"
         anchor="customer"
         title="お客様"
-        customClass="flex items-center justify-center text-3xl font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-500 w-fit px-5 py-3 rounded-full shadow-lg"
+        customClass="flex items-center justify-center text-2xl sm:text-3xl font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-500 w-fit px-5 py-3 rounded-full shadow-lg"
         @move="scrollToAnchor('customer')" />
 
       <div class="mt-5 space-y-20">
