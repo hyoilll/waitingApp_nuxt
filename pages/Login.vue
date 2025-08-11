@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+  <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg md:shadow-md">
     <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
     <form @submit.prevent="login" class="space-y-4">
       <div>

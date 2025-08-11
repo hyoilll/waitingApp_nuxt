@@ -21,7 +21,7 @@
       <p v-if="errMsg.length" class="text-red-500 font-bold">{{ errMsg }}</p>
       <button
         type="submit"
-        class="w-full px-4 py-2 text-white bg-blue-600 rounded-md">
+        class="w-full px-4 py-2 text-white bg-indigo-600 md:hover:bg-indigo-700 rounded-md">
         Send
       </button>
     </form>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+  <div class="bg-white p-6 rounded-lg md:shadow-md w-full max-w-sm">
     <h2 class="text-2xl font-bold text-center mb-4">Logout</h2>
     <p class="text-gray-600 text-center mb-6">
       Are you sure you want to log out?
