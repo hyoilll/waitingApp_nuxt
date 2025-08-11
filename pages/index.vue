@@ -4,11 +4,11 @@
       <img src="~/assets/imgs/wating.png" alt="Wating" class="w-full h-[600px]" />
       <div class="absolute top-0 left-0 w-full h-[600px] bg-black opacity-50"></div>
       <div class="absolute top-40 left-[10%] text-white flex flex-col gap-5">
-        <div class="flex flex-col gap-4 text-6xl font-bold">
+        <div class="flex flex-col gap-4 font-bold text-3xl md:text-6xl">
           <span>お客様をお待たせしない</span>
           <span>を実現。</span>
         </div>
-        <div class="ml-5 flex flex-col gap-3 text-3xl font-medium">
+        <div class="ml-5 flex flex-col gap-3 text-xl font-medium md:text-3xl">
           <span>お店の新しい顧客体験を創造</span>
           <span>しませんか？</span>
         </div>
@@ -100,11 +100,11 @@
 
       <h1 class="font-bold text-center text-xl">導入までの流れ</h1>
 
-      <div class="w-full bg-white rounded-lg shadow-lg p-6 flex justify-between items-center">
+      <div class="w-full bg-white rounded-lg shadow-lg p-6 flex items-center flex-col gap-5 md:flex-row md:justify-between">
         <ReuseIntroductionTemplate icon="mdi:file-document-edit-outline" title="お申し込み" description="簡単な申込書作成でOK" />
-        <Icon name="mdi:arrow-right-thick" class="text-indigo-600" size="3em" />
+        <Icon name="mdi:arrow-right-thick" class="text-indigo-600 rotate-90 md:rotate-0" size="3em" />
         <ReuseIntroductionTemplate icon="mdi:cog" title="準備・設定" description="システムにお店情報を追加" />
-        <Icon name="mdi:arrow-right-thick" class="text-indigo-600" size="3em" />
+        <Icon name="mdi:arrow-right-thick" class="text-indigo-600 rotate-90 md:rotate-0" size="3em" />
         <ReuseIntroductionTemplate icon="mdi:rocket-launch" title="導入・運用開始" description="翌日からすぐに利用開始" />
       </div>
     </section>
@@ -112,11 +112,11 @@
     <section class="w-[70%] mx-auto flex flex-col gap-3">
       <DefineFAQTemplate #="{ question, answer }">
         <div class="w-full bg-white rounded-lg shadow-lg p-3 flex flex-col gap-2">
-          <div class="flex gap-2 items-center">
+          <div class="flex flex-col md:flex-row md:items-center md:gap-2">
             <Icon name="mdi:alpha-q-circle" class="text-indigo-600" size="2em" />
             <span>{{ question }}</span>
           </div>
-          <div class="flex gap-2 items-center">
+          <div class="flex flex-col md:flex-row md:items-center md:gap-2">
             <Icon name="mdi:alpha-a-circle-outline" class="text-indigo-600" size="2em" />
             <span>{{ answer }}</span>
           </div>
