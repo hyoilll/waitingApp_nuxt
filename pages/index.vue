@@ -18,7 +18,7 @@
     <section class="w-[70%] mx-auto">
       <DefineDiscriptionTemplate #="{ icon, text }">
         <div class="w-[250px] h-[250px] bg-white rounded-lg shadow-lg flex items-center justify-center flex-col gap-2 p-2 text-center">
-          <Icon :name="icon" class="text-blue-400" size="4em" />
+          <Icon :name="icon" class="text-indigo-600" size="4em" />
           <span>{{ text }}</span>
         </div>
       </DefineDiscriptionTemplate>
@@ -40,14 +40,14 @@
       <DefineMeritTemplate #="{ icon, title, descriptions }">
         <div>
           <div class="flex items-center gap-1">
-            <Icon :name="icon" class="text-blue-400" size="2em" />
+            <Icon :name="icon" class="text-indigo-600" size="2em" />
             <strong>{{ title }}</strong>
           </div>
 
           <ul class="ml-8">
             <li v-for="(description, index) in descriptions" :key="index" :class="{ 'mb-4': index < descriptions.length - 1 }">
               <div class="flex items-center gap-2 mb-1">
-                <span class="text-blue-400 text-bold">{{ index + 1 }}.</span>
+                <span class="text-indigo-600 text-bold">{{ index + 1 }}.</span>
                 <span class="text-md">{{ description.title }}</span>
               </div>
               <span class="text-md">{{ description.value }}</span>
@@ -88,7 +88,7 @@
     <section class="w-[70%] mx-auto flex flex-col gap-3">
       <DefineIntroductionTemplate #="{ icon, title, description }">
         <div class="flex flex-col items-center gap-3 w-[200px]">
-          <span class="p-3 bg-blue-300 rounded-full w-fit flex items-center justify-center">
+          <span class="p-3 bg-indigo-500 rounded-full w-fit flex items-center justify-center">
             <Icon :name="icon" class="text-white" size="3em" />
           </span>
           <div class="flex flex-col items-center gap-2">
@@ -102,9 +102,9 @@
 
       <div class="w-full bg-white rounded-lg shadow-lg p-6 flex justify-between items-center">
         <ReuseIntroductionTemplate icon="mdi:file-document-edit-outline" title="お申し込み" description="簡単な申込書作成でOK" />
-        <Icon name="mdi:arrow-right-thick" class="text-blue-400" size="3em" />
+        <Icon name="mdi:arrow-right-thick" class="text-indigo-600" size="3em" />
         <ReuseIntroductionTemplate icon="mdi:cog" title="準備・設定" description="システムにお店情報を追加" />
-        <Icon name="mdi:arrow-right-thick" class="text-blue-400" size="3em" />
+        <Icon name="mdi:arrow-right-thick" class="text-indigo-600" size="3em" />
         <ReuseIntroductionTemplate icon="mdi:rocket-launch" title="導入・運用開始" description="翌日からすぐに利用開始" />
       </div>
     </section>
@@ -113,11 +113,11 @@
       <DefineFAQTemplate #="{ question, answer }">
         <div class="w-full bg-white rounded-lg shadow-lg p-3 flex flex-col gap-2">
           <div class="flex gap-2 items-center">
-            <Icon name="mdi:alpha-q-circle" class="text-blue-400" size="2em" />
+            <Icon name="mdi:alpha-q-circle" class="text-indigo-600" size="2em" />
             <span>{{ question }}</span>
           </div>
           <div class="flex gap-2 items-center">
-            <Icon name="mdi:alpha-a-circle-outline" class="text-blue-400" size="2em" />
+            <Icon name="mdi:alpha-a-circle-outline" class="text-indigo-600" size="2em" />
             <span>{{ answer }}</span>
           </div>
         </div>

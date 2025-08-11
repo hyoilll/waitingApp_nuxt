@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-[300px] p-2 gap-5" :class="isReverse ? 'flex-row-reverse' : ''">
-    <img :src="useAsset(image, type)" alt="Waiting" class="shadow-xl p-1 bg-blue-400 brightness-125" />
+    <img :src="useAsset(image, type)" alt="Waiting" class="shadow-xl p-1 bg-indigo-500 brightness-125" />
     <div class="w-[55%] p-3">
       <AnchorLabel
         class="relative group"
