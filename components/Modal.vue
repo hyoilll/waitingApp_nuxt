@@ -3,7 +3,7 @@
     :id
     ref="dialogRef"
     @mousedown="handleOutSideClick($event)"
-    class="min-w-[100px] min-h-[100px] w-[50%] rounded-md shadow-lg p-4">
+    class="min-w-[100px] min-h-[100px] w-[90%] md:w-[50%] rounded-md shadow-lg p-4">
     <section class="h-full flex items-center justify-center">
       <slot />
     </section>
