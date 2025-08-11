@@ -6,13 +6,13 @@
         :key="comment.id"
         class="p-4 rounded-lg"
         :class="isCreator(comment.user.email) ? 'bg-indigo-50' : 'bg-white border'">
-        <div class="flex justify-between items-center mb-2">
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-gray-800">{{ comment.user.email }}</span>
-            <span v-if="isLogin && isCreator(comment.user.email)" class="text-xs px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full">作成者</span>
+        <div class="flex flex-col items-start md:flex-row md:justify-between md:items-center mb-2 gap-2 md:gap-0">
+          <div class="flex flex-col md:flex-row md:items-center gap-2">
+            <span class="font-bold text-gray-800 break-all">{{ comment.user.email }}</span>
+            <span v-if="isLogin && isCreator(comment.user.email)" class="text-xs w-fit px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full whitespace-nowrap">作成者</span>
             <!-- TODO: 管理者ラベルも追加 -->
           </div>
-          <div class="flex items-center gap-3 text-sm text-gray-500">
+          <div class="flex items-center gap-3 text-sm text-gray-500 self-end md:self-auto">
             <template v-if="isLogin && isCreator(comment.user.email)">
               <button class="text-green-500 hover:text-green-600" @click="editComment(comment.id, comment.content)">
                 <Icon name="mdi:pencil" />

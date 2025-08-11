@@ -2,16 +2,16 @@
   <div class="bg-white rounded-lg shadow-xl overflow-hidden">
     <div class="p-6">
       <!-- ヘッダー：戻るボタン、編集、ページネーション -->
-      <div class="flex justify-between items-center mb-6 pb-4 border-b">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b gap-4 md:gap-0">
         <button
           type="button"
-          class="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          class="inline-flex whitespace-nowrap items-center gap-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           @click="$emit('return')">
           <Icon name="mdi:arrow-left" />
           一覧に戻る
         </button>
 
-        <div class="flex items-center gap-4">
+        <div class="flex w-full justify-between md:justify-end md:items-center md:gap-4">
           <!-- 編集ボタン -->
           <div v-if="user.email === inquiries[selectedIdx].email">
             <button
@@ -57,10 +57,10 @@
 
       <!-- 詳細内容 -->
       <component :is="isEdit ? 'form' : 'div'" id="updateForm" class="space-y-6" @submit.prevent="updateInquiry($event.target)">
-        <h1 v-if="!isEdit" class="text-3xl font-bold text-gray-900">{{ inquiries[selectedIdx].title }}</h1>
-        <input v-else type="text" name="title" :value="inquiries[selectedIdx].title" class="w-full text-3xl font-bold p-2 border-b-2 focus:outline-none focus:border-indigo-500" required />
+        <h1 v-if="!isEdit" class="text-2xl md:text-3xl font-bold text-gray-900">{{ inquiries[selectedIdx].title }}</h1>
+        <input v-else type="text" name="title" :value="inquiries[selectedIdx].title" class="w-full text-2xl md:text-3xl font-bold p-2 border-b-2 focus:outline-none focus:border-indigo-500" required />
 
-        <div class="flex items-center gap-6 text-sm text-gray-500">
+        <div class="flex flex-col items-start md:flex-row md:items-center gap-2 md:gap-6 text-sm text-gray-500">
           <span>
             <Icon name="mdi:account-circle" class="mr-1 translate-y-0.5" />{{ inquiries[selectedIdx].email }}
           </span>
