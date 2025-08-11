@@ -3,7 +3,7 @@
     <div
       v-for="inquiry, idx in shownInquiries"
       :key="inquiry.id"
-      class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+      class="bg-white p-6 rounded-lg shadow-md md:hover:shadow-lg transition-shadow duration-300 cursor-pointer"
       @click="$emit('open', idx)">
       <h2 class="font-bold text-lg md:text-xl text-gray-800 mb-2">{{ inquiry.title }}</h2>
       <div class="text-sm text-gray-500 flex flex-col items-start md:flex-row md:items-center gap-2 md:gap-4">

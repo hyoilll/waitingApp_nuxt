@@ -20,7 +20,7 @@
             <NuxtLink to="/dashboard/modeselect" class="action-button" target="_blank">
               Dashboard
             </NuxtLink>
-            <NuxtLink to="/logout" class="nav-link !text-red-500 hover:!text-red-700">Signout</NuxtLink>
+            <NuxtLink to="/logout" class="nav-link !text-red-500 md:hover:!text-red-700">Signout</NuxtLink>
           </template>
           <template v-else>
             <NuxtLink to="/login" class="nav-link" active-class="active-link">Signin</NuxtLink>

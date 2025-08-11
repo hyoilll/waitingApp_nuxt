@@ -3,7 +3,7 @@
     <div class="mb-8">
       <div class="flex flex-col items-start md:flex-row md:items-center md:justify-between">
         <h1 class="text-3xl md:text-4xl font-bold border-b-2 w-fit pb-1 mb-4 md:mb-0">問い合わせ</h1>
-        <button v-if="isLogin" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="openAddDialog">
+        <button v-if="isLogin" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 md:hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="openAddDialog">
           <Icon name="mdi:plus" class="-ml-1 mr-2 h-5 w-5" />
           新規作成
         </button>

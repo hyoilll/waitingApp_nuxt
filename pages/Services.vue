@@ -25,7 +25,7 @@
             ※ 「呼出」押下後のお客様の画面は
             <NuxtLink
               href="#customer_3"
-              class="cursor-pointer text-blue-500 hover:underline"
+              class="cursor-pointer text-blue-500 md:hover:underline"
               @click="scrollToAnchor('customer_3')">ここ</NuxtLink>
           </p>
         </ServiceItem>

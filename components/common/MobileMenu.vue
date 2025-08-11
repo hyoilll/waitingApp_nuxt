@@ -25,7 +25,7 @@
               </a>
             </li>
             <li>
-              <a @click="navigate('/logout')" class="text-xl text-red-500 hover:text-red-700 block text-center cursor-pointer">
+              <a @click="navigate('/logout')" class="text-xl text-red-500 md:hover:text-red-700 block text-center cursor-pointer">
                 Signout
               </a>
             </li>

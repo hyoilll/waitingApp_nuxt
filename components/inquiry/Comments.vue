@@ -17,7 +17,7 @@
               <button class="text-green-500 hover:text-green-600" @click="editComment(comment.id, comment.content)">
                 <Icon name="mdi:pencil" />
               </button>
-              <button class="text-red-500 hover:text-red-600" @click="$emit('delete', comment.id)">
+              <button class="text-red-500 md:hover:text-red-600" @click="$emit('delete', comment.id)">
                 <Icon name="mdi:delete" />
               </button>
             </template>

@@ -19,7 +19,7 @@
 
     <div class="flex justify-center gap-3">
       <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300" @click="$emit('close')">キャンセル</button>
-      <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700">送信</button>
+      <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md md:hover:bg-indigo-700">送信</button>
     </div>
   </form>
 </template>

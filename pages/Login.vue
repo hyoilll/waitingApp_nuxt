@@ -26,7 +26,7 @@
       <button type="button" class="text-blue-500 font-bold text-right" @click="resetPassword">forgot password?</button>
       <button
         type="submit"
-        class="w-full px-4 py-2 text-white bg-blue-600 rounded-md">
+        class="w-full px-4 py-2 text-white bg-indigo-600 md:hover:bg-indigo-700 rounded-md">
         Sign In
       </button>
     </form>

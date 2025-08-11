@@ -6,7 +6,7 @@
         <button
           :disabled="currentPage === 1"
           @click="changePage(1)"
-          class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+          class="px-3 py-2 rounded-md text-gray-600 bg-white md:hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
           <Icon name="mdi:chevron-double-left" />
         </button>
       </li>
@@ -15,7 +15,7 @@
         <button
           :disabled="currentPage === 1"
           @click="changePage(currentPage - 1)"
-          class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+          class="px-3 py-2 rounded-md text-gray-600 bg-white md:hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
           <Icon name="mdi:chevron-left" />
         </button>
       </li>
@@ -28,7 +28,7 @@
           @click="changePage(page.page)"
           :class="{
             'bg-indigo-600 text-white': page.page === currentPage,
-            'bg-white text-gray-700 hover:bg-gray-50': page.page !== currentPage
+            'bg-white text-gray-700 md:hover:bg-gray-50': page.page !== currentPage
           }"
           class="px-4 py-2 rounded-md font-medium border">
           {{ page.page }}
@@ -41,7 +41,7 @@
         <button
           :disabled="currentPage === totalPages"
           @click="changePage(currentPage + 1)"
-          class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+          class="px-3 py-2 rounded-md text-gray-600 bg-white md:hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
           <Icon name="mdi:chevron-right" />
         </button>
       </li>
@@ -50,7 +50,7 @@
         <button
           :disabled="currentPage === totalPages"
           @click="changePage(totalPages)"
-          class="px-3 py-2 rounded-md text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
+          class="px-3 py-2 rounded-md text-gray-600 bg-white md:hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border">
           <Icon name="mdi:chevron-double-right" />
         </button>
       </li>

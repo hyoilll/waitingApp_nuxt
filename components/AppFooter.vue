@@ -75,7 +75,7 @@ onUnmounted(() => {
 
 <style scoped>
 .footer-link {
-  @apply text-gray-600 hover:text-indigo-600 transition duration-300;
+  @apply text-gray-600 md:hover:text-indigo-600 transition duration-300;
 }
 
 /* .footer-icon {

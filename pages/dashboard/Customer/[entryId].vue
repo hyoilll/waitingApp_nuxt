@@ -18,7 +18,7 @@
             </li>
           </ul>
         </div>
-        <button @click="cancelWaiting" :disabled="isCancelling" class="w-full bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 disabled:opacity-50">
+        <button @click="cancelWaiting" :disabled="isCancelling" class="w-full bg-red-500 text-white font-semibold py-2 px-4 rounded-lg md:hover:bg-red-700 disabled:opacity-50">
           {{ isCancelling ? 'キャンセル中...' : '順番待ちをキャンセル' }}
         </button>
       </template>

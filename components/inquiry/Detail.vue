@@ -23,7 +23,7 @@
               編集
             </button>
             <div v-else class="flex gap-2">
-              <button form="updateForm" class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+              <button form="updateForm" class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 md:hover:bg-green-700">
                 <Icon name="mdi:check" />
                 更新
               </button>
@@ -39,14 +39,14 @@
           <div class="flex items-center gap-2">
             <button
               type="button"
-              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 disabled:opacity-50"
+              class="p-2 rounded-full text-gray-500 md:hover:bg-gray-100 disabled:opacity-50"
               :disabled="!enableLeftBtn"
               @click="moveLeft">
               <Icon name="mdi:chevron-left" size="1.5em" />
             </button>
             <button
               type="button"
-              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 disabled:opacity-50"
+              class="p-2 rounded-full text-gray-500 md:hover:bg-gray-100 disabled:opacity-50"
               :disabled="!enableRightBtn"
               @click="moveRight">
               <Icon name="mdi:chevron-right" size="1.5em" />
@@ -89,7 +89,7 @@
           <button
             type="submit"
             class="px-4 py-2 text-sm font-medium rounded-md shadow-sm text-white"
-            :class="isEditFlag ? 'bg-red-600 hover:bg-red-700' : 'bg-indigo-600 hover:bg-indigo-700'">
+            :class="isEditFlag ? 'bg-red-600 md:hover:bg-red-700' : 'bg-indigo-600 hover:bg-indigo-700'">
             {{ isEditFlag ? 'Update Comment' : 'Submit Comment' }}
           </button>
         </div>
