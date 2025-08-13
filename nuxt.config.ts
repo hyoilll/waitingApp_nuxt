@@ -4,7 +4,25 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', '@nuxt/test-utils/module', '@nuxt/icon', 'nuxt-anchorscroll'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/supabase',
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    'dayjs-nuxt',
+    '@nuxt/test-utils/module',
+    '@nuxt/icon',
+    'nuxt-anchorscroll',
+    '@nuxtjs/i18n',
+  ],
+  i18n: {
+    locales: [
+      { code: 'ja', name: 'Japaness', file: 'ja.json' },
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'ko', name: 'Korean', file: 'ko.json' },
+    ],
+    defaultLocale: 'en',
+  },
   supabase: {
     redirectOptions: {
       login: '/login',
