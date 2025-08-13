@@ -1,0 +1,31 @@
+{
+  "pageTitle": {
+    "login": "Login",
+    "service": "Services",
+    "inquiry": "Inquiry",
+    "signup": "Sign Up",
+    "updatePassword": "Update Password",
+    "dashboard": "Dashboard"
+  },
+  "header": {
+    "service": "Services",
+    "inquiry": "Inquiry",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "dashboard": "Dashboard"
+  },
+  "button": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "send": "Send",
+    "close": "Close",
+    "back": "Back"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "pageTitle": {
+    "login": "로그인",
+    "service": "서비스 목록",
+    "inquiry": "문의하기",
+    "signup": "신규 등록",
+    "updatePassword": "비밀번호 변경",
+    "dashboard": "대시보드"
+  },
+  "header": {
+    "service": "서비스",
+    "inquiry": "문의하기",
+    "login": "로그인",
+    "signup": "신규 등록",
+    "logout": "로그아웃",
+    "dashboard": "대시보드"
+  },
+  "button": {
+    "submit": "전송",
+    "cancel": "취소",
+    "add": "추가",
+    "edit": "수정",
+    "delete": "삭제",
+    "login": "로그인",
+    "signup": "신규 등록",
+    "logout": "로그아웃",
+    "send": "전송",
+    "close": "닫기",
+    "back": "뒤로"
+  }
+}

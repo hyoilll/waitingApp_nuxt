@@ -1,0 +1,31 @@
+{
+  "pageTitle": {
+    "login": "ログイン",
+    "service": "サービス一覧",
+    "inquiry": "お問い合わせ",
+    "signup": "新規登録",
+    "updatePassword": "パスワードの更新",
+    "dashboard": "ダッシュボード"
+  },
+  "header": {
+    "service": "サービス",
+    "inquiry": "お問い合わせ",
+    "login": "ログイン",
+    "signup": "新規登録",
+    "logout": "ログアウト",
+    "dashboard": "ダッシュボード"
+  },
+  "button": {
+    "submit": "送信",
+    "cancel": "キャンセル",
+    "add": "追加",
+    "edit": "編集",
+    "delete": "削除",
+    "login": "ログイン",
+    "signup": "新規登録",
+    "logout": "ログアウト",
+    "send": "送信",
+    "close": "閉じる",
+    "back": "戻る"
+  }
+}
