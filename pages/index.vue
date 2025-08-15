@@ -5,12 +5,12 @@
       <div class="absolute top-0 left-0 w-full h-[600px] bg-black opacity-50"></div>
       <div class="absolute top-40 left-[10%] text-white flex flex-col gap-5">
         <div class="flex flex-col gap-4 font-bold text-3xl md:text-6xl">
-          <span>お客様をお待たせしない</span>
-          <span>を実現。</span>
+          <span>{{ $t('index.hero.mainText1') }}</span>
+          <span>{{ $t('index.hero.mainText2') }}</span>
         </div>
         <div class="ml-5 flex flex-col gap-3 text-xl font-medium md:text-3xl">
-          <span>お店の新しい顧客体験を創造</span>
-          <span>しませんか？</span>
+          <span>{{ $t('index.hero.subText1') }}</span>
+          <span>{{ $t('index.hero.subText2') }}</span>
         </div>
       </div>
     </section>
@@ -26,13 +26,13 @@
       <div class="flex flex-wrap justify-center gap-10">
         <ReuseDiscriptionTemplate
           icon="mdi:alarm"
-          text="お客様を呼びに行ったり、行列の整理に時間を取られたり…お店の運営には、見えない「待ち時間」に関する課題があります。" />
+          :text="$t('index.description.card1')" />
         <ReuseDiscriptionTemplate
           icon="mdi:qrcode"
-          text="QRコード一つで整理券発行から呼び出しまで完結し、お客様もスタッフもストレスなく過ごせる新しい店舗体験を実現します。" />
+          :text="$t('index.description.card2')" />
         <ReuseDiscriptionTemplate
           icon="mdi:account-multiple"
-          text="私たちは、そんなお店の皆様のために、お客様の「待つ」をなくし、よりスムーズな店舗運営をサポートするWebサービスを提供しています。" />
+          :text="$t('index.description.card3')" />
       </div>
     </section>
 
@@ -48,40 +48,25 @@
             <li v-for="(description, index) in descriptions" :key="index" :class="{ 'mb-4': index < descriptions.length - 1 }">
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-indigo-600 text-bold">{{ index + 1 }}.</span>
-                <span class="text-md">{{ description.title }}</span>
+                <span class="text-md">{{ description.title.loc.source }}</span>
               </div>
-              <span class="text-md">{{ description.value }}</span>
+              <span class="text-md">{{ description.value.loc.source }}</span>
             </li>
           </ul>
         </div>
       </DefineMeritTemplate>
 
-      <h1 class="font-bold text-center text-xl">「Qパス」を導入することで、お店とお客様、双方に嬉しい変化が生まれます。</h1>
+      <h1 class="font-bold text-center text-xl">{{ $t('index.merit.title') }}</h1>
 
       <div class="flex flex-col gap-2">
         <ReuseMeritTemplate
           icon="mdi:emoticon-happy-outline"
-          title="スタッフの負担を大幅軽減"
-          :descriptions="[
-            { title: '業務効率の向上', value: 'お客様の呼び出しは、ボタン一つで完了。スタッフがいちいち呼びに行ったり、列の整理に張り付いたりする手間がなくなります。その分、本来の接客や調理、商品準備など、売上に直結する業務に集中できます。' },
-            { title: 'スムーズなオペレーション', value: '混雑時でも混乱なくお客様を誘導でき、店内外の状況を常に把握しやすくなります。新人スタッフでも簡単に操作できるため、教育コストも抑えられます。' }
-          ]" />
+          :title="$t('index.merit.staff.title')"
+          :descriptions="$tm('index.merit.staff.descriptions')" />
         <ReuseMeritTemplate
           icon="mdi:cards-heart-outline"
-          title="お客様の満足度とリピート率を向上"
-          :descriptions="[
-            { title: '待ち時間のストレスを解消', value: 'お客様はもう、お店の前でただ待つ必要はありません。順番が来るまで自由に時間を過ごせることで、待ち時間に対する不満が解消され、来店時の満足度が向上します。' },
-            { title: '来店機会の創出', value: '「並びたくない」という理由で入店を諦めていたお客様も、安心して来店できるようになります。これにより、潜在的な顧客層を取り込み、来店機会を増やすことができます。' },
-            { title: '質の高い顧客体験を提供', value: '待ち時間の快適さが、お店全体の印象アップに繋がり、お客様の再来店や口コミを促進します。' }
-          ]" />
-        <!-- TODO: 文章など調整しないといけない
-         <ReuseMeritTemplate
-          icon="mdi:security"
-          title="セキュリティー問題の心配なし"
-          :descriptions="[
-            { title: '簡単な会員登録', value: 'お店の名前とパスワードを入力し、普段使ってるメールアドレスに届く確認リンクをクリックするだけで会員登録完了します。' },
-            { title: 'アプリインストールなし', value: 'お客様からしてもアプリインストールなしで、qrコードを読み取るだけどWebページに遷移され整理券が発見できます。' },
-          ]" /> -->
+          :title="$t('index.merit.customer.title')"
+          :descriptions="$tm('index.merit.customer.descriptions')" />
       </div>
     </section>
 
@@ -98,14 +83,14 @@
         </div>
       </DefineIntroductionTemplate>
 
-      <h1 class="font-bold text-center text-xl">導入までの流れ</h1>
+      <h1 class="font-bold text-center text-xl">{{ $t('index.introduction.title') }}</h1>
 
       <div class="w-full bg-white rounded-lg shadow-lg p-6 flex items-center flex-col gap-5 md:flex-row md:justify-between">
-        <ReuseIntroductionTemplate icon="mdi:file-document-edit-outline" title="お申し込み" description="簡単な申込書作成でOK" />
+        <ReuseIntroductionTemplate icon="mdi:file-document-edit-outline" :title="$t('index.introduction.step1.title')" :description="$t('index.introduction.step1.description')" />
         <Icon name="mdi:arrow-right-thick" class="text-indigo-600 rotate-90 md:rotate-0" size="3em" />
-        <ReuseIntroductionTemplate icon="mdi:cog" title="準備・設定" description="システムにお店情報を追加" />
+        <ReuseIntroductionTemplate icon="mdi:cog" :title="$t('index.introduction.step2.title')" :description="$t('index.introduction.step2.description')" />
         <Icon name="mdi:arrow-right-thick" class="text-indigo-600 rotate-90 md:rotate-0" size="3em" />
-        <ReuseIntroductionTemplate icon="mdi:rocket-launch" title="導入・運用開始" description="翌日からすぐに利用開始" />
+        <ReuseIntroductionTemplate icon="mdi:rocket-launch" :title="$t('index.introduction.step3.title')" :description="$t('index.introduction.step3.description')" />
       </div>
     </section>
 
@@ -123,13 +108,13 @@
         </div>
       </DefineFAQTemplate>
 
-      <h1 class="font-bold text-center text-xl">よくある質問</h1>
+      <h1 class="font-bold text-center text-xl">{{ $t('index.faq.title') }}</h1>
 
       <div class="flex flex-col gap-2">
-        <ReuseFAQTemplate question="Qパスの導入にはどれくらいの時間がかかりますか？" answer="お申し込みから運用開始まで、最短で翌日からご利用いただけます。" />
-        <ReuseFAQTemplate question="導入にあたって特別な設備は必要ですか？" answer="特別な設備は不要で、スマートフォンやタブレットがあれば簡単に導入できます。" />
-        <ReuseFAQTemplate question="導入後のサポートはありますか？" answer="はい、導入後も専任のサポートチームが対応いたしますので、ご安心ください。" />
-        <ReuseFAQTemplate question="お店別にカスタマイズはできますか？" answer="はい、申し込みいただければ、お店別にカスタマイズ対応できます。" />
+        <ReuseFAQTemplate :question="$t('index.faq.item1.question')" :answer="$t('index.faq.item1.answer')" />
+        <ReuseFAQTemplate :question="$t('index.faq.item2.question')" :answer="$t('index.faq.item2.answer')" />
+        <ReuseFAQTemplate :question="$t('index.faq.item3.question')" :answer="$t('index.faq.item3.answer')" />
+        <ReuseFAQTemplate :question="$t('index.faq.item4.question')" :answer="$t('index.faq.item4.answer')" />
       </div>
     </section>
   </div>
