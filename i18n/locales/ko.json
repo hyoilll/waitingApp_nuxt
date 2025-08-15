@@ -1,15 +1,8 @@
 {
-  "pageTitle": {
-    "login": "로그인",
-    "service": "서비스 목록",
-    "inquiry": "문의하기",
-    "signup": "신규 등록",
-    "updatePassword": "비밀번호 변경",
-    "dashboard": "대시보드"
-  },
   "header": {
+    "home": "홈",
     "service": "서비스",
-    "inquiry": "문의하기",
+    "inquiry": "문의",
     "login": "로그인",
     "signup": "신규 등록",
     "logout": "로그아웃",

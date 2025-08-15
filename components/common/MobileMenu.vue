@@ -11,7 +11,7 @@
       <ul class="space-y-6">
         <li v-for="link in navLinks" :key="link.to">
           <a @click="navigate(link.to)" class="text-xl text-gray-700 hover:text-indigo-600 cursor-pointer">
-            {{ link.text }}
+            {{ $t(link.text) }}
           </a>
         </li>
       </ul>
@@ -21,24 +21,24 @@
           <template v-if="isLogin">
             <li>
               <a @click="navigate('/dashboard/modeselect', true)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-center block cursor-pointer">
-                Dashboard
+                {{ $t('header.dashboard') }}
               </a>
             </li>
             <li>
               <a @click="navigate('/logout')" class="text-xl text-red-500 md:hover:text-red-700 block text-center cursor-pointer">
-                Signout
+                {{ $t('header.logout') }}
               </a>
             </li>
           </template>
           <template v-else>
             <li>
               <a @click="navigate('/login')" class="text-xl text-gray-700 hover:text-indigo-600 block text-center cursor-pointer">
-                Signin
+                {{ $t('header.login') }}
               </a>
             </li>
             <li>
-              <a @click="navigate('/signup')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-center block cursor-pointer">
-                無料で会員登録
+              <a @click="navigate('/signup')" class="text-xl text-gray-700 hover:text-indigo-600 block text-center cursor-pointer">
+                {{ $t('header.signup') }}
               </a>
             </li>
           </template>

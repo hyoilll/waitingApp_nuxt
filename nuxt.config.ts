@@ -49,6 +49,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       QR_CODE_MOVE_PAGE_URL: process.env.QR_CODE_MOVE_PAGE_URL || 'http://localhost:3000',
+      DEFAULT_LOCALE: process.env.DEFAULT_LOCALE || 'ja',
     }
   },
   alias: {

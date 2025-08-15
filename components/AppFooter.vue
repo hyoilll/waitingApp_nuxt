@@ -10,9 +10,9 @@
 
         <!-- Navigation Links -->
         <nav class="flex gap-8 mb-6 md:mb-0">
-          <NuxtLink to="/" class="footer-link">Home</NuxtLink>
-          <NuxtLink to="/services" class="footer-link">Services</NuxtLink>
-          <NuxtLink to="/inquiry" class="footer-link">Inquiry</NuxtLink>
+          <NuxtLink to="/" class="footer-link">{{ $t('header.home') }}</NuxtLink>
+          <NuxtLink to="/services" class="footer-link">{{ $t('header.service') }}</NuxtLink>
+          <NuxtLink to="/inquiry" class="footer-link">{{ $t('header.inquiry') }}</NuxtLink>
         </nav>
 
         <!-- TODO: SNSを作ったら表示する -->
@@ -64,13 +64,9 @@ const handleScroll = () => {
   }
 };
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
+onMounted(() => window.addEventListener('scroll', handleScroll));
 
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+onUnmounted(() => window.removeEventListener('scroll', handleScroll));
 </script>
 
 <style scoped>

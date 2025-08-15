@@ -7,45 +7,36 @@
           <NuxtLink to="/" class="text-2xl font-bold text-indigo-600">
             Qパス
           </NuxtLink>
+          <CommonLanguageSelector class="md:hidden" />
           <span v-if="isLogin" class="hidden sm:block text-gray-600">ようこそ, {{ userEmail }} さん</span>
-
-          <select
-            v-if="locales.length > 1"
-            class="bg-white border border-gray-300 rounded-lg p-2 focus:outline-none text-gray-700" @change="updateLocale($event.target as HTMLSelectElement)">
-            <option v-for="loc in locales" :key="loc.code" :value="loc.code">
-              {{ loc.name }}
-            </option>
-          </select>
-
-          {{ $t('pageTitle.login') }}
         </div>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center space-x-8">
+        <nav class="hidden md:flex md:items-center space-x-8">
+          <CommonLanguageSelector />
+
           <NuxtLink v-for="link in navLinks" :key="link.to" :to="link.to" class="nav-link" active-class="active-link">
-            {{ link.text }}
+            {{ $t(link.text) }}
           </NuxtLink>
 
           <template v-if="isLogin">
-            <NuxtLink to="/dashboard/modeselect" class="action-button" target="_blank">
-              Dashboard
+            <NuxtLink to="/dashboard/modeselect" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2 px-3 rounded-lg transition duration-300" target="_blank">
+              {{ $t('header.dashboard') }}
             </NuxtLink>
-            <NuxtLink to="/logout" class="nav-link !text-red-500 md:hover:!text-red-700">Signout</NuxtLink>
+            <NuxtLink to="/logout" class="nav-link !text-red-500 md:hover:!text-red-700">{{ $t('header.logout') }}</NuxtLink>
           </template>
           <template v-else>
-            <NuxtLink to="/login" class="nav-link" active-class="active-link">Signin</NuxtLink>
-            <NuxtLink to="/signup" class="action-button">
-              無料で会員登録
+            <NuxtLink to="/login" class="nav-link" active-class="active-link">{{ $t('header.login') }}</NuxtLink>
+            <NuxtLink to="/signup" class="nav-link" active-class="active-link">
+              {{ $t('header.signup') }}
             </NuxtLink>
           </template>
         </nav>
 
         <!-- Mobile Menu Button -->
-        <div class="md:hidden">
-          <button popovertarget="mobile-menu-popover" popovertargetaction="toggle" class="text-gray-700 focus:outline-none">
-            <Icon name="mdi:menu" size="2em" />
-          </button>
-        </div>
+        <button popovertarget="mobile-menu-popover" popovertargetaction="toggle" class="text-gray-700 focus:outline-none md:hidden">
+          <Icon name="mdi:menu" size="2em" />
+        </button>
       </div>
     </header>
 
@@ -57,8 +48,6 @@
 <script lang="ts" setup>
 import MobileMenu from '~/components/common/MobileMenu.vue';
 
-type LocaleType = 'ja' | 'en' | 'ko';
-
 const { user, isLogin } = storeToRefs(useUserStore());
 
 const userEmail = computed(() => {
@@ -67,19 +56,10 @@ const userEmail = computed(() => {
 });
 
 const navLinks = [
-  { to: '/', text: 'Home' },
-  { to: '/services', text: 'Services' },
-  { to: '/inquiry', text: 'Inquiry' },
+  { to: '/', text: 'header.home' },
+  { to: '/services', text: 'header.service' },
+  { to: '/inquiry', text: 'header.inquiry' },
 ];
-
-const { locales, setLocale } = useI18n();
-
-function updateLocale(target: HTMLSelectElement) {
-  const selectedLocale = target.value as LocaleType
-  setLocale(selectedLocale);
-}
-
-onBeforeMount(() => setLocale('ja'));
 </script>
 
 <style scoped>
@@ -89,9 +69,5 @@ onBeforeMount(() => setLocale('ja'));
 
 .active-link {
   @apply text-indigo-600 border-indigo-600;
-}
-
-.action-button {
-  @apply bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300;
 }
 </style>

@@ -1,18 +1,11 @@
 {
-  "pageTitle": {
-    "login": "Login",
-    "service": "Services",
-    "inquiry": "Inquiry",
-    "signup": "Sign Up",
-    "updatePassword": "Update Password",
-    "dashboard": "Dashboard"
-  },
   "header": {
-    "service": "Services",
+    "home": "Home",
+    "service": "Service",
     "inquiry": "Inquiry",
-    "login": "Login",
+    "login": "Sign In",
     "signup": "Sign Up",
-    "logout": "Logout",
+    "logout": "Sign Out",
     "dashboard": "Dashboard"
   },
   "button": {

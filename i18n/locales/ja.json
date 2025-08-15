@@ -1,13 +1,6 @@
 {
-  "pageTitle": {
-    "login": "ログイン",
-    "service": "サービス一覧",
-    "inquiry": "お問い合わせ",
-    "signup": "新規登録",
-    "updatePassword": "パスワードの更新",
-    "dashboard": "ダッシュボード"
-  },
   "header": {
+    "home": "ホーム",
     "service": "サービス",
     "inquiry": "お問い合わせ",
     "login": "ログイン",
