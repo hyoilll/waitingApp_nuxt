@@ -9,6 +9,7 @@
     "dashboard": "대시보드"
   },
   "msg": {
+    "menu": "메뉴",
     "welcome": "환영합니다 {username}님"
   },
   "button": {

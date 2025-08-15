@@ -9,6 +9,7 @@
     "dashboard": "Dashboard"
   },
   "msg": {
+    "menu": "Menu",
     "welcome": "welcome {username}"
   },
   "button": {

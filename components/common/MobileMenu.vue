@@ -2,8 +2,8 @@
   <div id="mobile-menu-popover" popover class="m-0 p-0 border-none h-full w-72 bg-white shadow-xl inset-auto right-0">
     <!-- Menu Header -->
     <div class="p-6 border-b border-gray-200">
-      <h2 class="text-xl font-bold text-indigo-600">メニュー</h2>
-      <p v-if="isLogin" class="text-gray-600 mt-2 text-sm">ようこそ, {{ userEmail }} さん</p>
+      <h2 class="text-xl font-bold text-indigo-600">{{ $t('msg.menu') }}</h2>
+      <p v-if="isLogin" class="text-gray-600 mt-2 text-sm">{{ $t('msg.welcome', { username: userEmail }) }}</p>
     </div>
 
     <!-- Navigation Links -->
