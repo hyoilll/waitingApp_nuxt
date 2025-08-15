@@ -10,11 +10,11 @@
         <span>
           <Icon name="mdi:account-circle" class="mr-1 translate-y-0.5" />
           {{ inquiry.email }}
-          <span v-if="user.email === inquiry.email" class="ml-2 text-xs px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full">作成者</span>
+          <span v-if="user.email === inquiry.email" class="ml-2 text-xs px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full">{{ $t('inquiry.comments.author') }}</span>
         </span>
         <span>
           <Icon name="mdi:comment-text-outline" class="mr-1 translate-y-0.5" />
-          {{ inquiry.comments.length }} コメント
+          {{ inquiry.comments.length }} {{ $t('inquiry.comments.title') }}
         </span>
         <span>
           <Icon name="mdi:clock-outline" class="mr-1 translate-y-0.5" />
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div v-if="!shownInquiries.length" class="text-center py-12">
-      <p class="text-gray-500 text-lg">該当する問い合わせはありません。</p>
+      <p class="text-gray-500 text-lg">{{ $t('inquiry.displayList.noInquiries') }}</p>
     </div>
   </div>
 </template>

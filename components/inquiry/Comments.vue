@@ -9,7 +9,7 @@
         <div class="flex flex-col items-start md:flex-row md:justify-between md:items-center mb-2 gap-2 md:gap-0">
           <div class="flex flex-col md:flex-row md:items-center gap-2">
             <span class="font-bold text-gray-800 break-all">{{ comment.user.email }}</span>
-            <span v-if="isLogin && isCreator(comment.user.email)" class="text-xs w-fit px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full whitespace-nowrap">作成者</span>
+            <span v-if="isLogin && isCreator(comment.user.email)" class="text-xs w-fit px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full whitespace-nowrap">{{ $t('inquiry.comments.author') }}</span>
             <!-- TODO: 管理者ラベルも追加 -->
           </div>
           <div class="flex items-center gap-3 text-sm text-gray-500 self-end md:self-auto">
@@ -28,7 +28,7 @@
       </li>
     </ul>
     <div v-else class="text-center py-8">
-      <p class="text-gray-500">コメントはまだありません。</p>
+      <p class="text-gray-500">{{ $t('inquiry.comments.noComments') }}</p>
     </div>
   </div>
 </template>

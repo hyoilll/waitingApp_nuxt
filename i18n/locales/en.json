@@ -23,5 +23,137 @@
     "send": "Send",
     "close": "Close",
     "back": "Back"
+  },
+  "index": {
+    "hero": {
+      "mainText1": "No more waiting for your customers.",
+      "mainText2": "Make it happen.",
+      "subText1": "Create a new customer experience",
+      "subText2": "for your store."
+    },
+    "description": {
+      "card1": "Having to call customers, organize queues... Store operations have hidden challenges related to 'waiting time'.",
+      "card2": "From issuing tickets to calling with a single QR code, we create a new, stress-free store experience for both customers and staff.",
+      "card3": "For all such stores, we provide a web service that eliminates customer 'waiting' and supports smoother store operations."
+    },
+    "merit": {
+      "title": "Introducing 'Q-Pass' brings happy changes for both stores and customers.",
+      "staff": {
+        "title": "Significantly reduce staff burden",
+        "descriptions": [
+          { "title": "Improved operational efficiency", "value": "Calling customers is done with a single button. Staff no longer need to go and call them or manage the queue. This allows them to focus on tasks that directly contribute to sales, such as customer service, cooking, and product preparation." },
+          { "title": "Smooth operations", "value": "Guide customers without confusion even during peak hours, and easily keep track of the situation inside and outside the store. New staff can operate it easily, reducing training costs." }
+        ]
+      },
+      "customer": {
+        "title": "Improve customer satisfaction and repeat rates",
+        "descriptions": [
+          { "title": "Eliminate waiting time stress", "value": "Customers no longer have to just wait in front of the store. Being able to spend their time freely until their turn comes reduces frustration with waiting and improves satisfaction upon visiting." },
+          { "title": "Create visit opportunities", "value": "Customers who gave up on entering because they 'didn't want to wait in line' can now visit with peace of mind. This helps capture a potential customer base and increase visit opportunities." },
+          { "title": "Provide a high-quality customer experience", "value": "The comfort of the waiting time improves the overall impression of the store, encouraging repeat visits and word-of-mouth." }
+        ]
+      }
+    },
+    "introduction": {
+      "title": "Flow to Introduction",
+      "step1": { "title": "Application", "description": "Just a simple application form" },
+      "step2": { "title": "Preparation & Setup", "description": "Add store information to the system" },
+      "step3": { "title": "Introduction & Operation Start", "description": "Start using from the next day" }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "item1": { "question": "How long does it take to introduce Q-Pass?", "answer": "You can start using it from the next day at the earliest after applying." },
+      "item2": { "question": "Are any special facilities required for introduction?", "answer": "No special equipment is required; you can easily introduce it with a smartphone or tablet." },
+      "item3": { "question": "Is there support after introduction?", "answer": "Yes, our dedicated support team will assist you after introduction, so please rest assured." },
+      "item4": { "question": "Can it be customized for each store?", "answer": "Yes, we can customize it for each store upon application." }
+    }
+  },
+  "services": {
+    "title": "Q-Pass",
+    "description": "One-touch calling and management. A new waiting experience.",
+    "admin": {
+      "title": "Admin",
+      "card1": {
+        "title": "Easily select modes!",
+        "description": "There are no restrictions like dedicated terminals for waiting management or QR code display. You can easily switch modes on any device, such as a tablet or smartphone."
+      },
+      "card2": {
+        "title": "Display QR codes without complex settings!",
+        "description": "No complex settings are required to display the QR code. You can display it with just the 'Display QR Code' button."
+      },
+      "card3": {
+        "title": "Customer status is easy to understand!",
+        "description": "The status is separated for customers who have entered and those who are waiting, so you can see the customer's status at a glance. The number of people is also displayed, allowing for more appropriate responses."
+      },
+      "card4": {
+        "title": "Easy queue management!",
+        "description": "The 'Enter' button makes it easy to process customer entry, the 'Call' button saves you the trouble of calling them, and the 'Cancel' button makes it easy to process customer cancellations."
+      },
+      "card5": {
+        "title": "Calling is also a one-touch operation!",
+        "description": "By pressing the 'Call' button, a notification is sent to the customer's terminal. The customer can confirm that they have been called by receiving the notification, which reduces the staff's workload.\nAlso, the display changes to 'Called', making it easier to grasp the customer's status.",
+        "supportText": "* The customer's screen after pressing 'Call' is",
+        "supportLink": "here"
+      },
+      "card6": {
+        "title": "Easy exit processing!",
+        "description": "You can also easily process the exit of customers who have paid. By pressing the 'Exit' button, they are removed from the list of entered customers, allowing staff to grasp the customer's status more accurately."
+      }
+    },
+    "customer": {
+      "title": "Customer",
+      "card1": {
+        "title": "The only information needed is the number of people!",
+        "description": "The only information required to issue a ticket is the number of people.\nNo name or phone number is needed, you can easily issue a ticket with just the number of people."
+      },
+      "card2": {
+        "title": "Simple UI!",
+        "description": "The screen used by customers has a simple UI, so anyone can operate it without inconvenience.\nYou can easily see your turn number and cancel with one touch."
+      },
+      "card3": {
+        "title": "Predict when you can enter",
+        "description": "Based on the information of recently entered customers, you can predict the next available entry time.\nThis allows customers to predict their turn and wait with peace of mind."
+      },
+      "card4": {
+        "title": "Know when you've been called",
+        "description": "A notification is sent to the customer's terminal, so they know when they have been called.\nReceiving the notification saves the staff the trouble of going to call them, reducing their workload."
+      }
+    }
+  },
+  "inquiry": {
+    "title": "Inquiry",
+    "description": "For opinions, requests, bug reports, etc., please post here.",
+    "new": "Create New",
+    "searchPlaceholder": "Search inquiries...",
+    "addDialog": {
+      "title": "New Inquiry",
+      "inquiryTitle": "Title",
+      "inquiryTitlePlaceholder": "Enter title",
+      "inquiryContent": "Content",
+      "inquiryContentPlaceholder": "Enter content"
+    },
+    "comments": {
+      "title": "Comments",
+      "addPlaceholder": "Add a comment...",
+      "author": "(Author)",
+      "edited": "(edited)",
+      "deleteConfirm": "Are you sure you want to delete this comment?",
+      "noComments": "There are no comments yet."
+    },
+    "detail": {
+      "status": "Status:",
+      "author": "Author:",
+      "createdAt": "Created at:",
+      "lastUpdated": "Last updated:",
+      "statusOpen": "Open",
+      "statusClosed": "Closed",
+      "statusPending": "Pending",
+      "statusResolved": "Resolved",
+      "closeInquiry": "Close Inquiry",
+      "openInquiry": "Open Inquiry"
+    },
+    "displayList": {
+      "noInquiries": "No inquiries to display."
+    }
   }
 }

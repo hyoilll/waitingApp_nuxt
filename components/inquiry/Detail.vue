@@ -8,7 +8,7 @@
           class="inline-flex whitespace-nowrap items-center gap-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           @click="$emit('return')">
           <Icon name="mdi:arrow-left" />
-          一覧に戻る
+          {{ $t('button.back') }}
         </button>
 
         <div class="flex w-full justify-between md:justify-end md:items-center md:gap-4">
@@ -20,18 +20,18 @@
               class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
               @click="isEdit = true">
               <Icon name="mdi:pencil" />
-              編集
+              {{ $t('button.edit') }}
             </button>
             <div v-else class="flex gap-2">
               <button form="updateForm" class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 md:hover:bg-green-700">
                 <Icon name="mdi:check" />
-                更新
+                {{ $t('button.submit') }}
               </button>
               <button
                 type="button"
                 class="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                 @click="isEdit = false">
-                キャンセル
+                {{ $t('button.cancel') }}
               </button>
             </div>
           </div>
@@ -76,21 +76,21 @@
 
     <!-- コメントセクション -->
     <div class="bg-gray-50 p-6">
-      <h2 class="text-xl font-bold mb-4 text-gray-800">Comments</h2>
+      <h2 class="text-xl font-bold mb-4 text-gray-800">{{ $t('inquiry.comments.title') }}</h2>
       <form v-if="isLogin" class="mb-6" @submit.prevent="isEditFlag ? edit() : add()">
         <textarea
           v-model="newComment"
-          placeholder="Add a comment..."
+          :placeholder="$t('inquiry.comments.addPlaceholder')"
           class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           rows="4"
           required />
         <div class="flex justify-end items-center gap-2 mt-2">
-          <button v-if="isEditFlag" type="button" class="px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 border" @click="cancelUpdateComment">Cancel</button>
+          <button v-if="isEditFlag" type="button" class="px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 border" @click="cancelUpdateComment">{{ $t('button.cancel') }}</button>
           <button
             type="submit"
             class="px-4 py-2 text-sm font-medium rounded-md shadow-sm text-white"
             :class="isEditFlag ? 'bg-red-600 md:hover:bg-red-700' : 'bg-indigo-600 hover:bg-indigo-700'">
-            {{ isEditFlag ? 'Update Comment' : 'Submit Comment' }}
+            {{ isEditFlag ? $t('button.edit') : $t('button.submit') }}
           </button>
         </div>
       </form>
@@ -102,6 +102,8 @@
 
 <script setup lang="ts">
 import type { InquiryInfo, InquiryUpdateForm, NewCommentPayload } from '~/composables/types/Inquiry';
+
+const { t } = useI18n()
 
 const { inquiries, idx } = defineProps<{
   inquiries: InquiryInfo[]
@@ -187,7 +189,7 @@ const cancelUpdateComment = () => {
 }
 
 const deleteComment = (commentId: number) => {
-  if (!confirm('本当に削除しますか？')) {
+  if (!confirm(t('inquiry.comments.deleteConfirm'))) {
     return
   }
 

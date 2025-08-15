@@ -1,8 +1,8 @@
 <template>
   <section class="w-full lg:w-[70%] mx-auto py-10 px-4 sm:px-6 lg:px-8">
     <div>
-      <h1 class="text-3xl sm:text-4xl font-bold border-b-2 w-fit pb-1">Qパス</h1>
-      <p class="text-gray-600">呼び出しも管理もワンタッチ。順番待ちの新体験。</p>
+      <h1 class="text-3xl sm:text-4xl font-bold border-b-2 w-fit pb-1">{{ $t('services.title') }}</h1>
+      <p class="text-gray-600">{{ $t('services.description') }}</p>
     </div>
 
     <!-- 管理者側でのイメージ -->
@@ -10,23 +10,23 @@
       <AnchorLabel
         class="relative w-fit mx-auto group"
         anchor="admin"
-        title="管理者"
+        :title="$t('services.admin.title')"
         customClass="flex items-center justify-center text-2xl sm:text-3xl font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-500 w-fit px-5 py-3 rounded-full shadow-lg"
         @move="scrollToAnchor('admin')" />
 
       <div class=" mt-5 space-y-20">
         <ServiceItem
-          v-for="content, idx in serviceShopItems.contents"
+          v-for="content, idx in translatedShopItems"
           :key="idx"
           v-bind="content"
           :is-reverse="idx % 2 === 1"
           @move-to-anchor="scrollToAnchor">
           <p v-if="content.isSupportText" class="ml-2 text-sm font-bold">
-            ※ 「呼出」押下後のお客様の画面は
+            {{ $t('services.admin.card5.supportText') }}
             <NuxtLink
               href="#customer_3"
               class="cursor-pointer text-blue-500 md:hover:underline"
-              @click="scrollToAnchor('customer_3')">ここ</NuxtLink>
+              @click="scrollToAnchor('customer_3')">{{ $t('services.admin.card5.supportLink') }}</NuxtLink>
           </p>
         </ServiceItem>
       </div>
@@ -37,13 +37,13 @@
       <AnchorLabel
         class="relative w-fit mx-auto group"
         anchor="customer"
-        title="お客様"
+        :title="$t('services.customer.title')"
         customClass="flex items-center justify-center text-2xl sm:text-3xl font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-500 w-fit px-5 py-3 rounded-full shadow-lg"
         @move="scrollToAnchor('customer')" />
 
       <div class="mt-5 space-y-20">
         <ServiceItem
-          v-for="content, idx in serviceCustomerItems.contents"
+          v-for="content, idx in translatedCustomerItems"
           :key="idx"
           v-bind="content"
           :is-reverse="idx % 2 === 1"
@@ -55,6 +55,25 @@
 
 <script setup lang="ts">
 import { serviceShopItems, serviceCustomerItems } from '~/composables/datas/Service';
+
+const { t } = useI18n();
+
+const translatedShopItems = computed(() => {
+  return serviceShopItems.contents.map(item => ({
+    ...item,
+    title: t(item.title),
+    description: t(item.description)
+  }));
+});
+
+const translatedCustomerItems = computed(() => {
+  return serviceCustomerItems.contents.map(item => ({
+    ...item,
+    title: t(item.title),
+    description: t(item.description)
+  }));
+});
+
 
 /**
  * TODO: 
