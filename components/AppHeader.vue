@@ -8,6 +8,16 @@
             Qパス
           </NuxtLink>
           <span v-if="isLogin" class="hidden sm:block text-gray-600">ようこそ, {{ userEmail }} さん</span>
+
+          <select
+            v-if="locales.length > 1"
+            class="bg-white border border-gray-300 rounded-lg p-2 focus:outline-none text-gray-700" @change="updateLocale($event.target as HTMLSelectElement)">
+            <option v-for="loc in locales" :key="loc.code" :value="loc.code">
+              {{ loc.name }}
+            </option>
+          </select>
+
+          {{ $t('pageTitle.login') }}
         </div>
 
         <!-- Desktop Navigation -->
@@ -47,6 +57,8 @@
 <script lang="ts" setup>
 import MobileMenu from '~/components/common/MobileMenu.vue';
 
+type LocaleType = 'ja' | 'en' | 'ko';
+
 const { user, isLogin } = storeToRefs(useUserStore());
 
 const userEmail = computed(() => {
@@ -59,6 +71,15 @@ const navLinks = [
   { to: '/services', text: 'Services' },
   { to: '/inquiry', text: 'Inquiry' },
 ];
+
+const { locales, setLocale } = useI18n();
+
+function updateLocale(target: HTMLSelectElement) {
+  const selectedLocale = target.value as LocaleType
+  setLocale(selectedLocale);
+}
+
+onBeforeMount(() => setLocale('ja'));
 </script>
 
 <style scoped>

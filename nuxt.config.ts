@@ -22,6 +22,7 @@ export default defineNuxtConfig({
       { code: 'ko', name: 'Korean', file: 'ko.json' },
     ],
     defaultLocale: 'en',
+    strategy: 'no_prefix',
   },
   supabase: {
     redirectOptions: {
