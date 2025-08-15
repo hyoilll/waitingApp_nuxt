@@ -1,9 +1,7 @@
 <template>
   <div class="mt-20">
-    <Header headerTitle="QRコードを読み取ってください" />
-
     <div class="mt-6 flex gap-5 justify-center">
-      <img v-if="true" class="rounded border" :src="qrcode" alt="QR Code">
+      <img class="rounded border" :src="qrcode" alt="QR Code">
       <div class="flex flex-col items-start">
         <span>読み取った上で、人数を入力して送信ボタンを押してください。</span>
         <span>入店のメッセージが表示されるまで、お待ちください。</span>
@@ -29,5 +27,4 @@ const qrcode = useQRCode(`${baseUrl}/dashboard/create-entry-id/${shop.id}`, {
   errorCorrectionLevel: 'H',
   margin: 3,
 })
-console.log(`qrcode: ${baseUrl}/dashboard/create-entry-id/${shop.id}`)
 </script>
