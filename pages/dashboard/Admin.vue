@@ -27,7 +27,7 @@
               <span>{{ waiting.visitor_count }}人</span>
             </div>
             <div class="flex gap-2">
-              <button @click="handleMarkAsEntered(waiting.entry_number, waiting.id)" class="md:hover:bg-green-700">入店</button>
+              <button @click="handleMarkAsEntered(waiting.entry_number, waiting.id)" class="bg-green-500 text-white px-3 py-1 rounded">入店</button>
               <button
                 @click="handelMarkAsCalled(waiting.entry_number, waiting.id)"
                 class="px-3 py-1 rounded"
