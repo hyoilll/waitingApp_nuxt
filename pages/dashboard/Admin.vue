@@ -1,12 +1,13 @@
 <template>
-  <div class="grid grid-cols-2 gap-6 h-[90%] w-[85%]">
-    <div class="min-h-[250px] h-[90%] max-h-[500px] min-w-[300px] w-[100%] border p-4 rounded shadow">
+  <div class="grid grid-cols-2 gap-6 h-[90%] w-[90%]">
+    <div class="bg-gray-800 min-h-[250px] h-[90%] max-h-[500px] min-w-[300px] w-[100%] p-4 rounded shadow">
       <h2 class="text-lg font-semibold mb-4">入店済みのお客様</h2>
       <template v-if="enteredList.length">
-        <ul class="h-[calc(100%-2rem)] overflow-y-auto">
-          <li v-for="entered in enteredList" :key="entered.id" class="flex items-center justify-between mb-2">
+        <ul class="h-[calc(100%-2rem)] overflow-y-auto space-y-2">
+          <li v-for="entered in enteredList" :key="entered.id" class="flex items-center justify-between bg-gray-700 p-3 rounded">
             <div class="flex gap-4">
               <span class="font-medium">No. {{ entered.entry_number }}</span>
+              <span>/</span>
               <span>{{ entered.visitor_count }}人</span>
               <span class="text-gray-500">入店: {{ convertToJSTDate(entered.entered_at ?? new Date(), 'HH:mm') }}</span>
             </div>
@@ -16,11 +17,11 @@
       </template>
       <p v-else class="text-gray-500">現在、入店済みのお客様はいません。</p>
     </div>
-    <div class="min-h-[250px] h-[90%] max-h-[500px] min-w-[300px] w-[100%] border p-4 rounded shadow">
+    <div class="bg-gray-800 min-h-[250px] h-[90%] max-h-[500px] min-w-[300px] w-[100%] p-4 rounded shadow">
       <h2 class="text-lg font-semibold mb-4">順番待ちのお客様</h2>
       <template v-if="waitingList.length">
-        <ul class="h-[calc(100%-2rem)] overflow-y-auto">
-          <li v-for="waiting in waitingList" :key="waiting.id" class="flex items-center justify-between mb-2">
+        <ul class="h-[calc(100%-2rem)] overflow-y-auto space-y-2">
+          <li v-for="waiting in waitingList" :key="waiting.id" class="flex items-center justify-between bg-gray-700 p-3 rounded">
             <div class="flex gap-4">
               <span class="font-medium">No. {{ waiting.entry_number }}</span>
               <span>/</span>
