@@ -8,6 +8,9 @@
     "logout": "Sign Out",
     "dashboard": "Dashboard"
   },
+  "msg": {
+    "welcome": "welcome {username}"
+  },
   "button": {
     "submit": "Submit",
     "cancel": "Cancel",

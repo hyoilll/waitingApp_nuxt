@@ -8,6 +8,9 @@
     "logout": "ログアウト",
     "dashboard": "ダッシュボード"
   },
+  "msg": {
+    "welcome": "ようこそ {username}さん"
+  },
   "button": {
     "submit": "送信",
     "cancel": "キャンセル",

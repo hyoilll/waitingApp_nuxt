@@ -8,7 +8,7 @@
             Qパス
           </NuxtLink>
           <CommonLanguageSelector class="md:hidden" />
-          <span v-if="isLogin" class="hidden sm:block text-gray-600">ようこそ, {{ userEmail }} さん</span>
+          <span v-if="isLogin" class="hidden sm:block text-gray-600">{{ $t('msg.welcome', { username: userEmail }) }}</span>
         </div>
 
         <!-- Desktop Navigation -->

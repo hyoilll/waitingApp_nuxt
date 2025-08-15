@@ -8,6 +8,9 @@
     "logout": "로그아웃",
     "dashboard": "대시보드"
   },
+  "msg": {
+    "welcome": "환영합니다 {username}님"
+  },
   "button": {
     "submit": "전송",
     "cancel": "취소",
