@@ -48,9 +48,9 @@
             <li v-for="(description, index) in descriptions" :key="index" :class="{ 'mb-4': index < descriptions.length - 1 }">
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-indigo-600 text-bold">{{ index + 1 }}.</span>
-                <span class="text-md">{{ description.title.loc?.source }}</span>
+                <span class="text-md">{{ description.title.loc?.source ?? description.title }}</span>
               </div>
-              <span class="text-md">{{ description.value.loc?.source }}</span>
+              <span class="text-md">{{ description.value.loc?.source ?? description.value }}</span>
             </li>
           </ul>
         </div>
