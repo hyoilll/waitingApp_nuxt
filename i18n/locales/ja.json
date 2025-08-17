@@ -97,7 +97,7 @@
     "comments": {
       "title": "コメント",
       "addPlaceholder": "コメントを追加...",
-      "author": "(作成者)",
+      "author": "作成者",
       "edited": "(編集済み)",
       "deleteConfirm": "このコメントを削除してもよろしいですか？",
       "noComments": "コメントはまだありません。"
@@ -116,6 +116,68 @@
     },
     "displayList": {
       "noInquiries": "表示する問い合わせがありません。"
+    }
+  },
+  "dashboard": {
+    "admin": {
+      "enteredCustomers": "入店済みのお客様",
+      "waitingCustomers": "順番待ちのお客様",
+      "noEnteredCustomers": "現在、入店済みのお客様はいません。",
+      "noWaitingCustomers": "現在、順番待ちのお客様はいません。",
+      "entryNumber": "No. {entry_number}",
+      "visitorCount": "{visitor_count}人",
+      "enteredAt": "入店: {entered_at}",
+      "exit": "退室",
+      "enter": "入店",
+      "called": "呼出済み",
+      "call": "呼出",
+      "cancel": "キャンセル",
+      "confirmExit": "No.{entry_number}を本当に退室しますか？",
+      "confirmEnter": "No.{entry_number}を本当に入店しますか？",
+      "confirmCancel": "No.{entry_number}を本当にキャンセルしますか？",
+      "confirmCall": "No.{entry_number}を本当に呼出しますか？",
+      "fetchWaitingError": "順番待ちのお客様の取得に失敗しました。",
+      "fetchEnteredError": "入店済みのお客様の取得に失敗しました。"
+    },
+    "canceled": {
+      "message": "キャンセルしました。またお越しください。"
+    },
+    "modeSelect": {
+      "title": "どちらのモードで利用しますか？",
+      "waitingManagement": "ウェイティング管理",
+      "waitingManagementDesc": "お客様の待ち状況をリアルタイムで管理します。",
+      "qrCodeDisplay": "QRコード表示",
+      "qrCodeDisplayDesc": "お客様がウェイティング登録するためのQRコードを表示します。"
+    },
+    "qrCodeDisplay": {
+      "title": "ウェイティング登録用QRコード",
+      "step1": "1. 上記のQRコードをスマートフォンで読み取ってください。",
+      "step2": "2. 表示されたページで人数を入力し、登録ボタンを押してください。",
+      "step3": "3. 入店準備ができましたら、通知メッセージをお送りします。"
+    },
+    "createEntry": {
+      "welcome": "{shopName}へようこそ！",
+      "instruction": "人数を入力した上で、\n送信ボタンを押してください。",
+      "visitorCount": "人数:",
+      "submit": "送信",
+      "unexpectedError": "予期せぬエラーが発生しました。"
+    },
+    "customer": {
+      "ticketNumber": "整理番号",
+      "ticketNumberSuffix": "番",
+      "calledMessageHeader": "お待たせいたしました。",
+      "calledMessageBody": "お席のご用意ができましたので、お入りください。",
+      "waitingCount": "お待ちの人数: {count} 組",
+      "recentEntries": "最近の入店",
+      "cancelWaiting": "順番待ちをキャンセル",
+      "cancelling": "キャンセル中...",
+      "fetchTicketFailed": "整理番号修得を失敗しました。",
+      "scanAgain": "QRコードをもう一度スキャンしてください",
+      "cancelSuccess": "順番待ちをキャンセルしました",
+      "cancelError": "entryIdが取得できませんでした。",
+      "recentEntriesError": "直近入店取得エラー:",
+      "waitingCountError": "待ち組数取得エラー:",
+      "entryDetailsError": "entry詳細取得エラー:"
     }
   }
 }

@@ -45,4 +45,13 @@
 definePageMeta({
   layout: 'dashboard',
 })
+
+const { locale, setLocale } = useI18n();
+
+tryOnBeforeMount(() => {
+  const localeStorage = localStorage.getItem('locale');
+  console.log('Setting locale to:', locale.value);
+  console.log('Locale from localStorage:', localeStorage);
+  // setLocale(locale)
+})
 </script>

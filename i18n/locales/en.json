@@ -136,7 +136,7 @@
     "comments": {
       "title": "Comments",
       "addPlaceholder": "Add a comment...",
-      "author": "(Author)",
+      "author": "Author",
       "edited": "(edited)",
       "deleteConfirm": "Are you sure you want to delete this comment?",
       "noComments": "There are no comments yet."
@@ -155,6 +155,68 @@
     },
     "displayList": {
       "noInquiries": "No inquiries to display."
+    }
+  },
+  "dashboard": {
+    "admin": {
+      "enteredCustomers": "Entered Customers",
+      "waitingCustomers": "Waiting Customers",
+      "noEnteredCustomers": "No customers currently entered.",
+      "noWaitingCustomers": "No customers currently waiting.",
+      "entryNumber": "No. {entry_number}",
+      "visitorCount": "{visitor_count} people",
+      "enteredAt": "Entered: {entered_at}",
+      "exit": "Exit",
+      "enter": "Enter",
+      "called": "Called",
+      "call": "Call",
+      "cancel": "Cancel",
+      "confirmExit": "Are you sure you want to mark No.{entry_number} as exited?",
+      "confirmEnter": "Are you sure you want to mark No.{entry_number} as entered?",
+      "confirmCancel": "Are you sure you want to cancel No.{entry_number}?",
+      "confirmCall": "Are you sure you want to call No.{entry_number}?",
+      "fetchWaitingError": "Failed to fetch waiting customers.",
+      "fetchEnteredError": "Failed to fetch entered customers."
+    },
+    "canceled": {
+      "message": "Canceled. Please visit us again."
+    },
+    "modeSelect": {
+      "title": "Which mode will you use?",
+      "waitingManagement": "Waiting Management",
+      "waitingManagementDesc": "Manage your customers' waiting status in real-time.",
+      "qrCodeDisplay": "QR Code Display",
+      "qrCodeDisplayDesc": "Display the QR code for customers to register for waiting."
+    },
+    "qrCodeDisplay": {
+      "title": "QR Code for Waiting Registration",
+      "step1": "1. Scan the QR code above with your smartphone.",
+      "step2": "2. Enter the number of people on the displayed page and press the register button.",
+      "step3": "3. We will send you a notification message when it's time to enter."
+    },
+    "createEntry": {
+      "welcome": "Welcome to {shopName}!",
+      "instruction": "Please enter the number of people and press the submit button.",
+      "visitorCount": "Number of people:",
+      "submit": "Submit",
+      "unexpectedError": "An unexpected error occurred."
+    },
+    "customer": {
+      "ticketNumber": "Ticket Number",
+      "ticketNumberSuffix": "",
+      "calledMessageHeader": "Thank you for waiting.",
+      "calledMessageBody": "Your table is ready. Please come in.",
+      "waitingCount": "People waiting: {count} groups",
+      "recentEntries": "Recent Entries",
+      "cancelWaiting": "Cancel Waiting",
+      "cancelling": "Cancelling...",
+      "fetchTicketFailed": "Failed to get ticket number.",
+      "scanAgain": "Please scan the QR code again.",
+      "cancelSuccess": "Your waiting has been canceled.",
+      "cancelError": "Could not get entryId.",
+      "recentEntriesError": "Error fetching recent entries:",
+      "waitingCountError": "Error fetching waiting count:",
+      "entryDetailsError": "Error fetching entry details:"
     }
   }
 }
