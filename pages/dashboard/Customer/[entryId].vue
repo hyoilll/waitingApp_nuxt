@@ -14,7 +14,7 @@
           <h2 class="text-xl font-semibold text-gray-800 mb-3">{{ $t('dashboard.customer.recentEntries') }}</h2>
           <ul class="space-y-2">
             <li v-for="entry in recentEntries" :key="entry.entry_number" class="bg-gray-50 border border-gray-200 rounded-lg p-2">
-              <span class="text-gray-700">{{ `No. ${entry.entry_number}（${entry.visitor_count}人）${convertToJSTDate(entry.entered_at, 'HH:mm')}` }}</span>
+              <span class="text-gray-700">{{ $t('dashboard.customer.recentEntryLine', { entry_number: entry.entry_number, visitor_count: entry.visitor_count, entered_at: convertToJSTDate(entry.entered_at, 'HH:mm') }) }}</span>
             </li>
           </ul>
         </div>

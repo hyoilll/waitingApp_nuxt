@@ -160,7 +160,9 @@
       "instruction": "人数を入力した上で、\n送信ボタンを押してください。",
       "visitorCount": "人数:",
       "submit": "送信",
-      "unexpectedError": "予期せぬエラーが発生しました。"
+      "unexpectedError": "予期せぬエラーが発生しました。",
+      "increment": "増やす",
+      "decrement": "減らす"
     },
     "customer": {
       "ticketNumber": "整理番号",
@@ -177,7 +179,8 @@
       "cancelError": "entryIdが取得できませんでした。",
       "recentEntriesError": "直近入店取得エラー:",
       "waitingCountError": "待ち組数取得エラー:",
-      "entryDetailsError": "entry詳細取得エラー:"
+      "entryDetailsError": "entry詳細取得エラー:",
+      "recentEntryLine": "No. {entry_number}（{visitor_count}人）{entered_at}"
     }
   },
   "logout": {

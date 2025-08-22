@@ -176,7 +176,9 @@
       "instruction": "인원수를 입력한 후\n전송 버튼을 눌러주세요.",
       "visitorCount": "인원수:",
       "submit": "전송",
-      "unexpectedError": "예기치 않은 오류가 발생했습니다."
+      "unexpectedError": "예기치 않은 오류가 발생했습니다.",
+      "increment": "증가",
+      "decrement": "감소"
     },
     "customer": {
       "ticketNumber": "대기 번호",
@@ -193,7 +195,8 @@
       "cancelError": "entryId를 가져올 수 없습니다.",
       "recentEntriesError": "최근 입장 정보 가져오기 오류:",
       "waitingCountError": "대기 인원 수 가져오기 오류:",
-      "entryDetailsError": "입장 상세 정보 가져오기 오류:"
+      "entryDetailsError": "입장 상세 정보 가져오기 오류:",
+      "recentEntryLine": "No. {entry_number} ({visitor_count}명) {entered_at}"
     }
   },
   "logout": {

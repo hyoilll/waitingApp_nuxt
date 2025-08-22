@@ -216,7 +216,8 @@
       "cancelError": "Could not get entryId.",
       "recentEntriesError": "Error fetching recent entries:",
       "waitingCountError": "Error fetching waiting count:",
-      "entryDetailsError": "Error fetching entry details:"
+      "entryDetailsError": "Error fetching entry details:",
+      "recentEntryLine": "No. {entry_number} ({visitor_count} people) {entered_at}"
     }
   },
   "logout": {

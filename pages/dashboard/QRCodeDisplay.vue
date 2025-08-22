@@ -41,7 +41,9 @@ const { shop } = useUserStore()
 const config = useRuntimeConfig()
 const baseUrl = config.public.QR_CODE_MOVE_PAGE_URL
 
-const qrcode = useQRCode(`${baseUrl}/dashboard/create-entry-id/${shop.id}`, {
+const { locale } = useI18n()
+
+const qrcode = useQRCode(`${baseUrl}/${locale.value}/dashboard/create-entry-id/${shop.id}`, {
   errorCorrectionLevel: 'H',
   margin: 3,
 })

@@ -1,15 +1,16 @@
 <template>
   <div class="mt-20 w-[80%]">
     <div class="flex flex-col items-center">
-      <h2 class="text-2xl font-bold"><strong>{{ shopName }}</strong>へようこそ！</h2>
-      <h3 class="text-sm mt-2 text-center">人数を入力した上で、<br>送信ボタンを押してください。</h3>
+      <h2 class="text-2xl font-bold" v-html="$t('dashboard.createEntry.welcome', { shopName: shopName })" />
+      <h3 class="text-sm mt-2 text-center" v-html="$t('dashboard.createEntry.instruction')" />
     </div>
     <form @submit.prevent="handleSubmit" class="mt-6 flex flex-col gap-5 p-4 border border-gray-300 rounded shadow-md bg-white">
       <div class="flex flex-col gap-2">
-        <label for="visitorCount" class="font-medium text-gray-700">人数:</label>
+        <label for="visitorCount" class="font-medium text-gray-700">{{ $t('dashboard.createEntry.visitorCount') }}</label>
         <div class="flex items-center gap-2">
           <input
             id="visitorCount"
+            type="number"
             v-model="visitorCount"
             min="1"
             max="30"
@@ -22,7 +23,7 @@
         </div>
       </div>
       <button type="submit" class="px-6 py-3 bg-gray-500 font-semibold rounded-lg shadow-md">
-        送信
+        {{ $t('dashboard.createEntry.submit') }}
       </button>
     </form>
   </div>
@@ -30,6 +31,8 @@
 
 <script lang="ts" setup>
 import { getShopName, getTicket } from '~/composables/apis/Customer'
+
+const { t } = useI18n()
 
 definePageMeta({
   layout: 'dashboard',
@@ -70,7 +73,7 @@ const handleSubmit = async () => {
     router.push(localePath(`/dashboard/customer/${resp.id}`))
   } catch (error: any) {
     // This handles 4xx/5xx errors thrown by $fetch
-    const errorMessage = error.data?.error || '予期せぬエラーが発生しました。'
+    const errorMessage = error.data?.error || t('dashboard.createEntry.unexpectedError')
     errMsg.value = errorMessage
     alert(errorMessage)
   }
