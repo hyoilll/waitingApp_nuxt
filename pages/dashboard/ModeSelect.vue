@@ -13,10 +13,10 @@
             <Icon name="mdi:account-group" class="h-16 w-16 text-blue-500" />
           </div>
           <h2 class="mb-2 text-2xl font-semibold text-white">
-            ウェイティング管理
+            {{ $t('dashboard.modeSelect.waitingManagement') }}
           </h2>
           <p class="text-gray-300">
-            お客様の待ち状況をリアルタイムで管理します。
+            {{ $t('dashboard.modeSelect.waitingManagementDesc') }}
           </p>
         </div>
       </NuxtLink>
@@ -30,10 +30,10 @@
             <Icon name="mdi:qrcode" class="h-16 w-16 text-green-500" />
           </div>
           <h2 class="mb-2 text-2xl font-semibold text-white">
-            QRコード表示
+            {{ $t('dashboard.modeSelect.qrCodeDisplay') }}
           </h2>
           <p class="text-gray-300">
-            お客様がウェイティング登録するためのQRコードを表示します。
+            {{ $t('dashboard.modeSelect.qrCodeDisplayDesc') }}
           </p>
         </div>
       </NuxtLink>

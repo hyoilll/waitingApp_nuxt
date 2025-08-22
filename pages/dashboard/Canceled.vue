@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center">
-    キャンセルしました。またお越しください。
+    {{ $t('dashboard.canceled.message') }}
   </div>
 </template>
 

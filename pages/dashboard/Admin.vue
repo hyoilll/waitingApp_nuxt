@@ -1,48 +1,48 @@
 <template>
   <div class="grid grid-cols-2 gap-6 h-[90%] w-[90%]">
     <div class="bg-gray-800 min-h-[250px] h-[90%] max-h-[500px] min-w-[300px] w-[100%] p-4 rounded shadow">
-      <h2 class="text-lg font-semibold mb-4">入店済みのお客様</h2>
+      <h2 class="text-lg font-semibold mb-4">{{ $t('dashboard.admin.enteredCustomers') }}</h2>
       <template v-if="enteredList.length">
         <ul class="h-[calc(100%-2rem)] overflow-y-auto space-y-2">
           <li v-for="entered in enteredList" :key="entered.id" class="flex items-center justify-between bg-gray-700 p-3 rounded">
             <div class="flex gap-4">
               <span class="font-medium">No. {{ entered.entry_number }}</span>
               <span>/</span>
-              <span>{{ entered.visitor_count }}人</span>
-              <span class="text-gray-500">入店: {{ convertToJSTDate(entered.entered_at ?? new Date(), 'HH:mm') }}</span>
+              <span>{{ $t('dashboard.admin.visitorCount', { visitor_count: entered.visitor_count }) }}</span>
+              <span class="text-gray-500">{{ $t('dashboard.admin.enteredAt', { entered_at: convertToJSTDate(entered.entered_at ?? new Date(), 'HH:mm') }) }}</span>
             </div>
-            <button type="button" class="text-white bg-red-500 px-3 py-1 rounded" @click="handleMarkAsExited(entered.entry_number, entered.id)">退室</button>
+            <button type="button" class="text-white bg-red-500 px-3 py-1 rounded" @click="handleMarkAsExited(entered.entry_number, entered.id)">{{ $t('dashboard.admin.exit') }}</button>
           </li>
         </ul>
       </template>
-      <p v-else class="text-gray-500">現在、入店済みのお客様はいません。</p>
+      <p v-else class="text-gray-500">{{ $t('dashboard.admin.noEnteredCustomers') }}</p>
     </div>
     <div class="bg-gray-800 min-h-[250px] h-[90%] max-h-[500px] min-w-[300px] w-[100%] p-4 rounded shadow">
-      <h2 class="text-lg font-semibold mb-4">順番待ちのお客様</h2>
+      <h2 class="text-lg font-semibold mb-4">{{ $t('dashboard.admin.waitingCustomers') }}</h2>
       <template v-if="waitingList.length">
         <ul class="h-[calc(100%-2rem)] overflow-y-auto space-y-2">
           <li v-for="waiting in waitingList" :key="waiting.id" class="flex items-center justify-between bg-gray-700 p-3 rounded">
             <div class="flex gap-4">
               <span class="font-medium">No. {{ waiting.entry_number }}</span>
               <span>/</span>
-              <span>{{ waiting.visitor_count }}人</span>
+              <span>{{ $t('dashboard.admin.visitorCount', { visitor_count: waiting.visitor_count }) }}</span>
             </div>
             <div class="flex gap-2">
-              <button @click="handleMarkAsEntered(waiting.entry_number, waiting.id)" class="bg-green-500 text-white px-3 py-1 rounded">入店</button>
               <button
                 @click="handelMarkAsCalled(waiting.entry_number, waiting.id)"
                 class="px-3 py-1 rounded"
                 :class="waiting.is_called ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white'"
                 :disabled="waiting.is_called">
-                {{ waiting.is_called ? '呼出済み' : '呼出' }}
+                {{ waiting.is_called ? $t('dashboard.admin.called') : $t('dashboard.admin.call') }}
               </button>
-              <button @click="handelMarkAsCanceled(waiting.entry_number, waiting.id)" class="bg-gray-500 text-white px-3 py-1 rounded">キャンセル</button>
+              <button @click="handleMarkAsEntered(waiting.entry_number, waiting.id)" class="bg-green-500 text-white px-3 py-1 rounded">{{ $t('dashboard.admin.enter') }}</button>
+              <button @click="handelMarkAsCanceled(waiting.entry_number, waiting.id)" class="bg-gray-500 text-white px-3 py-1 rounded">{{ $t('dashboard.admin.cancel') }}</button>
             </div>
           </li>
         </ul>
       </template>
       <p v-else-if="waitingErrMsg.length" class="text-red-500 font-bold">{{ waitingErrMsg }}</p>
-      <p v-else class="text-gray-500">現在、順番待ちのお客様はいません。</p>
+      <p v-else class="text-gray-500">{{ $t('dashboard.admin.noWaitingCustomers') }}</p>
     </div>
   </div>
 </template>
@@ -51,6 +51,8 @@
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { getEnteredList, getWaitingList, markAsCalled, markAsCanceled, markAsEntered, markAsExited, subscribeToShopInAdmin, unsubscribeFromShopInAdmin } from '~/composables/apis/Admin';
 import type { Entry } from '~/composables/types/Admin';
+
+const { t } = useI18n()
 
 definePageMeta({
   layout: 'dashboard',
@@ -65,7 +67,7 @@ const realtimeChannel = ref<RealtimeChannel>();
 const { shop } = useUserStore();
 
 const handleMarkAsExited = async (entryNumber: number, entryId: string) => {
-  if (!confirm(`No.${entryNumber}を本当に退室します？`)) {
+  if (!confirm(t('dashboard.admin.confirmExit', { entry_number: entryNumber }))) {
     return
   }
 
@@ -76,7 +78,7 @@ const handleMarkAsExited = async (entryNumber: number, entryId: string) => {
 };
 
 const handleMarkAsEntered = async (entryNumber: number, entryId: string) => {
-  if (!confirm(`No.${entryNumber}を本当に入店します？`)) {
+  if (!confirm(t('dashboard.admin.confirmEnter', { entry_number: entryNumber }))) {
     return
   }
 
@@ -87,7 +89,7 @@ const handleMarkAsEntered = async (entryNumber: number, entryId: string) => {
 };
 
 const handelMarkAsCanceled = async (entryNumber: number, entryId: string) => {
-  if (!confirm(`No.${entryNumber}を本当にキャンセルしますか？`)) {
+  if (!confirm(t('dashboard.admin.confirmCancel', { entry_number: entryNumber }))) {
     return
   }
 
@@ -98,7 +100,7 @@ const handelMarkAsCanceled = async (entryNumber: number, entryId: string) => {
 };
 
 const handelMarkAsCalled = async (entryNumber: number, entryId: string) => {
-  if (!confirm(`No.${entryNumber}を本当に呼出しますか？`)) {
+  if (!confirm(t('dashboard.admin.confirmCall', { entry_number: entryNumber }))) {
     return
   }
 
@@ -112,13 +114,13 @@ const fetchWaitingCustomers = async () => {
   try {
     const resp = await getWaitingList(shop.id);
     if (resp.error) {
-      waitingErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+      waitingErrMsg.value = t('dashboard.admin.fetchWaitingError');
       return;
     }
 
     waitingList.value = resp.data;
   } catch (error) {
-    waitingErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+    waitingErrMsg.value = t('dashboard.admin.fetchWaitingError');
   }
 };
 
@@ -126,13 +128,13 @@ const fetchEnteredCustomers = async () => {
   try {
     const resp = await getEnteredList(shop.id);
     if (resp.error) {
-      enteredErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+      enteredErrMsg.value = t('dashboard.admin.fetchEnteredError');
       return;
     }
 
     enteredList.value = resp.data;
   } catch (error) {
-    enteredErrMsg.value = '順番待ちのお客様の取得に失敗しました。';
+    enteredErrMsg.value = t('dashboard.admin.fetchEnteredError');
   }
 };
 

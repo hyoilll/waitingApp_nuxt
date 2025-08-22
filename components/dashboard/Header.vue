@@ -14,5 +14,6 @@
 <script setup lang="ts">
 const { user } = useUserStore()
 const route = useRoute()
-const enableBackBtn = computed(() => route.path === '/dashboard/admin')
+
+const enableBackBtn = computed(() => route.path.includes('/dashboard/Admin'))
 </script>
