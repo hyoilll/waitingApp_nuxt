@@ -58,7 +58,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      include: ['dashboard/modeselect', 'dashboard/admin', 'dashboard/qrcodedisplay'],
+      include: ['/dashboard/ModeSelect', '/dashboard/Admin', '/dashboard/QRCodeDisplay'],
       exclude: supabaseExcludePaths,
       saveRedirectToCookie: false,
     },
