@@ -14,6 +14,7 @@ export const useLogin = () => {
   const loginError = ref('')
   const client = useSupabaseClient()
   const router = useRouter()
+  const { t } = useI18n()
   const { setUser } = useUserStore()
 
   const login = async () => {
@@ -29,7 +30,7 @@ export const useLogin = () => {
     }
 
     if (!authData.user) {
-      loginError.value = 'Could not retrieve user information.'
+      loginError.value = t('login.error.noUserInfo')
       return
     }
 
@@ -52,10 +53,11 @@ export const useLogin = () => {
       }
 
       setUser(userData, shopData)
-      await router.push('/')
+      const localePath = useLocalePath();
+      await router.push(localePath('/'))
 
     } catch (error: any) {
-      loginError.value = error.message || 'An error occurred while fetching user data.'
+      loginError.value = error.message || t('login.error.fetchError')
       await client.auth.signOut()
     }
   }

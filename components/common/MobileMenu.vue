@@ -61,6 +61,7 @@ defineProps<{
 }>();
 
 const router = useRouter();
+const localePath = useLocalePath()
 
 const hidePopover = () => {
   const popover = document.getElementById('mobile-menu-popover');
@@ -71,10 +72,11 @@ const hidePopover = () => {
 
 const navigate = (path: string, newTab = false) => {
   hidePopover();
+  const localizedPath = localePath(path)
   if (newTab) {
-    window.open(path, '_blank');
+    window.open(localizedPath, '_blank');
   } else {
-    router.push(path);
+    router.push(localizedPath);
   }
 };
 </script>

@@ -179,5 +179,36 @@
       "waitingCountError": "待ち組数取得エラー:",
       "entryDetailsError": "entry詳細取得エラー:"
     }
+  },
+  "logout": {
+    "title": "ログアウト",
+    "message": "本当にログアウトしますか？",
+    "button": "ログアウト",
+    "confirm": "本当にログアウトしますか？"
+  },
+  "signup": {
+    "title": "新規登録",
+    "email": "メールアドレス",
+    "shopName": "店舗名",
+    "password": "パスワード",
+    "button": "新規登録",
+    "success": "会員登録完了しました。"
+  },
+  "login": {
+    "title": "ログイン",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "forgotPassword": "パスワードを忘れましたか？",
+    "button": "ログイン",
+    "error": {
+      "noUserInfo": "ユーザー情報を取得できませんでした。",
+      "fetchError": "ユーザーデータの取得中にエラーが発生しました。"
+    }
+  },
+  "sendMailUpdatePw": {
+    "title": "メール送信",
+    "description": "※ 入力したメールアドレスにパスワード変更リンク先をお送りします。\n登録されてないメールアドレスを入力した場合は送信されません。",
+    "email": "メールアドレス",
+    "button": "送信"
   }
 }

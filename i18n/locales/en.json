@@ -218,5 +218,36 @@
       "waitingCountError": "Error fetching waiting count:",
       "entryDetailsError": "Error fetching entry details:"
     }
+  },
+  "logout": {
+    "title": "Logout",
+    "message": "Are you sure you want to log out?",
+    "button": "Logout",
+    "confirm": "Are you sure you want to log out?"
+  },
+  "signup": {
+    "title": "Sign Up",
+    "email": "Email",
+    "shopName": "Shop name",
+    "password": "Password",
+    "button": "Sign Up",
+    "success": "Sign up complete."
+  },
+  "login": {
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "forgot password?",
+    "button": "Sign In",
+    "error": {
+      "noUserInfo": "Could not retrieve user information.",
+      "fetchError": "An error occurred while fetching user data."
+    }
+  },
+  "sendMailUpdatePw": {
+    "title": "Send mail",
+    "description": "※ We will send a password change link to the email address you entered.\nIf you enter an unregistered email address, it will not be sent.",
+    "email": "Email",
+    "button": "Send"
   }
 }

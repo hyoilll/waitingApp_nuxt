@@ -1,4 +1,28 @@
 import { fileURLToPath, URL } from 'node:url';
+import type { LocaleType } from './components/common/LanguageSelector.vue';
+
+const publicPages = [
+  '/',
+  '/Services',
+  '/Inquiry',
+  '/Inquiry/**',
+  '/Login',
+  '/Signup',
+  '/updatepassword',
+  '/dashboard/create-entry-id/**',
+  '/dashboard/customer/**',
+  '/dashboard/canceled',
+];
+
+const nonDefaultLocales = ['en', 'ko'];
+
+const supabaseExcludePaths = [
+  ...publicPages,
+  ...nonDefaultLocales.flatMap(locale => [
+    `/${locale}`,
+    ...publicPages.filter(page => page !== '/').map(page => `/${locale}${page}`)
+  ])
+];
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -21,17 +45,21 @@ export default defineNuxtConfig({
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'ko', name: 'Korean', file: 'ko.json' },
     ],
-    defaultLocale: 'en',
-    strategy: 'no_prefix',
+    defaultLocale: process.env.DEFAULT_LOCALE as LocaleType ?? 'ja',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+      alwaysRedirect: true,
+    }
   },
   supabase: {
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      include: undefined,
-      exclude: [
-        '/', '/services', '/inquiry', '/inquiry/**', '/signup', '/updatepassword', 
-        '/dashboard/create-entry-id/**', '/dashboard/customer/**', '/dashboard/canceled',],
+      include: ['dashboard/modeselect', 'dashboard/admin', 'dashboard/qrcodedisplay'],
+      exclude: supabaseExcludePaths,
       saveRedirectToCookie: false,
     },
     cookieOptions: {

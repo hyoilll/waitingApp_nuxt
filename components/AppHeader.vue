@@ -4,7 +4,7 @@
       <div class="mx-auto px-6 py-4 flex justify-between items-center md:justify-around">
         <!-- Logo -->
         <div class="flex items-center gap-5">
-          <NuxtLink to="/" class="text-2xl font-bold text-indigo-600">
+          <NuxtLink :to="localePath('/')" class="text-2xl font-bold text-indigo-600">
             Qパス
           </NuxtLink>
           <CommonLanguageSelector class="md:hidden" />
@@ -15,19 +15,19 @@
         <nav class="hidden md:flex md:items-center space-x-8">
           <CommonLanguageSelector />
 
-          <NuxtLink v-for="link in navLinks" :key="link.to" :to="link.to" class="nav-link" active-class="active-link">
+          <NuxtLink v-for="link in navLinks" :key="link.to" :to="localePath(link.to)" class="nav-link" active-class="active-link">
             {{ $t(link.text) }}
           </NuxtLink>
 
           <template v-if="isLogin">
-            <NuxtLink to="/dashboard/modeselect" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2 px-3 rounded-lg transition duration-300" target="_blank">
+            <NuxtLink :to="localePath('/dashboard/modeselect')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2 px-3 rounded-lg transition duration-300" target="_blank">
               {{ $t('header.dashboard') }}
             </NuxtLink>
-            <NuxtLink to="/logout" class="nav-link !text-red-500 md:hover:!text-red-700">{{ $t('header.logout') }}</NuxtLink>
+            <NuxtLink :to="localePath('/logout')" class="nav-link !text-red-500 md:hover:!text-red-700">{{ $t('header.logout') }}</NuxtLink>
           </template>
           <template v-else>
-            <NuxtLink to="/login" class="nav-link" active-class="active-link">{{ $t('header.login') }}</NuxtLink>
-            <NuxtLink to="/signup" class="nav-link" active-class="active-link">
+            <NuxtLink :to="localePath('/login')" class="nav-link" active-class="active-link">{{ $t('header.login') }}</NuxtLink>
+            <NuxtLink :to="localePath('/signup')" class="nav-link" active-class="active-link">
               {{ $t('header.signup') }}
             </NuxtLink>
           </template>
@@ -49,6 +49,7 @@
 import MobileMenu from '~/components/common/MobileMenu.vue';
 
 const { user, isLogin } = storeToRefs(useUserStore());
+const localePath = useLocalePath();
 
 const userEmail = computed(() => {
   if (!user.value || !user.value.email) return '';

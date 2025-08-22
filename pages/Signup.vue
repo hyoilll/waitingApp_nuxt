@@ -1,9 +1,9 @@
 <template>
   <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-center mb-6">Sign Up</h2>
+    <h2 class="text-2xl font-bold text-center mb-6">{{ $t('signup.title') }}</h2>
     <form @submit.prevent="submitForm">
       <div class="mb-4">
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('signup.email') }}</label>
         <input
           type="email"
           id="email"
@@ -11,7 +11,7 @@
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
       </div>
       <div class="mb-4">
-        <label for="shopName" class="block text-sm font-medium text-gray-700">Shop name</label>
+        <label for="shopName" class="block text-sm font-medium text-gray-700">{{ $t('signup.shopName') }}</label>
         <input
           type="text"
           id="shopName"
@@ -19,7 +19,7 @@
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
       </div>
       <div class="mb-4">
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('signup.password') }}</label>
         <input
           type="password"
           id="password"
@@ -30,7 +30,7 @@
       <button
         type="submit"
         class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md md:hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-        Sign Up
+        {{ $t('signup.button') }}
       </button>
     </form>
   </div>
@@ -38,6 +38,9 @@
 
 <script lang="ts" setup>
 import type { SignUpUserInfo } from '~/composables/types/Admin'
+
+const { t } = useI18n()
+const localePath = useLocalePath()
 
 definePageMeta({
   isSignPage: true
@@ -47,7 +50,7 @@ definePageMeta({
 const supabaseUser = useSupabaseUser()
 watch(supabaseUser, () => {
   if (supabaseUser.value) {
-    return navigateTo('/')
+    return navigateTo(localePath('/'))
   }
 }, { immediate: true })
 
@@ -74,7 +77,7 @@ const submitForm = async () => {
     return
   }
 
-  alert('会員登録完了しました。')
-  router.push('/login')
+  alert(t('signup.success'))
+  router.push(localePath('/login'))
 }
 </script>

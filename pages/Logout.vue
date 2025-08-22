@@ -1,20 +1,23 @@
 <template>
   <div class="bg-white p-6 rounded-lg md:shadow-md w-full max-w-sm">
-    <h2 class="text-2xl font-bold text-center mb-4">Logout</h2>
+    <h2 class="text-2xl font-bold text-center mb-4">{{ $t('logout.title') }}</h2>
     <p class="text-gray-600 text-center mb-6">
-      Are you sure you want to log out?
+      {{ $t('logout.message') }}
     </p>
     <div class="flex justify-between">
       <button
         @click="handleLogout"
         class="bg-red-500 w-full text-white px-4 py-2 rounded transition">
-        Logout
+        {{ $t('logout.button') }}
       </button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+const { t } = useI18n()
+const localePath = useLocalePath()
+
 definePageMeta({
   isSignPage: true
 })
@@ -24,7 +27,7 @@ const supabase = useSupabaseClient()
 const { clearUser } = useUserStore()
 
 const handleLogout = async () => {
-  if (!confirm('Are you sure you want to log out?')) {
+  if (!confirm(t('logout.confirm'))) {
     return
   }
 
@@ -36,7 +39,7 @@ const handleLogout = async () => {
 
   clearUser()
 
-  await router.push('/')
+  await router.push(localePath('/'))
   window.location.reload()
 }
 </script>

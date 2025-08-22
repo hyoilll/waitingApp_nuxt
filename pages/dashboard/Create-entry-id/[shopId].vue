@@ -56,6 +56,8 @@ const router = useRouter()
 const shopId = route.params.shopId as string
 const errMsg = ref('')
 
+const localePath = useLocalePath()
+
 const handleSubmit = async () => {
   try {
     const resp = await getTicket(shopId, visitorCount.value)
@@ -65,7 +67,7 @@ const handleSubmit = async () => {
       alert(resp.error)
       return
     }
-    router.push(`/dashboard/customer/${resp.id}`)
+    router.push(localePath(`/dashboard/customer/${resp.id}`))
   } catch (error: any) {
     // This handles 4xx/5xx errors thrown by $fetch
     const errorMessage = error.data?.error || '予期せぬエラーが発生しました。'

@@ -1,33 +1,33 @@
 <template>
   <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg md:shadow-md">
-    <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
+    <h2 class="text-2xl font-bold text-center text-gray-800">{{ $t('login.title') }}</h2>
     <form @submit.prevent="login" class="space-y-4">
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('login.email') }}</label>
         <input
           v-model="user.email"
           type="email"
           id="email"
           class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
-          placeholder="Enter your email"
+          :placeholder="$t('login.email')"
           required />
       </div>
       <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('login.password') }}</label>
         <input
           v-model="user.password"
           type="password"
           id="password"
           class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-300"
-          placeholder="Enter your password"
+          :placeholder="$t('login.password')"
           required />
       </div>
       <p v-if="loginError.length" class="text-red-500 font-bold">{{ loginError }}</p>
-      <button type="button" class="text-blue-500 font-bold text-right" @click="resetPassword">forgot password?</button>
+      <button type="button" class="text-blue-500 font-bold text-right" @click="resetPassword">{{ $t('login.forgotPassword') }}</button>
       <button
         type="submit"
         class="w-full px-4 py-2 text-white bg-indigo-600 md:hover:bg-indigo-700 rounded-md">
-        Sign In
+        {{ $t('login.button') }}
       </button>
     </form>
   </div>
@@ -42,6 +42,8 @@
 <script lang="ts" setup>
 import { useLogin } from '~/composables/useLogin';
 
+const localePath = useLocalePath()
+
 definePageMeta({
   isSignPage: true
 })
@@ -50,7 +52,7 @@ definePageMeta({
 const supabaseUser = useSupabaseUser()
 watch(supabaseUser, () => {
   if (supabaseUser.value) {
-    return navigateTo('/')
+    return navigateTo(localePath('/'))
   }
 }, { immediate: true })
 

@@ -1,17 +1,17 @@
 <template>
   <div class="p-6 min-h-screen flex flex-col items-center justify-center">
     <div v-if="entryNumber" class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-      <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">整理番号</h2>
-      <p class="text-2xl font-semibold text-gray-700 mb-4 text-center">{{ entryNumber }} 番</p>
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">{{ $t('dashboard.customer.ticketNumber') }}</h2>
+      <p class="text-2xl font-semibold text-gray-700 mb-4 text-center">{{ entryNumber }} {{ $t('dashboard.customer.ticketNumberSuffix') }}</p>
 
       <div v-if="isCalled" class="bg-green-100 border border-green-400 text-green-700 rounded-lg p-4 text-center">
-        <p class="font-semibold">お待たせいたしました。</p>
-        <p>お席のご用意ができましたので、お入りください。</p>
+        <p class="font-semibold">{{ $t('dashboard.customer.calledMessageHeader') }}</p>
+        <p>{{ $t('dashboard.customer.calledMessageBody') }}</p>
       </div>
       <template v-else>
-        <p class="text-lg text-gray-600 mb-4 text-center">お待ちの人数: <span class="font-semibold">{{ waitingCount }} 組</span></p>
+        <p class="text-lg text-gray-600 mb-4 text-center">{{ $t('dashboard.customer.waitingCount', { count: waitingCount }) }}</p>
         <div v-if="recentEntries.length" class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-3">最近の入店</h2>
+          <h2 class="text-xl font-semibold text-gray-800 mb-3">{{ $t('dashboard.customer.recentEntries') }}</h2>
           <ul class="space-y-2">
             <li v-for="entry in recentEntries" :key="entry.entry_number" class="bg-gray-50 border border-gray-200 rounded-lg p-2">
               <span class="text-gray-700">{{ `No. ${entry.entry_number}（${entry.visitor_count}人）${convertToJSTDate(entry.entered_at, 'HH:mm')}` }}</span>
@@ -19,13 +19,13 @@
           </ul>
         </div>
         <button @click="cancelWaiting" :disabled="isCancelling" class="w-full bg-red-500 text-white font-semibold py-2 px-4 rounded-lg md:hover:bg-red-700 disabled:opacity-50">
-          {{ isCancelling ? 'キャンセル中...' : '順番待ちをキャンセル' }}
+          {{ isCancelling ? $t('dashboard.customer.cancelling') : $t('dashboard.customer.cancelWaiting') }}
         </button>
       </template>
     </div>
     <div v-else class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md text-center">
-      <h1 class="text-2xl font-bold text-gray-800 mb-4">整理番号修得を失敗しました。</h1>
-      <p class="text-lg text-gray-600 mb-2">QRコードをもう一度スキャンしてください</p>
+      <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ $t('dashboard.customer.fetchTicketFailed') }}</h1>
+      <p class="text-lg text-gray-600 mb-2">{{ $t('dashboard.customer.scanAgain') }}</p>
     </div>
   </div>
 
@@ -46,6 +46,9 @@
 import { getEntryDetail, getIsCalled, getRecentEntryTimes, getWaitingCount, subscribeToShop, unsubscribeFromShop, updateCancelWaiting } from '~/composables/apis/Customer';
 import type { RecentEntryTimesResponse } from '~/composables/types/Customer';
 import type { RealtimeChannel } from '@supabase/supabase-js';
+
+const { t } = useI18n()
+const localePath = useLocalePath()
 
 definePageMeta({
   layout: 'dashboard',
@@ -73,16 +76,16 @@ const cancelWaiting = async () => {
     const resp = await updateCancelWaiting(entryId.value)
 
     if (resp?.error) {
-      console.error('順番待ちキャンセルエラー:', resp.error)
+      console.error(t('dashboard.customer.cancelError'), resp.error)
       isCancelling.value = false
       return
     }
 
-    alert('順番待ちをキャンセルしました');
-    router.push('/dashboard/canceled');
+    alert(t('dashboard.customer.cancelSuccess'));
+    router.push(localePath('/dashboard/canceled'));
     isCancelling.value = false;
   } else {
-    console.error('entryIdが取得できませんでした。')
+    console.error(t('dashboard.customer.cancelError'))
   }
 }
 
@@ -94,7 +97,7 @@ const fetchRecentEntries = async (shopId: string) => {
   if (shopId) {
     const resp = await getRecentEntryTimes(shopId)
     if (resp.error) {
-      console.error('直近入店取得エラー:', resp.error)
+      console.error(t('dashboard.customer.recentEntriesError'), resp.error)
       return
     }
 
@@ -111,7 +114,7 @@ const fetchWaitingCount = async (shopId: string, entryNumber: number) => {
   if (shopId && entryNumber) {
     const resp = await getWaitingCount(shopId, entryNumber);
     if (resp.error) {
-      console.error('待ち組数取得エラー:', resp.error)
+      console.error(t('dashboard.customer.waitingCountError'), resp.error)
       return
     }
 
@@ -130,7 +133,7 @@ const fetchIsCalled = async () => {
 const fetchEntryDetails = async (entryId: string) => {
   const resp = await getEntryDetail(entryId);
   if (resp.error) {
-    console.error('entry詳細取得エラー:', resp.error)
+    console.error(t('dashboard.customer.entryDetailsError'), resp.error)
     return
   }
 
