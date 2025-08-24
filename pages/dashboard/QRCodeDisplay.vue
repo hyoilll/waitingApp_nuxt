@@ -39,8 +39,11 @@ const config = useRuntimeConfig()
 const baseUrl = config.public.QR_CODE_MOVE_PAGE_URL
 
 const { locale } = useI18n()
+const pageUrl = locale.value === 'ja'
+  ? `${baseUrl}/dashboard/create-entry-id/${shop.id}`
+  : `${baseUrl}/${locale.value}/dashboard/create-entry-id/${shop.id}`
 
-const qrcode = useQRCode(`${baseUrl}/${locale.value}/dashboard/create-entry-id/${shop.id}`, {
+const qrcode = useQRCode(pageUrl, {
   errorCorrectionLevel: 'H',
   margin: 3,
   color: {

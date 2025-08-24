@@ -131,7 +131,7 @@ const fetchIsCalled = async () => {
     return
   }
 
-  isCalled.value = resp.data
+  isCalled.value = resp.is_called
 }
 
 /**
@@ -149,9 +149,9 @@ const fetchEntryDetails = async (entryId: string) => {
   entryNumber.value = resp.entry_number
   shopId.value = resp.shop_id
 
-  // ここは要らないかも、発券後に直ちに呼ばれることはおそらくないので。
   await fetchIsCalled()
   if (isCalled.value) {
+    isLoading.value = true
     return
   }
 

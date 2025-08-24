@@ -16,7 +16,7 @@ export default eventHandler(async (event) => {
       return { error: getErrorMessage(error, 'server.error.fetchCallInfoFailed') };
     }
 
-    return entry.is_called;
+    return entry;
   }
   catch (error) {
     return { error: 'server.error.unexpected' }
