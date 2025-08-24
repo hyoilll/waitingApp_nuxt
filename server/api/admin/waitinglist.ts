@@ -15,11 +15,11 @@ export default eventHandler(async (event) => {
     .order('entry_number', { ascending: true });
 
     if (error) {
-      return { error: getErrorMessage(error, '待ち組のリスト取得に失敗しました') };
+      return { error: getErrorMessage(error, 'server.error.fetchWaitingListFailed') };
     }
 
     return { data };
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

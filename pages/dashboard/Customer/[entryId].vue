@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 min-h-screen flex flex-col items-center justify-center">
+  <div v-if="isLoading" class="p-6 min-h-screen flex flex-col items-center justify-center">
     <div v-if="entryNumber" class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
       <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">{{ $t('dashboard.customer.ticketNumber') }}</h2>
       <p class="text-2xl font-semibold text-gray-700 mb-4 text-center">{{ entryNumber }} {{ $t('dashboard.customer.ticketNumberSuffix') }}</p>
@@ -55,6 +55,7 @@ definePageMeta({
   disableDashboardHeader: true,
 })
 
+const isLoading = ref(false);
 const entryNumber = ref(0);
 const isCalled = ref(false);
 const recentEntries = ref<RecentEntryTimesResponse[]>([]);
@@ -76,7 +77,7 @@ const cancelWaiting = async () => {
     const resp = await updateCancelWaiting(entryId.value)
 
     if (resp?.error) {
-      console.error(t('dashboard.customer.cancelError'), resp.error)
+      alert(t(resp.error))
       isCancelling.value = false
       return
     }
@@ -85,7 +86,7 @@ const cancelWaiting = async () => {
     router.push(localePath('/dashboard/canceled'));
     isCancelling.value = false;
   } else {
-    console.error(t('dashboard.customer.cancelError'))
+    alert(t('dashboard.customer.cancelError'))
   }
 }
 
@@ -97,7 +98,7 @@ const fetchRecentEntries = async (shopId: string) => {
   if (shopId) {
     const resp = await getRecentEntryTimes(shopId)
     if (resp.error) {
-      console.error(t('dashboard.customer.recentEntriesError'), resp.error)
+      alert(t(resp.error))
       return
     }
 
@@ -114,7 +115,7 @@ const fetchWaitingCount = async (shopId: string, entryNumber: number) => {
   if (shopId && entryNumber) {
     const resp = await getWaitingCount(shopId, entryNumber);
     if (resp.error) {
-      console.error(t('dashboard.customer.waitingCountError'), resp.error)
+      alert(t(resp.error))
       return
     }
 
@@ -123,7 +124,14 @@ const fetchWaitingCount = async (shopId: string, entryNumber: number) => {
 };
 
 const fetchIsCalled = async () => {
-  isCalled.value = await getIsCalled(entryId.value)
+  const resp = await getIsCalled(entryId.value)
+
+  if (resp.error) {
+    alert(t(resp.error))
+    return
+  }
+
+  isCalled.value = resp.data
 }
 
 /**
@@ -131,15 +139,17 @@ const fetchIsCalled = async () => {
  * @param entryId 
  */
 const fetchEntryDetails = async (entryId: string) => {
+  isLoading.value = false
   const resp = await getEntryDetail(entryId);
   if (resp.error) {
-    console.error(t('dashboard.customer.entryDetailsError'), resp.error)
+    alert(t(resp.error))
     return
   }
 
   entryNumber.value = resp.entry_number
   shopId.value = resp.shop_id
 
+  // ここは要らないかも、発券後に直ちに呼ばれることはおそらくないので。
   await fetchIsCalled()
   if (isCalled.value) {
     return
@@ -149,6 +159,8 @@ const fetchEntryDetails = async (entryId: string) => {
     fetchWaitingCount(shopId.value, resp.entry_number),
     fetchRecentEntries(shopId.value)
   ])
+
+  isLoading.value = true
 }
 
 onBeforeMount(async () => {

@@ -4,7 +4,7 @@
       <button
         v-if="enableBackBtn"
         class="px-3 py-1 bg-gray-500 font-semibold rounded-lg shadow-md"
-        @click="$router.back()">戻る</button>
+        @click="$router.back()">{{ $t('button.back') }}</button>
     </div>
 
     <span class="font-bold">{{ user.shop_name }}</span>

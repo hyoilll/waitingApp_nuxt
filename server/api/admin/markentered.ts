@@ -16,11 +16,11 @@ export default eventHandler(async (event) => {
       .eq('id', query.entryId);
 
     if (selectError) {
-      return { error: getErrorMessage(selectError, '入店情報の取得に失敗しました') };
+      return { error: getErrorMessage(selectError, 'server.error.fetchEntryInfoFailed') };
     }
 
     if (data !== null && (data as EntryInfo[]).at(0)?.is_called === false) {
-      return { error: '先に呼出を実行してください。' };
+      return { error: 'server.error.callBeforeEntry' };
     }
     
     const { error } = await client
@@ -29,12 +29,12 @@ export default eventHandler(async (event) => {
       .eq('id', query.entryId);
 
     if (error) {
-      return { error: getErrorMessage(error, '入店処理に失敗しました') };
+      return { error: getErrorMessage(error, 'server.error.enterFailed') };
     }
 
     return true;
   }
   catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

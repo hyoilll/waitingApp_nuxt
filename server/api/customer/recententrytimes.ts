@@ -16,11 +16,11 @@ export default eventHandler(async (event) => {
       .limit(10);
 
     if (error) {
-      return { error: getErrorMessage(error, '最近の入店情報の取得に失敗しました') };
+      return { error: getErrorMessage(error, 'server.error.fetchRecentEntriesFailed') };
     }
 
     return { entries: data }
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

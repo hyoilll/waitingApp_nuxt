@@ -12,12 +12,12 @@ export default eventHandler(async (event) => {
       .eq('id', body.entryId);
 
     if (error) {
-      return { error: getErrorMessage(error, '退店処理に失敗しました') };
+      return { error: getErrorMessage(error, 'server.error.exitFailed') };
     }
 
     return true;
   }
   catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

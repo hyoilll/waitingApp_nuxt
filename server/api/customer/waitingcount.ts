@@ -15,11 +15,11 @@ export default eventHandler(async (event) => {
       .eq('status', 'waiting')
     
     if (error) {
-      return { error: getErrorMessage(error, '待ち組数の取得に失敗しました') };
+      return { error: getErrorMessage(error, 'server.error.fetchWaitingCountFailed') };
     }
 
     return { count };
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

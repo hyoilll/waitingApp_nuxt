@@ -2,8 +2,7 @@
   <div class="flex min-h-screen flex-col items-center justify-center bg-black">
     <div class="w-full max-w-2xl px-4">
       <div
-        class="rounded-lg bg-gray-800 p-8 text-center shadow-lg"
-      >
+        class="rounded-lg bg-gray-800 p-8 text-center shadow-lg">
         <h1 class="mb-6 text-3xl font-bold text-white">
           {{ $t('dashboard.qrCodeDisplay.title') }}
         </h1>
@@ -39,7 +38,9 @@ const { shop } = useUserStore()
 const config = useRuntimeConfig()
 const baseUrl = config.public.QR_CODE_MOVE_PAGE_URL
 
-const qrcode = useQRCode(`${baseUrl}/dashboard/create-entry-id/${shop.id}`, {
+const { locale } = useI18n()
+
+const qrcode = useQRCode(`${baseUrl}/${locale.value}/dashboard/create-entry-id/${shop.id}`, {
   errorCorrectionLevel: 'H',
   margin: 3,
   color: {

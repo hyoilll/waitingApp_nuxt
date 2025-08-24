@@ -199,7 +199,9 @@
       "instruction": "Please enter the number of people and press the submit button.",
       "visitorCount": "Number of people:",
       "submit": "Submit",
-      "unexpectedError": "An unexpected error occurred."
+      "unexpectedError": "An unexpected error occurred.",
+      "increment": "Increment",
+      "decrement": "Decrement"
     },
     "customer": {
       "ticketNumber": "Ticket Number",
@@ -250,5 +252,40 @@
     "description": "※ We will send a password change link to the email address you entered.\nIf you enter an unregistered email address, it will not be sent.",
     "email": "Email",
     "button": "Send"
+  },
+  "server": {
+    "error": {
+      "unexpected": "An unexpected error occurred.\nPlease contact support.",
+      "fetchWaitingListFailed": "Failed to fetch waiting list.",
+      "callFailed": "Call processing failed.",
+      "cancelFailed": "Cancel processing failed.\nPlease contact support.",
+      "fetchEntryInfoFailed": "Failed to fetch entry information.",
+      "callBeforeEntry": "Please execute the call before marking as entered.",
+      "enterFailed": "Enter processing failed.",
+      "exitFailed": "Exit processing failed.",
+      "fetchEntryDetailFailed": "Failed to fetch entry details.\nPlease contact support.",
+      "fetchCallInfoFailed": "Failed to fetch call information.\nPlease contact support.",
+      "fetchRecentEntriesFailed": "Failed to fetch recent entry information.\nPlease contact support.",
+      "fetchWaitingCountFailed": "Failed to fetch waiting count.\nPlease contact support.",
+      "forgotPasswordFailed": "Forgot password process failed.",
+      "updatePasswordFailed": "Update password process failed.",
+      "passwordsDoNotMatch": "Passwords do not match.",
+      "noUserFound": "No user found.",
+      "fetchUserFailed": "Failed to fetch user.",
+      "fetchShopFailed": "Failed to fetch shop.",
+      "addInquiryFailed": "Failed to add inquiry.",
+      "fetchInquiryListFailed": "Failed to fetch inquiry list.",
+      "fetchCommentFailed": "Failed to fetch inquiry comments.",
+      "deleteCommentFailed": "Failed to delete comment.",
+      "editCommentFailed": "Failed to edit comment.",
+      "addCommentFailed": "Failed to add comment.",
+      "fetchInquiryDetailFailed": "Failed to fetch inquiry details.",
+      "updateInquiryFailed": "Failed to update inquiry.",
+      "visitorCountMissing": "Visitor count is not specified.",
+      "visitorCountInvalid": "The value for visitor count is invalid. Please specify an integer between 1 and 30.",
+      "fetchTicketNumberFailed": "Failed to fetch ticket number.\nPlease contact support.",
+      "updateTicketNumberFailed": "Failed to update ticket number.\nPlease contact support.",
+      "issueTicketNumberFailed": "Failed to issue ticket number.\nPlease contact support."
+    }
   }
 }

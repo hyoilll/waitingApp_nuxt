@@ -21,8 +21,10 @@ const { data } = await useFetch('/api/me', {
   headers: useRequestHeaders(['cookie'])
 })
 
+const { t } = useI18n()
+
 if (data.value?.error) {
-  console.log(data.value.error)
+  alert(t(data.value.error))
 }
 
 if (data.value?.user) {

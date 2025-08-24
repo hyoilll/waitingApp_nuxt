@@ -9,19 +9,19 @@ export default eventHandler(async (event) => {
   const confirmPw = body.confirmPassword
 
   if (newPw !== confirmPw) {
-    return { error: 'Passwords do not match' }
+    return { error: 'server.error.passwordsDoNotMatch' }
   }
 
   const { error } = await client.auth.updateUser({
     password: newPw,
   })
   if (error) {
-    return { error: getErrorMessage(error, 'update password error') }
+    return { error: getErrorMessage(error, 'server.error.updatePasswordFailed') }
   }
 
   // Sign out after updating password　自動ログインされるため。
   const { error: signoutError } = await client.auth.signOut()
   if (signoutError) {
-    return { error: getErrorMessage(signoutError, 'update password error') }
+    return { error: getErrorMessage(signoutError, 'server.error.updatePasswordFailed') }
   }
 })

@@ -14,11 +14,11 @@ export default eventHandler(async (event) => {
     .single();
 
     if (entryError) {
-      return { error: getErrorMessage(entryError, 'エントリー情報の取得に失敗しました') };
+      return { error: getErrorMessage(entryError, 'server.error.fetchEntryDetailFailed') };
     }
 
     return entry;
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました。' }
+    return { error: 'server.error.unexpected' }
   }
 })

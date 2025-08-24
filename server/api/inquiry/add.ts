@@ -12,11 +12,11 @@ export default eventHandler(async (event) => {
       .insert(body)
     
     if (insertError) {
-      return { error: getErrorMessage(insertError, '問い合わせの追加に失敗しました') };
+      return { error: getErrorMessage(insertError, 'server.error.addInquiryFailed') };
     }
 
     return getInquiriesWithComments(client)
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 const email = ref('')
-const loginError = ref('')
 
 defineProps<{
   errMsg: string

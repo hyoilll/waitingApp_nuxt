@@ -4,7 +4,7 @@ import { getErrorMessage } from '../utils'
 export default defineEventHandler(async (event) => {
   const data = await serverSupabaseUser(event)
   if (!data) {
-    return { error: 'No user found' }
+    return { error: 'server.error.noUserFound' }
   }
 
   const client = await serverSupabaseClient(event)
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
       .single()
   
   if (userError) {
-    return { error: getErrorMessage(userError, 'fetch user error') }
+    return { error: getErrorMessage(userError, 'server.error.fetchUserFailed') }
   }
 
   // Get user info from public.shops
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
       .single()
 
   if (shopError) {
-    return { error: getErrorMessage(shopError, 'fetch shop error') }
+    return { error: getErrorMessage(shopError, 'server.error.fetchShopFailed') }
   }
     
   return { user, shop }

@@ -47,6 +47,8 @@ const confirmPassword = ref('')
 const errorMessage = ref('')
 const successUpdated = ref(false)
 
+const { t } = useI18n()
+
 const updatePassword = async () => {
   errorMessage.value = ''
   successUpdated.value = false
@@ -59,7 +61,7 @@ const updatePassword = async () => {
   })
 
   if (resp?.error) {
-    errorMessage.value = resp.error
+    errorMessage.value = t(resp.error)
     return
   }
 

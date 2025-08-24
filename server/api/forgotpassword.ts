@@ -10,6 +10,6 @@ export default eventHandler(async (event) => {
   })
 
   if (error) {
-    return { error: getErrorMessage(error, 'forgot password error') }
+    return { error: getErrorMessage(error, 'server.error.forgotPasswordFailed') }
   }
 })

@@ -13,12 +13,12 @@ export default eventHandler(async (event) => {
       .single();
 
     if (error) {
-      return { error: getErrorMessage(error, '呼び出し情報の取得に失敗しました') };
+      return { error: getErrorMessage(error, 'server.error.fetchCallInfoFailed') };
     }
 
     return entry.is_called;
   }
   catch (error) {
-    return { error: '予期せぬエラーが発生しました。' }
+    return { error: 'server.error.unexpected' }
   }
 })

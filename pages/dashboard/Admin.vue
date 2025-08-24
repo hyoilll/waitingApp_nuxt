@@ -59,7 +59,6 @@ definePageMeta({
 })
 
 const enteredList = ref<Entry[]>([]);
-const enteredErrMsg = ref('');
 const waitingList = ref<Entry[]>([]);
 const waitingErrMsg = ref('');
 const realtimeChannel = ref<RealtimeChannel>();
@@ -73,7 +72,7 @@ const handleMarkAsExited = async (entryNumber: number, entryId: string) => {
 
   const resp = await markAsExited(entryId)
   if (resp.error) {
-    alert(resp.error);
+    alert(t(resp.error));
   }
 };
 
@@ -84,7 +83,7 @@ const handleMarkAsEntered = async (entryNumber: number, entryId: string) => {
 
   const resp = await markAsEntered(entryId)
   if (resp.error) {
-    alert(resp.error);
+    alert(t(resp.error));
   }
 };
 
@@ -95,7 +94,7 @@ const handelMarkAsCanceled = async (entryNumber: number, entryId: string) => {
 
   const resp = await markAsCanceled(entryId);
   if (resp.error) {
-    alert(resp.error);
+    alert(t(resp.error));
   }
 };
 
@@ -106,7 +105,7 @@ const handelMarkAsCalled = async (entryNumber: number, entryId: string) => {
 
   const resp = await markAsCalled(entryId);
   if (resp.error) {
-    alert(resp.error);
+    alert(t(resp.error));
   }
 };
 
@@ -114,13 +113,13 @@ const fetchWaitingCustomers = async () => {
   try {
     const resp = await getWaitingList(shop.id);
     if (resp.error) {
-      waitingErrMsg.value = t('dashboard.admin.fetchWaitingError');
+      waitingErrMsg.value = t(resp.error);
       return;
     }
 
     waitingList.value = resp.data;
   } catch (error) {
-    waitingErrMsg.value = t('dashboard.admin.fetchWaitingError');
+    waitingErrMsg.value = t('server.error.unexpected');
   }
 };
 
@@ -128,13 +127,13 @@ const fetchEnteredCustomers = async () => {
   try {
     const resp = await getEnteredList(shop.id);
     if (resp.error) {
-      enteredErrMsg.value = t('dashboard.admin.fetchEnteredError');
+      alert(resp.error);
       return;
     }
 
     enteredList.value = resp.data;
   } catch (error) {
-    enteredErrMsg.value = t('dashboard.admin.fetchEnteredError');
+    alert(t('server.error.unexpected'))
   }
 };
 

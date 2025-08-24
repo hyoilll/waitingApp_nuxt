@@ -24,14 +24,15 @@ export const addInquiry = async (payload: NewInquiryPayload) => {
 
 /**
  * Fetches the details of a specific inquiry.
+ * 今のところ使われてないけど、いずれ使うかも
  * @param inquiryId 
  * @returns 
  */
-export const getDetailInquiry = async (inquiryId: number) => {
-  return await useFetch(`/api/inquiry/${inquiryId}/detail`, {
-    headers: useRequestHeaders(['cookie']),
-  })
-}
+// export const getDetailInquiry = async (inquiryId: number) => {
+//   return await useFetch(`/api/inquiry/${inquiryId}/detail`, {
+//     headers: useRequestHeaders(['cookie']),
+//   })
+// }
 
 /**
  * Fetches the list of comments for a specific inquiry.

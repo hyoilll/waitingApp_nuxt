@@ -65,6 +65,8 @@ const resetPassword = async () => {
   await UpdatePwDialog.start()
 }
 
+const { t } = useI18n()
+
 const sendMail = async (email: string, resolve: (v: unknown) => void) => {
   const resp = await $fetch('/api/forgotpassword', {
     method: 'post',
@@ -75,7 +77,7 @@ const sendMail = async (email: string, resolve: (v: unknown) => void) => {
   })
 
   if (resp?.error) {
-    sendMailError.value = resp.error
+    sendMailError.value = t(resp.error)
     return
   }
 

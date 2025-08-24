@@ -3,9 +3,9 @@ import { getErrorMessage } from '../../../utils'
 import { getInquiriesWithComments } from '../util'
 
 export default eventHandler(async (event) => {
+  const inquiryId = getRouterParam(event, 'id')
   const body = await readBody(event)
   const client = await serverSupabaseClient(event)
-  const inquiryId = event.context.params?.id ?? '';
 
   try {
     const { error: updateError } = await client
@@ -13,13 +13,13 @@ export default eventHandler(async (event) => {
       .update({ title: body.title, content: body.content, updated_at: new Date() })
       .eq('id', inquiryId)
       .eq('user_id', body.user_id)
-
+    
     if (updateError) {
-      return { error: getErrorMessage(updateError, '問い合わせコメントの更新に失敗しました') };
+      return { error: getErrorMessage(updateError, 'server.error.updateInquiryFailed') };
     }
 
     return getInquiriesWithComments(client)
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

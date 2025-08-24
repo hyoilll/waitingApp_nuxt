@@ -73,7 +73,7 @@ const submitForm = async () => {
   })
 
   if (resp?.error) {
-    errorMsg.value = resp.error
+    errorMsg.value = t(resp.error)
     return
   }
 

@@ -64,13 +64,15 @@ const { currentPage, totalPages, paginatedItems, LIMIT, goToPage } = usePaginati
 
 const { isLogin } = useUserStore()
 
+const { t } = useI18n()
+
 const AddDialog = createTemplatePromise<NewInquiryPayload>()
 const openAddDialog = async () => {
   const newInquiry = await AddDialog.start()
   const resp = await addInquiry(newInquiry)
 
   if (resp?.error) {
-    console.error(resp.error)
+    alert(t(resp.error))
     return
   }
 
@@ -83,7 +85,7 @@ const openAddDialog = async () => {
 // TODO: 今は全ての問い合わせを取得しているが、ページネーションを考慮して必要な分だけ取得するようにする
 const resp = await getInquryList()
 if (resp.error.value) {
-  console.error(resp.error)
+  alert(t(resp.error))
 }
 
 inquiries.value = resp.data.value?.data as InquiryInfo[]
@@ -91,7 +93,7 @@ inquiries.value = resp.data.value?.data as InquiryInfo[]
 const add = async (payload: NewCommentPayload, targetIdx: number) => {
   const resp = await addComment(shownInquiries.value[targetIdx].id, payload)
   if (resp?.error) {
-    console.error(resp.error)
+    alert(t(resp.error))
     return
   }
 
@@ -101,7 +103,7 @@ const add = async (payload: NewCommentPayload, targetIdx: number) => {
 const edit = async (payload: NewCommentPayload, targetIdx: number, commentId: number) => {
   const resp = await editComment(shownInquiries.value[targetIdx].id, commentId, payload)
   if (resp?.error) {
-    console.error(resp.error)
+    alert(t(resp.error))
     return
   }
 
@@ -111,7 +113,7 @@ const edit = async (payload: NewCommentPayload, targetIdx: number, commentId: nu
 const handleDelete = async (targetIdx: number, commentId: number, userId: string) => {
   const resp = await deleteComment(shownInquiries.value[targetIdx].id, commentId, userId)
   if (resp?.error) {
-    console.error(resp.error)
+    alert(t(resp.error))
     return
   }
 
@@ -141,7 +143,7 @@ const updateInq = async (updateForm: InquiryUpdateForm, idx: number) => {
 
   const resp = await updateInquiry(inquiry.id, payload)
   if (resp?.error) {
-    console.error(resp.error)
+    alert(t(resp.error))
     return
   }
 

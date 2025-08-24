@@ -10,13 +10,13 @@ export default eventHandler(async (event) => {
   const visitorCountRaw = query.visitorCount
   if (visitorCountRaw === null || visitorCountRaw === undefined) {
     setResponseStatus(event, 400)
-    return { error: '人数が指定されていません。' }
+    return { error: 'server.error.visitorCountMissing' }
   }
 
   const visitorCount = Number(visitorCountRaw)
   if (isNaN(visitorCount) || !Number.isInteger(visitorCount) || visitorCount < 1 || visitorCount > 30) {
     setResponseStatus(event, 400)
-    return { error: '人数の値が不正です。1から30までの整数で指定してください。' }
+    return { error: 'server.error.visitorCountInvalid' }
   }
   // --- End of Validation ---
 
@@ -30,7 +30,7 @@ export default eventHandler(async (event) => {
       .single();
 
     if (selectError || !shopData) {
-      return { error: getErrorMessage(selectError, '整理番号の取得に失敗しました') };
+      return { error: getErrorMessage(selectError, 'server.error.fetchTicketNumberFailed') };
     }
 
     const newCurrentNumber = shopData.current_number + 1;
@@ -44,7 +44,7 @@ export default eventHandler(async (event) => {
       .single();
 
     if (incrementError || !updatedShop) {
-      return { error: getErrorMessage(incrementError, '整理番号の更新に失敗しました') };
+      return { error: getErrorMessage(incrementError, 'server.error.updateTicketNumberFailed') };
     }
 
     const newTicketNumber = updatedShop.current_number;
@@ -57,11 +57,11 @@ export default eventHandler(async (event) => {
       .single();
 
     if (entryError || !newEntry) {
-      return { error: getErrorMessage(entryError, '整理番号の発行に失敗しました') };
+      return { error: getErrorMessage(entryError, 'server.error.issueTicketNumberFailed') };
     }
 
     return newEntry; // 発行された整理番号とエントリーIDを返す
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

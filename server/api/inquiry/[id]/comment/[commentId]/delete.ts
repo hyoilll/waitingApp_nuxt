@@ -4,24 +4,24 @@ import { getInquiriesWithComments } from '../../../util'
 
 export default eventHandler(async (event) => {
   const body = await readBody(event)
+  const inquiryId = getRouterParam(event, 'id')
+  const commentId = getRouterParam(event, 'commentId')
   const client = await serverSupabaseClient(event)
-  const inquiryId = event.context.params?.id ?? '';
-  const commentId = event.context.params?.commentId ?? '';
 
   try {
-    const { error: updateError } = await client
+    const { error: deleteError } = await client
       .from('inquiry_comments')
       .delete()
       .eq('id', commentId)
       .eq('inquiry_id', inquiryId)
       .eq('user_id', body.user_id)
-
-    if (updateError) {
-      return { error: getErrorMessage(updateError, '問い合わせコメントの更新に失敗しました') };
+    
+    if (deleteError) {
+      return { error: getErrorMessage(deleteError, 'server.error.deleteCommentFailed') };
     }
 
     return getInquiriesWithComments(client)
   } catch (error) {
-    return { error: '予期せぬエラーが発生しました' };
+    return { error: 'server.error.unexpected' };
   }
 })

@@ -180,6 +180,7 @@
       "recentEntriesError": "直近入店取得エラー:",
       "waitingCountError": "待ち組数取得エラー:",
       "entryDetailsError": "entry詳細取得エラー:",
+      "isCalledError": "呼出情報取得エラー:",
       "recentEntryLine": "No. {entry_number}（{visitor_count}人）{entered_at}"
     }
   },
@@ -213,5 +214,40 @@
     "description": "※ 入力したメールアドレスにパスワード変更リンク先をお送りします。\n登録されてないメールアドレスを入力した場合は送信されません。",
     "email": "メールアドレス",
     "button": "送信"
+  },
+  "server": {
+    "error": {
+      "unexpected": "予期せぬエラーが発生しました。\nスタッフにお問い合わせください。",
+      "fetchWaitingListFailed": "待ち組のリスト取得に失敗しました。",
+      "callFailed": "呼出処理に失敗しました。",
+      "cancelFailed": "キャンセル処理に失敗しました。\nスタッフにお問い合わせください。",
+      "fetchEntryInfoFailed": "入店情報の取得に失敗しました。",
+      "callBeforeEntry": "先に呼出を実行してください。",
+      "enterFailed": "入店処理に失敗しました。",
+      "exitFailed": "退店処理に失敗しました。",
+      "fetchEntryDetailFailed": "エントリー情報の取得に失敗しました。\nスタッフにお問い合わせください。",
+      "fetchCallInfoFailed": "呼び出し情報の取得に失敗しました。\nスタッフにお問い合わせください。",
+      "fetchRecentEntriesFailed": "最近の入店情報の取得に失敗しました。\nスタッフにお問い合わせください。",
+      "fetchWaitingCountFailed": "待ち組数の取得に失敗しました。\nスタッフにお問い合わせください。",
+      "forgotPasswordFailed": "パスワード再設定処理に失敗しました。",
+      "updatePasswordFailed": "パスワード更新処理に失敗しました。",
+      "passwordsDoNotMatch": "パスワードが一致しません。",
+      "noUserFound": "ユーザーが見つかりません。",
+      "fetchUserFailed": "ユーザーの取得に失敗しました。",
+      "fetchShopFailed": "店舗情報の取得に失敗しました。",
+      "addInquiryFailed": "問い合わせの追加に失敗しました。",
+      "fetchInquiryListFailed": "問い合わせのリスト取得に失敗しました。",
+      "fetchCommentFailed": "問い合わせのコメント取得に失敗しました。",
+      "deleteCommentFailed": "コメントの削除に失敗しました。",
+      "editCommentFailed": "コメントの編集に失敗しました。",
+      "addCommentFailed": "コメントの追加に失敗しました。",
+      "fetchInquiryDetailFailed": "問い合わせの詳細取得に失敗しました。",
+      "updateInquiryFailed": "問い合わせの更新に失敗しました。",
+      "visitorCountMissing": "人数が指定されていません。",
+      "visitorCountInvalid": "人数の値が不正です。1から30までの整数で指定してください。",
+      "fetchTicketNumberFailed": "整理番号の取得に失敗しました。\nスタッフにお問い合わせください。",
+      "updateTicketNumberFailed": "整理番号の更新に失敗しました。\nスタッフにお問い合わせください。",
+      "issueTicketNumberFailed": "整理番号の発行に失敗しました。\nスタッフにお問い合わせください。"
+    }
   }
 }

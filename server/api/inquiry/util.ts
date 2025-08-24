@@ -17,8 +17,8 @@ export const getInquiriesWithComments = async (client: SupabaseClient) => {
   if (inquiriesError || commentsError) {
     return { 
       error: inquiriesError 
-        ? getErrorMessage(inquiriesError, '問い合わせのリスト取得に失敗しました') 
-        : getErrorMessage(commentsError, '問い合わせのコメント取得に失敗しました') 
+        ? getErrorMessage(inquiriesError, 'server.error.fetchInquiryListFailed') 
+        : getErrorMessage(commentsError, 'server.error.fetchCommentFailed') 
     };
   }
 

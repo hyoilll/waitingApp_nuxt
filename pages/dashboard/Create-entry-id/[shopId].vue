@@ -57,7 +57,6 @@ const decrementCount = () => {
 const route = useRoute()
 const router = useRouter()
 const shopId = route.params.shopId as string
-const errMsg = ref('')
 
 const localePath = useLocalePath()
 
@@ -65,17 +64,13 @@ const handleSubmit = async () => {
   try {
     const resp = await getTicket(shopId, visitorCount.value)
     if (resp.error) {
-      // This handles non-4xx/5xx errors that are returned with a 200 status
-      errMsg.value = resp.error
-      alert(resp.error)
+      alert(t(resp.error))
       return
     }
     router.push(localePath(`/dashboard/customer/${resp.id}`))
   } catch (error: any) {
-    // This handles 4xx/5xx errors thrown by $fetch
-    const errorMessage = error.data?.error || t('dashboard.createEntry.unexpectedError')
-    errMsg.value = errorMessage
-    alert(errorMessage)
+    const errorMessage = error.data?.error || 'server.error.unexpected'
+    alert(t(errorMessage))
   }
 }
 
@@ -84,7 +79,7 @@ onBeforeMount(async () => {
 
   const resp = await getShopName(shopId)
   if (resp.error) {
-    errMsg.value = resp.error
+    alert(t(resp.error))
     return
   }
 
